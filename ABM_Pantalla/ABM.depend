@@ -1,0 +1,35 @@
+# depslib dependency file v1.0
+1556215537 source:g:\utn\programacion_laboratorio 1\testing code\empleado.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Empleado.h"
+	"utn_strings.h"
+
+1556175316 g:\utn\programacion_laboratorio 1\testing code\empleado.h
+
+1556176099 g:\utn\programacion_laboratorio 1\testing code\utn_strings.h
+
+1556221631 source:g:\utn\programacion_laboratorio 1\testing code\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+	"Pantalla.h"
+
+1556217911 source:g:\utn\programacion_laboratorio 1\testing code\utn_strings.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+	"Empleado.h"
+
+1556216372 g:\utn\programacion_laboratorio 1\testing code\pantalla.h
+
+1556220279 source:g:\utn\programacion_laboratorio 1\testing code\pantalla.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Pantalla.h"
+	"utn_strings.h"
+
