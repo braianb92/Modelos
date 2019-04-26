@@ -3,6 +3,8 @@
 #include <string.h>
 #include "Pantalla.h"
 #include "utn_strings.h"
+static int generarId(void);
+
 
 int Pan_inicializarArray(Pantalla* pPantalla,int len)
 {
@@ -34,97 +36,119 @@ int Pan_mostrarArray(Pantalla* pPantalla,int len)
     return 0;
 }
 
-int Pan_alta(Pantalla* pPantalla,int len,int pIndex,int idE,char* msgE)
+int Pan_alta(Pantalla* pPantalla,int len,int pIndex,char* msgE,int reintentos)
 {
     char bufferName[50];
     char bufferAdress[250];
+    char bufferPrecio[50];
+    char bufferTipo[50];
     float auxPrecio;
     int auxTipo;
-    int retorno=0;
-    while(retorno==0)
+    int retorno=-1;
+
+    if((pPantalla!=NULL)&&(len>0))
     {
-        if(getStringLetras(bufferName,"\nIngrese Nombre: ",msgE))
+        if(((getStringLetras(bufferName,"\nIngrese Nombre: ",msgE,reintentos)==0)&&
+            (getStringAlphanumeric(bufferAdress,"\nIngrese Direccion: ",msgE,reintentos)==0)))
         {
-            break;
+            printf("Segundo");
+            if((getStringNumerosFloat(bufferPrecio,"\nIngrese Precio: ",msgE,reintentos)==0)
+                &&(getStringNumeros(bufferTipo,"\nIngrese Tipo 1-LCD Paseo Comp. / 2-"
+                "Via Publ.: ",msgE,reintentos)==0))
+            {
+                printf("tercer");
+                auxTipo=atoi(bufferTipo);
+                auxPrecio=atof(bufferPrecio);
+                printf("%d",auxTipo);
+                if(auxTipo==1 || auxTipo==2)
+                {
+                    strncpy(pPantalla[pIndex].nombre,bufferName,sizeof(bufferName));
+                    strncpy(pPantalla[pIndex].direccion,bufferAdress,sizeof(bufferAdress));
+                    pPantalla[pIndex].precio=auxPrecio;
+                    pPantalla[pIndex].tipo=auxTipo;
+                    pPantalla[pIndex].isEmpty=0;
+                    pPantalla[pIndex].idPantalla=generarId();
+                }
+            }
         }
-        if(getStringAlphanumeric(bufferAdress,"\nIngrese Direccion: ",msgE,3))
-        {
-            break;
-        }
-        if(getFloat(&auxPrecio,"\nIngrese Precio: ",msgE))
-        {
-            break;
-        }
-        if(getInt(&auxTipo,"\nIngrese tipo de pantalla 1(LCD-PASEO COMER.) / 2(LED-VIA PUB.): ",msgE))
-        {
-            break;
-        }
-        if(auxTipo!=1 && auxTipo!=2)
-        {
-            printf(msgE);
-            break;
-        }
-        strncpy(pPantalla[pIndex].nombre,bufferName,sizeof(bufferName));
-        strncpy(pPantalla[pIndex].direccion,bufferAdress,sizeof(bufferAdress));
-        pPantalla[pIndex].precio=auxPrecio;
-        pPantalla[pIndex].tipo=auxTipo;
-        pPantalla[pIndex].isEmpty=0;
-        pPantalla[pIndex].idPantalla=idE;
-        retorno=1;
+
     }
     return retorno;
 }
 
-int Pan_modifyFromID(Pantalla* pPantalla, int len,char* msgE)
+int Pan_modifyFromID(Pantalla* pPantalla, int len,char* msgE,int reintentos)
 {
-    char bufferID[20];
-    char bufferName[50];
-    char bufferAdress[250];
-    float auxPrecio;
     int auxID;
     int posOfID;
+    int opcion=0;
+    char bufferName[50];
+    char bufferAdress[250];
+    char bufferPrecio[20];
+    char bufferTipo[20];
+    float auxPrecio;
     int auxTipo;
     int retorno=0;
 
-    do
+    if((pPantalla!=NULL)&&(len>0))
     {
-        if(getStringNumeros(bufferID,"\nIngrese ID: ",msgE))
+        if(getInt(&auxID,"\nIngrese ID: ",msgE)==0)
         {
-            break;
+            if((posOfID=Pan_findID(pPantalla,len,auxID))&&(posOfID!=-1))
+            {
+                while(opcion!=5)
+                {
+                    getIntInRange(&opcion,"\n1)Modificar Nombre\n2)Modificar Direccion\n"
+                                "3)Modificar Precio\n4)Modificar Tipo\n5)Salir",msgE,1,5,reintentos);
+                    switch(opcion)
+                    {
+                        case 1:
+                        {
+                            if(getStringLetras(bufferName,"\nIngrese NUEVO Nombre: ",msgE,reintentos)==0)
+                            {
+                                strncpy(pPantalla[posOfID].nombre,bufferName,sizeof(bufferName));
+                            }
+                            break;
+                        }
+                        case 2:
+                        {
+                            if(getStringAlphanumeric(bufferAdress,"\nIngrese NUEVA Direccion: ",msgE,reintentos)==0)
+                            {
+                                strncpy(pPantalla[posOfID].direccion,bufferAdress,sizeof(bufferAdress));
+                            }
+                            break;
+                        }
+                        case 3:
+                        {
+                            if(getStringNumerosFloat(bufferPrecio,"\nIngrese NUEVO Precio: ",msgE,reintentos)==0)
+                            {
+                                auxPrecio=atof(bufferPrecio);
+                                pPantalla[posOfID].precio=auxPrecio;
+                            }
+                            break;
+                        }
+                        case 4:
+                        {
+                            if(getStringNumeros(bufferTipo,"\nIngrese Tipo 1-LCD Paseo Comp. / 2-"
+                                "Via Publ.: ",msgE,reintentos)==0)
+                            {
+                                auxTipo=atoi(bufferTipo);
+                                pPantalla[posOfID].tipo=auxTipo;
+                            }
+                            break;
+                        }
+
+                    }
+
+                }
+
+            }
         }
-        auxID=atoi(bufferID);
-        posOfID=Pan_findID(pPantalla,len,auxID);
-        if(posOfID==-1)
-        {
-            printf("\n----El ID no existe!----\n");
-            break;
-        }
-        if(getStringLetras(bufferName,"\nIngrese NUEVO Nombre: ",msgE))
-        {
-            break;
-        }
-        if(getStringLetras(bufferAdress,"\nIngrese NUEVA Direccion: ",msgE))
-        {
-            break;
-        }
-           if(getFloat(&auxPrecio,"\nIngrese NUEVO Precio: ",msgE))
-        {
-            break;
-        }
-        if(getIntInRange(&auxTipo,"\nIngrese NUEVO tipo de pantalla 1(LCD-PASEO COMER.) / 2(LED-VIA PUB.): ",msgE,1,2,3))
-        {
-            break;
-        }
-        strncpy(pPantalla[posOfID].nombre,bufferName,sizeof(bufferName));
-        strncpy(pPantalla[posOfID].direccion,bufferAdress,sizeof(bufferAdress));
-        pPantalla[posOfID].precio=auxPrecio;
-        pPantalla[posOfID].tipo=auxTipo;
-        retorno=1;
-    }while(retorno==0);
+    }
+
     return retorno;
 }
 
-int Pan_bajaLogica(Pantalla* pPantalla, int len,char* msgE)
+int Pan_bajaLogica(Pantalla* pPantalla, int len,char* msgE,int reintentos)
 {
     char bufferID[20];
     int auxID;
@@ -133,7 +157,7 @@ int Pan_bajaLogica(Pantalla* pPantalla, int len,char* msgE)
 
     do
     {
-        if(getStringNumeros(bufferID,"\nIngrese ID: ",msgE))
+        if(getStringNumeros(bufferID,"\nIngrese ID: ",msgE,reintentos))
         {
             break;
         }
@@ -233,4 +257,10 @@ int Pan_posLibre(Pantalla* pPantalla, int len)
         }
     }
     return ret;
+}
+
+static int generarId(void)
+{
+    static int idPant=0;
+    return idPant++;
 }

@@ -9,8 +9,9 @@ int getIntInRange (int *pNum,char *msg,char *msgE,int minimo,int maximo,int rein
 int cargarArraySecuencialInt(int* pArray,int len,char* msg, char* msgE);
 int cargarArraySecuencialFloat(float* pArray,int len,char* msg, char* msgE);
 
-int getStringLetras (char* pStr, char* msg, char* msgE);
-int getStringNumeros (char* pStr, char* msg, char* msgE);
+int getStringLetras (char* pStr, char* msg, char* msgE,int reintentos);
+int getStringNumeros (char* pStr, char* msg, char* msgE,int reintentos);
+int getStringNumerosFloat (char* pStr, char* msg, char* msgE,int reintentos);
 int getStringAlphanumeric (char* pStr, char* msg, char* msgE,int reintentos);
 int getTelephone (char* pStr, char* msg, char* msgE,int reintentos);
 int getDni (char* pStr, char* msg, char* msgE,int reintentos);
@@ -24,6 +25,7 @@ int showArrayInt(int* pArray,int len);
 int showArrayChar(char* pArray,int len);
 
 int isNumber (char* pStr);
+int isNumberFloat (char* pStr);
 int isLetter (char* pStr);
 int isAlphanumeric (char* pStr);
 int isTelephone (char* pStr);

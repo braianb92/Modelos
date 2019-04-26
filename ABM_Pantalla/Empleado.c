@@ -44,11 +44,11 @@ int Empleado_alta(Empleado* pEmpleado,int len,int pIndex,int idE,char* msgE)
     int retorno=0;
     while(retorno==0)
     {
-        if(getStringLetras(bufferName,"\nIngrese Nombre: ",msgE))
+        if(getStringLetras(bufferName,"\nIngrese Nombre: ",msgE,3))
         {
             break;
         }
-        if(getStringLetras(bufferSurname,"\nIngrese Apellido: ",msgE))
+        if(getStringLetras(bufferSurname,"\nIngrese Apellido: ",msgE,3))
         {
             break;
         }

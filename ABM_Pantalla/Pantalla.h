@@ -14,9 +14,9 @@ typedef struct
 int Pan_inicializarArray(Pantalla* pPantalla,int len);
 int Pan_mostrarArray(Pantalla* pPantalla,int len);
 
-int Pan_alta(Pantalla* pPantalla,int len,int pIndex,int idE,char* msgE);
-int Pan_modifyFromID(Pantalla* pPantalla, int len,char* msgE);
-int Pan_bajaLogica(Pantalla* pPantalla, int len,char* msgE);
+int Pan_alta(Pantalla* pPantalla,int len,int pIndex,char* msgE,int reintentos);
+int Pan_modifyFromID(Pantalla* pPantalla, int len,char* msgE,int reintentos);
+int Pan_bajaLogica(Pantalla* pPantalla, int len,char* msgE,int reintentos);
 
 int Pan_orderByPrice(Pantalla* pPantalla, int len);
 int Pan_orderByID(Pantalla* pPantalla, int len);

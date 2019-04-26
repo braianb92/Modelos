@@ -31,10 +31,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="Empleado.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Empleado.h" />
 		<Unit filename="Pantalla.c">
 			<Option compilerVar="CC" />
 		</Unit>

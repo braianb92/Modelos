@@ -3,13 +3,12 @@
 #include <string.h>
 #include "utn_strings.h"
 #include "Pantalla.h"
-
+#define REINTENTOS 3
 #define LEN_LISTA 5
 
 int main()
 {
     Pantalla visores[LEN_LISTA];
-    int idPantallas=1;
     int posLibre;
     int opcion=0;
 
@@ -25,9 +24,8 @@ int main()
                 if(posLibre>=0)
                 {
                     printf("\n----Se encontro lugar----\n");
-                    if(Pan_alta(visores,LEN_LISTA,posLibre,idPantallas,"DATO NO VALIDO\n"))
+                    if(Pan_alta(visores,LEN_LISTA,posLibre,"DATO NO VALIDO\n",REINTENTOS))
                     {
-                        idPantallas++;
                         Pan_mostrarArray(visores,LEN_LISTA);
                     }
                 }
@@ -44,7 +42,7 @@ int main()
             }
             case 3:
             {
-                if(Pan_modifyFromID(visores,LEN_LISTA,"DATO NO VALIDO\n"))
+                if(Pan_modifyFromID(visores,LEN_LISTA,"DATO NO VALIDO\n",REINTENTOS))
                 {
                     printf("\n----Se modifico exitosamente----\n");
                 }
@@ -52,7 +50,7 @@ int main()
             }
             case 4:
             {
-                if(Pan_bajaLogica(visores,LEN_LISTA,"DATO NO VALIDO\n"))
+                if(Pan_bajaLogica(visores,LEN_LISTA,"DATO NO VALIDO\n",REINTENTOS))
                 {
                     printf("\n----La BAJA se realizo con exito!----\n");
                 }
