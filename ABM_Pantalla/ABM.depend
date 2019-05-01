@@ -33,3 +33,37 @@
 	"Pantalla.h"
 	"utn_strings.h"
 
+1556222341 source:/home/alumno/Documentos/Modelos-master/ABM_Pantalla/Empleado.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Empleado.h"
+	"utn_strings.h"
+
+1556222341 /home/alumno/Documentos/Modelos-master/ABM_Pantalla/Empleado.h
+
+1556234587 /home/alumno/Documentos/Modelos-master/ABM_Pantalla/utn_strings.h
+
+1556239768 source:/home/alumno/Documentos/Modelos-master/ABM_Pantalla/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+	"Pantalla.h"
+
+1556239777 /home/alumno/Documentos/Modelos-master/ABM_Pantalla/Pantalla.h
+
+1556240767 source:/home/alumno/Documentos/Modelos-master/ABM_Pantalla/Pantalla.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Pantalla.h"
+	"utn_strings.h"
+
+1556234508 source:/home/alumno/Documentos/Modelos-master/ABM_Pantalla/utn_strings.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+	"Empleado.h"
+
