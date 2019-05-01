@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1556750917 source:g:\utn\programacion_laboratorio 1\modelos\abm\empleado.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+	"Empleado.h"
+
+1556750903 g:\utn\programacion_laboratorio 1\modelos\abm\utn_strings.h
+
+1556750903 g:\utn\programacion_laboratorio 1\modelos\abm\empleado.h
+
+1556750903 source:g:\utn\programacion_laboratorio 1\modelos\abm\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Empleado.h"
+	"utn_strings.h"
+
+1556750903 source:g:\utn\programacion_laboratorio 1\modelos\abm\utn_strings.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+

@@ -3,30 +3,27 @@
 
 typedef struct
 {
-    char nombre[50];
-    char apellido[50];
-    int legajo;
-    int isEmpty; ///1vacio - 0ocupado
-    int idEmpleado; ///clave unica de identidad univoca
-}Empleado;
+    char name[50];
+    char surname[50];
+    int sector;
+    float salary;
+    int idEmployee;
+    int isEmpty; //1 free - 0 full
+}Employee;
 
-int Empleado_inicializarArray(Empleado* pEmpleado,int len);
-int Empleado_mostrarArray(Empleado* pEmpleado,int len);
+int emp_addEmployees(Employee* pEmployee,int len,int pIndex,char* msgE,int tries);
+int emp_alter(Employee* pEmployee, int len,char* msgE,int tries);
+int emp_removeEmployee(Employee* pEmployee, int len,char* msgE,int tries);
+//int emp_sortEmployees(Empleado* pEmpleado, int len,int order);
+int emp_totalPromedio(Employee* pEmployee, int len,float* totalResult,float* promedioResult);
+int emp_salaryOverPromedio(Employee* pEmployee,int len,float promedioResult,int* employeeOverPromedio);
 
-int Empleado_alta(Empleado* pEmpleado,int len,int pIndex,int idE,char* msgE);
-int Empleado_modifyFromLegajo(Empleado* pEmpleado, int len,char* msgE);
-int Empleado_modifyFromID(Empleado* pEmpleado, int len,char* msgE);
-int Empleado_bajaLogica(Empleado* pEmpleado, int len,char* msgE);
+int emp_initEmployees(Employee* pEmployee,int len);
+int emp_findFree(Employee* pEmployee, int len);
+int emp_findEmployeeById(Employee* pEmployee, int len, int idE);
+int emp_getID (Employee* pEmpleado,int len,char* msgE,int tries);
 
-
-int Empleado_ordenarNameAtoZ(Empleado* pEmpleado, int len);
-int Empleado_ordenarSurnameAtoZ(Empleado* pEmpleado, int len);
-int Empleado_orderByLegajo(Empleado* pEmpleado, int len);
-int Empleado_orderByID(Empleado* pEmpleado, int len);
-
-int Empleado_findLegajo(Empleado* pEmpleado, int len, int valor);
-int Empleado_findID(Empleado* pEmpleado, int len, int idE);
-int Empleado_posLibre(Empleado* pEmpleado, int len);
+int emp_printEmployees(Employee* pEmployee,int len);
 
 
 

@@ -1,98 +1,97 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "utn_strings.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "Empleado.h"
+#include "utn_strings.h"
+#define LEN 4
+#define TRIES 3
 
-#define LEN_LISTA 4
 
 int main()
 {
-    Empleado wachin[LEN_LISTA];
-    int idEmpleado=1;
+    Employee Empleado[LEN];
     int posLibre;
+    float promedio;
+    float totalSueldos;
+    int employeeOverPromedio;
+    char seguir='s';
     int opcion=0;
+    int flag=0;
 
-    Empleado_inicializarArray(wachin,LEN_LISTA);
-    while(opcion!=10)
+    emp_initEmployees(Empleado,LEN);
+    while(seguir=='s')
     {
-        getIntInRange(&opcion,"\n1)Ingresar\n2)Listar\n3)Modificar con ID\n4)Modificar con Legajo\n5)Baja\n6)Ordenar por Nombre\n"
-                      "7)Ordenar por Apellido\n8)Ordenar por Legajo\n9)Ordenar por ID\n10)Salir\n\n    INGRESE OPCION: ","ERROR\n",1,10,3);
+        printf("\n1- Alta\n");
+        printf("2- Modificacion\n");
+        printf("3- Baja\n");
+        printf("4- Informar\n");
+        printf("5- Salir\n");
+
+        getIntInRange(&opcion,"\n   INGRESE OPCION: ","DATO NO VALIDO\n",1,5,TRIES);
         switch(opcion)
         {
             case 1:
-            {
-                posLibre=Empleado_posLibre(wachin,LEN_LISTA);
-                if(posLibre>=0)
+                posLibre=emp_findFree(Empleado,LEN);
+                if(posLibre!=-1)
                 {
-                    printf("\n----Se encontro lugar----\n");
-                    if(Empleado_alta(wachin,LEN_LISTA,posLibre,idEmpleado,"DATO NO VALIDO\n"))
+                    printf("\n----Se encontro posicion libre!----\n");
+                    if(!emp_addEmployees(Empleado,LEN,posLibre,"\nDATO NO VALIDO\n",TRIES))
                     {
-                        idEmpleado++;
-                        Empleado_mostrarArray(wachin,LEN_LISTA);
+                        flag=1;
+                        printf("\n----Alta satisfactoria!----\n");
+                    }
+                    else
+                    {
+                        printf("\n----No se realizo el Alta----\n");
                     }
                 }
                 else
                 {
-                    printf("\n----No se encontro lugar libre!----\n");
+                    printf("\n----No se encontro posicion libre!----\n");
                 }
                 break;
-            }
             case 2:
-            {
-                Empleado_mostrarArray(wachin,LEN_LISTA);
+                if(flag)
+                {
+                    if(!emp_alter(Empleado,LEN,"\nDATO NO VALIDO\n",TRIES))
+                    {
+                        printf("\n----Se modifico exitosamente!----\n");
+                    }
+                }
+                else
+                {
+                    printf("\n----AUN NO HAY EMPLEADOS EN LA NOMINA!----\n");
+                }
                 break;
-            }
             case 3:
-            {
-                if(Empleado_modifyFromID(wachin,LEN_LISTA,"DATO NO VALIDO\n"))
+                if(flag)
                 {
-                    printf("\n----Se modifico exitosamente----\n");
+                    if(!emp_removeEmployee(Empleado,LEN,"\nDATO NO VALIDO\n",TRIES))
+                    {
+                        printf("\n----Se dio de baja exitosamente!----\n");
+                    }
+                }
+                else
+                {
+                    printf("\n----AUN NO HAY EMPLEADOS EN LA NOMINA!----\n");
                 }
                 break;
-            }
             case 4:
-            {
-                if(Empleado_modifyFromLegajo(wachin,LEN_LISTA,"DATO NO VALIDO\n"))
-                {
-                    printf("\n----Se modifico exitosamente----\n");
-                }
+                emp_printEmployees(Empleado,LEN);
+                emp_totalPromedio(Empleado,LEN,&totalSueldos,&promedio);
+                emp_salaryOverPromedio(Empleado,LEN,promedio,&employeeOverPromedio);
+                printf("\nEL TOTAL DE SALARIOS ES: %.2f\n",totalSueldos);
+                printf("\nEL PROMEDIO DE SALARIOS ES: %.2f\n",promedio);
+                printf("\nLOS EMPLEADOS QUE SUPERAN EL SALARIO PROMEDIO SON: %d\n",employeeOverPromedio);
                 break;
-            }
             case 5:
-            {
-                if(Empleado_bajaLogica(wachin,LEN_LISTA,"DATO NO VALIDO\n"))
-                {
-                    printf("\n----La BAJA se realizo con exito!----\n");
-                }
+                seguir = 'n';
                 break;
-            }
-            case 6:
-            {
-                Empleado_ordenarNameAtoZ(wachin,LEN_LISTA);
-                printf("----Se ordeno por NOMBRE!----\n");
-                break;
-            }
-            case 7:
-            {
-                Empleado_ordenarSurnameAtoZ(wachin,LEN_LISTA);
-                printf("----Se ordeno por APELLIDO!----\n");
-                break;
-            }
-             case 8:
-            {
-                Empleado_orderByLegajo(wachin,LEN_LISTA);
-                printf("----Se ordeno por LEGAJO!----\n");
-                break;
-            }
-             case 9:
-            {
-                Empleado_orderByID(wachin,LEN_LISTA);
-                printf("----Se ordeno por ID!----\n");
-                break;
-            }
-
         }
     }
+
     return 0;
 }

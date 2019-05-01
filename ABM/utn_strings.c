@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "utn_strings.h"
-#include "Empleado.h"
 
 
 int getString(char* pStr, char* msg, char*msgE)
@@ -70,7 +69,7 @@ int getIntInRange(  int *pNum,
     do
     {
 
-        if((pNum != NULL)&&(!getStringNumeros(bufferStr,msg,msgE)))
+        if((pNum != NULL)&&(!getStringNumeros(bufferStr,msg,msgE,reintentos)))
         {
             bufferInt = atoi(bufferStr);
             if(bufferInt >= minimo && bufferInt <= maximo)
@@ -129,35 +128,62 @@ int cargarArraySecuencialFloat(float* pArray,int len,char* msg, char* msgE)
     return 0;
 }
 
-int getStringLetras (char* pStr, char* msg, char* msgE)
+int getStringLetras (char* pStr, char* msg, char* msgE,int reintentos)
 {
     char bufferStr[20];
     int ret=-1;
-    if(!getString(bufferStr,msg,msgE)&&(pStr!=NULL)&&(isLetter(bufferStr)))
+    while(ret==-1 && reintentos>0)
     {
-        strncpy(pStr,bufferStr,sizeof(bufferStr));
-        ret=0;
-    }
-    else
-    {
-        printf(msgE);
+        if(!getString(bufferStr,msg,msgE)&&(pStr!=NULL)&&(isLetter(bufferStr)))
+        {
+            strncpy(pStr,bufferStr,sizeof(bufferStr));
+            ret=0;
+        }
+        else
+        {
+            printf(msgE);
+            reintentos--;
+        }
     }
     return ret;
 }
 
-int getStringNumeros (char* pStr, char* msg, char* msgE)
+int getStringNumeros (char* pStr, char* msg, char* msgE,int reintentos)
 {
     char bufferStr[20];
-    int retorno;
-    if(!getString(bufferStr,msg,msgE)&&(pStr!=NULL)&&(isNumber(bufferStr)))
+    int retorno=-1;
+    while(retorno==-1 && reintentos>0)
     {
-        strncpy(pStr,bufferStr,sizeof(bufferStr));
-        retorno=0;
+        if(!getString(bufferStr,msg,msgE)&&(pStr!=NULL)&&(isNumber(bufferStr)))
+        {
+            strncpy(pStr,bufferStr,sizeof(bufferStr));
+            retorno=0;
+        }
+        else
+        {
+            printf(msgE);
+            retorno=-1;
+        }
     }
-    else
+    return retorno;
+}
+
+int getStringNumerosFloat (char* pStr, char* msg, char* msgE,int reintentos)
+{
+    char bufferStr[20];
+    int retorno=-1;
+    while(retorno==-1 && reintentos>0)
     {
-        printf(msgE);
-        retorno=-1;
+        if(!getString(bufferStr,msg,msgE)&&(pStr!=NULL)&&(isNumberFloat(bufferStr)))
+        {
+            strncpy(pStr,bufferStr,sizeof(bufferStr));
+            retorno=0;
+        }
+        else
+        {
+            printf(msgE);
+            retorno=-1;
+        }
     }
     return retorno;
 }
@@ -324,6 +350,28 @@ int isNumber (char* pStr)
         if(pStr[i]<'0' || pStr[i]>'9')
         {
             return 0;
+        }
+        i++;
+    }
+    return 1;
+}
+int isNumberFloat (char* pStr)
+{
+    int i=0;
+    int contadorPuntos=0;
+    while(pStr[i]!='\0')
+    {
+        if((pStr[i]<'0' || pStr[i]>'9')&&(pStr[i]!='.'))
+        {
+            return 0;
+        }
+        if(pStr[i]=='.')
+        {
+            contadorPuntos++;
+            if(contadorPuntos>1)
+            {
+                return 0;
+            }
         }
         i++;
     }
