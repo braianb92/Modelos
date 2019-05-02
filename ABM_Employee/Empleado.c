@@ -31,6 +31,7 @@ int emp_addEmployees(Employee* pEmployee,int len,int pIndex,char* msgE,int tries
                 pEmployee[pIndex].sector=auxSector;
                 pEmployee[pIndex].idEmployee=generarId();
                 pEmployee[pIndex].isEmpty=0;
+                retorno=0;
             }
         }
     }

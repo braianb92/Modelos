@@ -191,13 +191,13 @@ int getStringNumerosFloat (char* pStr, char* msg, char* msgE,int reintentos)
 
 int getStringAlphanumeric (char* pStr, char* msg, char* msgE,int reintentos)
 {
-    char bufferStr[20];
+    char bufferStr[250];
     int ret=-1;
     while(ret==-1 && reintentos>0)
     {
         if(!getString(bufferStr,msg,msgE)&&(pStr!=NULL)&&(isAlphanumeric(bufferStr)))
         {
-            strncpy(pStr,bufferStr,20);
+            strncpy(pStr,bufferStr,sizeof(bufferStr));
             ret=0;
         }
         else
@@ -398,7 +398,7 @@ int isAlphanumeric (char* pStr)
     int i=0;
     while(pStr[i]!='\0')
     {
-        if((pStr[i]!=' ')&&(pStr[i]<'a'||pStr[i]>'z')&&(pStr[i]<'A'||pStr[i]>'Z')
+        if((pStr[i]!=' ')&&(pStr[i]!='.')&&(pStr[i]<'a'||pStr[i]>'z')&&(pStr[i]<'A'||pStr[i]>'Z')
            &&(pStr[i]<'0' || pStr[i]>'9'))
         {
             return 0;

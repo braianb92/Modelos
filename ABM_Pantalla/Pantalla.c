@@ -2,81 +2,57 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Pantalla.h"
+#include "Publicidad.h"
 #include "utn_strings.h"
 static int generarId(void);
 
-
-int Pan_inicializarArray(Pantalla* pPantalla,int len)
+int pan_initPantalla(Pantalla* pPantalla,int len)
 {
     int i;
-    for(i=0; i<len;i++)
+    if(pPantalla!=NULL && len>0)
     {
-        pPantalla[i].isEmpty=1;
-    }
-    return 0;
-}
-
-int Pan_mostrarArray(Pantalla* pPantalla,int len)
-{
-    int i;
-    int flag=1;
-    for(i=0;i<len;i++)
-    {
-        if(pPantalla[i].isEmpty==0)
+        for(i=0; i<len;i++)
         {
-            flag=0;
-            printf("\nID: %d\nNombre: %s\nDireccion: %s\nPrecio: %.2f\nTipo 1(LCD-PASEO COMERCIAL) / 2 (LED-VIA PUBLICA): %d\n-------",
-                   pPantalla[i].idPantalla,pPantalla[i].nombre,pPantalla[i].direccion,pPantalla[i].precio,pPantalla[i].tipo);
+            pPantalla[i].idPantalla=-1;
+            pPantalla[i].isEmpty=1;
         }
     }
-    if(flag)
-    {
-        printf("\n----El listado se encuentra vacio----\n");
-    }
     return 0;
 }
 
-int Pan_alta(Pantalla* pPantalla,int len,int pIndex,char* msgE,int reintentos)
+int pan_addPan(Pantalla* pPantalla,int len,int pIndex,char* msgE,int tries)
 {
     char bufferName[50];
     char bufferAdress[250];
-    char bufferPrecio[50];
-    char bufferTipo[50];
+    char bufferPrecio[20];
+    char bufferTipo[20];
     float auxPrecio;
     int auxTipo;
     int retorno=-1;
-
     if((pPantalla!=NULL)&&(len>0))
     {
-        if(((getStringLetras(bufferName,"\nIngrese Nombre: ",msgE,reintentos)==0)&&
-            (getStringAlphanumeric(bufferAdress,"\nIngrese Direccion: ",msgE,reintentos)==0)))
+        if(((getStringLetras(bufferName,"\nIngrese Nombre: ",msgE,tries)==0)&&
+            (getStringAlphanumeric(bufferAdress,"\nIngrese Direccion: ",msgE,tries)==0)))
         {
-            printf("Segundo");
-            if((getStringNumerosFloat(bufferPrecio,"\nIngrese Precio: ",msgE,reintentos)==0)
-                &&(getStringNumeros(bufferTipo,"\nIngrese Tipo 1-LCD Paseo Comp. / 2-"
-                "Via Publ.: ",msgE,reintentos)==0))
+            if((getStringNumerosFloat(bufferPrecio,"\nIngrese Precio: ",msgE,tries)==0)
+                &&(getStringNumeros(bufferTipo,"\nIngrese Tipo 1(LCD) 2(LED): ",msgE,tries)==0))
             {
-                printf("tercer");
-                auxTipo=atoi(bufferTipo);
                 auxPrecio=atof(bufferPrecio);
-                printf("%d",auxTipo);
-                if(auxTipo==1 || auxTipo==2)
-                {
-                    strncpy(pPantalla[pIndex].nombre,bufferName,sizeof(bufferName));
-                    strncpy(pPantalla[pIndex].direccion,bufferAdress,sizeof(bufferAdress));
-                    pPantalla[pIndex].precio=auxPrecio;
-                    pPantalla[pIndex].tipo=auxTipo;
-                    pPantalla[pIndex].isEmpty=0;
-                    pPantalla[pIndex].idPantalla=generarId();
-                }
+                auxTipo=atoi(bufferTipo);
+                strncpy(pPantalla[pIndex].nombre,bufferName,sizeof(bufferName));
+                strncpy(pPantalla[pIndex].direccion,bufferAdress,sizeof(bufferAdress));
+                pPantalla[pIndex].precio=auxPrecio;
+                pPantalla[pIndex].tipo=auxTipo;
+                pPantalla[pIndex].idPantalla=generarId();
+                pPantalla[pIndex].isEmpty=0;
+                retorno=0;
             }
         }
-
     }
     return retorno;
 }
 
-int Pan_modifyFromID(Pantalla* pPantalla, int len,char* msgE,int reintentos)
+int pan_alter(Pantalla* pPantalla, int len,char* msgE,int tries)
 {
     int auxID;
     int posOfID;
@@ -87,94 +63,98 @@ int Pan_modifyFromID(Pantalla* pPantalla, int len,char* msgE,int reintentos)
     char bufferTipo[20];
     float auxPrecio;
     int auxTipo;
-    int retorno=0;
+    int retorno=-1;
 
     if((pPantalla!=NULL)&&(len>0))
     {
-        if(getInt(&auxID,"\nIngrese ID: ",msgE)==0)
+        auxID=pan_getID(pPantalla,len,msgE,tries);
+        if(auxID>=0)
         {
-            if((posOfID=Pan_findID(pPantalla,len,auxID))&&(posOfID!=-1))
+            posOfID=pan_findPanById(pPantalla,len,auxID);
+            if(posOfID!=-1)
             {
                 while(opcion!=5)
                 {
-                    getIntInRange(&opcion,"\n1)Modificar Nombre\n2)Modificar Direccion\n"
-                                "3)Modificar Precio\n4)Modificar Tipo\n5)Salir",msgE,1,5,reintentos);
+                    printf("\n1- Modificar Nombre\n");
+                    printf("2- Modificar Direccion\n");
+                    printf("3- Modificar Precio\n");
+                    printf("4- Modificar Tipo\n");
+                    printf("5- Atras (Menu Principal)\n");
+                    getIntInRange(&opcion,"\n   INGRESE OPCION (Menu Modificacion): ",msgE,1,5,tries);
                     switch(opcion)
                     {
                         case 1:
                         {
-                            if(getStringLetras(bufferName,"\nIngrese NUEVO Nombre: ",msgE,reintentos)==0)
+                            if(!getStringLetras(bufferName,"\nIngrese NUEVO Nombre: ",msgE,tries))
                             {
                                 strncpy(pPantalla[posOfID].nombre,bufferName,sizeof(bufferName));
+                                retorno=0;
                             }
                             break;
                         }
                         case 2:
                         {
-                            if(getStringAlphanumeric(bufferAdress,"\nIngrese NUEVA Direccion: ",msgE,reintentos)==0)
+                            if(!getStringLetras(bufferAdress,"\nIngrese NUEVA Direccion: ",msgE,tries))
                             {
                                 strncpy(pPantalla[posOfID].direccion,bufferAdress,sizeof(bufferAdress));
+                                retorno=0;
                             }
                             break;
                         }
                         case 3:
                         {
-                            if(getStringNumerosFloat(bufferPrecio,"\nIngrese NUEVO Precio: ",msgE,reintentos)==0)
+                            if(!getStringNumerosFloat(bufferPrecio,"\nIngrese NUEVO Precio: ",msgE,tries))
                             {
                                 auxPrecio=atof(bufferPrecio);
                                 pPantalla[posOfID].precio=auxPrecio;
+                                retorno=0;
                             }
                             break;
                         }
                         case 4:
                         {
-                            if(getStringNumeros(bufferTipo,"\nIngrese Tipo 1-LCD Paseo Comp. / 2-"
-                                "Via Publ.: ",msgE,reintentos)==0)
+                            if(!getStringNumeros(bufferTipo,"\nIngrese NUEVO Tipo: ",msgE,tries))
                             {
                                 auxTipo=atoi(bufferTipo);
                                 pPantalla[posOfID].tipo=auxTipo;
+                                retorno=0;
                             }
                             break;
                         }
-
                     }
-
                 }
-
+            }
+            else
+            {
+                printf("\n----No se encontro el ID!-----\n");
             }
         }
     }
-
     return retorno;
 }
 
-int Pan_bajaLogica(Pantalla* pPantalla, int len,char* msgE,int reintentos)
+int pan_removePantalla(Pantalla* pPantalla, int len,char* msgE,int tries)
 {
-    char bufferID[20];
     int auxID;
     int posOfID;
-    int retorno=0;
-
-    do
+    int retorno=-1;
+    if(pPantalla!=NULL && len>0)
     {
-        if(getStringNumeros(bufferID,"\nIngrese ID: ",msgE,reintentos))
+        auxID=pan_getID(pPantalla,len,msgE,tries);
+         if(auxID>=0)
         {
-            break;
+            posOfID=pan_findPanById(pPantalla,len,auxID);
+            if(posOfID!=-1)
+            {
+               pPantalla[posOfID].isEmpty=1;
+               retorno=0;
+            }
         }
-        auxID=atoi(bufferID);
-        posOfID=Pan_findID(pPantalla,len,auxID);
-        if(posOfID==-1)
-        {
-            printf("\n----El ID no existe!----\n");
-            break;
-        }
-        pPantalla[posOfID].isEmpty=1;
-        retorno=1;
-    }while(retorno==0);
+     }
     return retorno;
 }
 
-int Pan_orderByPrice(Pantalla* pPantalla, int len)
+int pan_orderByPrice(Pantalla* pPantalla, int len)
 {
     int i;
     int j;
@@ -202,7 +182,7 @@ int Pan_orderByPrice(Pantalla* pPantalla, int len)
     return 0;
 }
 
-int Pan_orderByID(Pantalla* pPantalla, int len)
+int pan_orderByID(Pantalla* pPantalla, int len)
 {
     int i;
     int j;
@@ -230,7 +210,27 @@ int Pan_orderByID(Pantalla* pPantalla, int len)
     return 0;
 }
 
-int Pan_findID(Pantalla* pPantalla, int len, int idE)
+int pan_printPantalla(Pantalla* pPantalla,int len)
+{
+    int i;
+    int flag=1;
+    for(i=0;i<len;i++)
+    {
+        if(pPantalla[i].isEmpty==0)
+        {
+            printf("\nID: %d\nNombre: %s\nDireccion: %s\nPrecio: %.2f\nTipo: %d\n-------",
+                   pPantalla[i].idPantalla,pPantalla[i].nombre,pPantalla[i].direccion,pPantalla[i].precio,pPantalla[i].tipo);
+            flag=0;
+        }
+    }
+    if(flag)
+    {
+        printf("\n----El listado se encuentra vacio----\n");
+    }
+    return 0;
+}
+
+int pan_findPanById(Pantalla* pPantalla, int len, int idE)
 {
     int i;
     int ret=-1;
@@ -239,12 +239,13 @@ int Pan_findID(Pantalla* pPantalla, int len, int idE)
         if(pPantalla[i].idPantalla==idE)
         {
             ret=i;
+            break;
         }
     }
     return ret;
 }
 
-int Pan_posLibre(Pantalla* pPantalla, int len)
+int pan_findFree(Pantalla* pPantalla, int len)
 {
     int i;
     int ret=-1;
@@ -257,6 +258,22 @@ int Pan_posLibre(Pantalla* pPantalla, int len)
         }
     }
     return ret;
+}
+
+int pan_getID (Pantalla* pPantalla,int len,char* msgE,int tries)
+{
+    int retorno=-1;
+    char bufferID[20];
+    int auxID;
+    if(pPantalla!=NULL && len>0)
+    {
+        if(!getStringNumeros(bufferID,"\nIngrese ID: ",msgE,tries))
+        {
+            auxID=atoi(bufferID);
+            retorno=auxID;
+        }
+    }
+    return retorno;
 }
 
 static int generarId(void)

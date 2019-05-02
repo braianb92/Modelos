@@ -67,3 +67,81 @@
 	"utn_strings.h"
 	"Empleado.h"
 
+1556782912 source:c:\users\baldi\desktop\modelos-master\modelos-master\abm_pantalla\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+	"Pantalla.h"
+	"Publicidad.h"
+
+1556751844 c:\users\baldi\desktop\modelos-master\modelos-master\abm_pantalla\utn_strings.h
+
+1556774427 c:\users\baldi\desktop\modelos-master\modelos-master\abm_pantalla\pantalla.h
+
+1556776737 source:c:\users\baldi\desktop\modelos-master\modelos-master\abm_pantalla\pantalla.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Pantalla.h"
+	"Publicidad.h"
+	"utn_strings.h"
+
+1556780878 source:c:\users\baldi\desktop\modelos-master\modelos-master\abm_pantalla\utn_strings.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+	"Empleado.h"
+
+1556751844 c:\users\baldi\desktop\modelos-master\modelos-master\abm_pantalla\empleado.h
+
+1556782543 c:\users\baldi\desktop\modelos-master\modelos-master\abm_pantalla\publicidad.h
+
+1556782613 source:c:\users\baldi\desktop\modelos-master\modelos-master\abm_pantalla\publicidad.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Pantalla.h"
+	"Publicidad.h"
+	"utn_strings.h"
+
+1556819551 source:g:\utn\programacion_laboratorio 1\modelos\abm_pantalla\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+	"Pantalla.h"
+	"Publicidad.h"
+
+1556751844 g:\utn\programacion_laboratorio 1\modelos\abm_pantalla\utn_strings.h
+
+1556774427 g:\utn\programacion_laboratorio 1\modelos\abm_pantalla\pantalla.h
+
+1556782543 g:\utn\programacion_laboratorio 1\modelos\abm_pantalla\publicidad.h
+
+1556819503 source:g:\utn\programacion_laboratorio 1\modelos\abm_pantalla\pantalla.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Pantalla.h"
+	"Publicidad.h"
+	"utn_strings.h"
+
+1556782613 source:g:\utn\programacion_laboratorio 1\modelos\abm_pantalla\publicidad.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Pantalla.h"
+	"Publicidad.h"
+	"utn_strings.h"
+
+1556780878 source:g:\utn\programacion_laboratorio 1\modelos\abm_pantalla\utn_strings.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+	"Empleado.h"
+
+1556751844 g:\utn\programacion_laboratorio 1\modelos\abm_pantalla\empleado.h
+

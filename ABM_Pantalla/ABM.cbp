@@ -35,6 +35,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Pantalla.h" />
+		<Unit filename="Publicidad.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Publicidad.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

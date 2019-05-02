@@ -11,16 +11,19 @@ typedef struct
     int idPantalla; ///clave unica de identidad univoca
 }Pantalla;
 
-int Pan_inicializarArray(Pantalla* pPantalla,int len);
-int Pan_mostrarArray(Pantalla* pPantalla,int len);
+int pan_initPantalla(Pantalla* pPantalla,int len);
 
-int Pan_alta(Pantalla* pPantalla,int len,int pIndex,char* msgE,int reintentos);
-int Pan_modifyFromID(Pantalla* pPantalla, int len,char* msgE,int reintentos);
-int Pan_bajaLogica(Pantalla* pPantalla, int len,char* msgE,int reintentos);
+int pan_addPan(Pantalla* pPantalla,int len,int pIndex,char* msgE,int tries);
+int pan_alter(Pantalla* pPantalla, int len,char* msgE,int tries);
+int pan_removePantalla(Pantalla* pPantalla, int len,char* msgE,int tries);
 
-int Pan_orderByPrice(Pantalla* pPantalla, int len);
-int Pan_orderByID(Pantalla* pPantalla, int len);
+int pan_orderByPrice(Pantalla* pPantalla, int len);
+int pan_orderByID(Pantalla* pPantalla, int len);
 
-int Pan_findID(Pantalla* pPantalla, int len, int idE);
-int Pan_posLibre(Pantalla* pPantalla, int len);
+int pan_printPantalla(Pantalla* pPantalla,int len);
+
+int pan_findPanById(Pantalla* pPantalla, int len, int idE);
+int pan_findFree(Pantalla* pPantalla, int len);
+
+int pan_getID (Pantalla* pPantalla,int len,char* msgE,int tries);
 #endif // PANTALLA_H_INCLUDED

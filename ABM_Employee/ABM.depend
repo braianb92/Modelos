@@ -26,3 +26,30 @@
 	<string.h>
 	"utn_strings.h"
 
+1556770179 source:c:\users\baldi\desktop\modelos-master\modelos-master\abm_employee\empleado.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+	"Empleado.h"
+
+1556751844 c:\users\baldi\desktop\modelos-master\modelos-master\abm_employee\utn_strings.h
+
+1556751844 c:\users\baldi\desktop\modelos-master\modelos-master\abm_employee\empleado.h
+
+1556751844 source:c:\users\baldi\desktop\modelos-master\modelos-master\abm_employee\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Empleado.h"
+	"utn_strings.h"
+
+1556751844 source:c:\users\baldi\desktop\modelos-master\modelos-master\abm_employee\utn_strings.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+
