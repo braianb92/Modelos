@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "utn_strings.h"
-#include "Empleado.h"
+
 
 
 int getString(char* pStr, char* msg, char*msgE)
@@ -257,7 +257,7 @@ int getCuit (char* pStr, char* msg, char* msgE,int reintentos)
     {
         if(!getString(bufferStr,msg,msgE)&&(pStr!=NULL)&&(isCuit(bufferStr)))
         {
-            strncpy(pStr,bufferStr,20);
+            strncpy(pStr,bufferStr,sizeof(bufferStr));
             ret=0;
         }
         else

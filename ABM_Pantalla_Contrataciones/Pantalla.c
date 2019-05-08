@@ -210,6 +210,22 @@ int pan_orderByID(Pantalla* pPantalla, int len)
     return 0;
 }
 
+int printPanMenorA(Pantalla* pPantalla,int len,int valor)
+{
+    int i;
+    for(i=0;i<len;i++)
+    {
+        if(pPantalla[i].isEmpty==0)
+        {
+            if(pPantalla[i].precio<valor)
+            {
+                printf("\nID: %d - Precio: %.2f",pPantalla[i].idPantalla,pPantalla[i].precio);
+            }
+        }
+    }
+    return 0;
+}
+
 int pan_printPantalla(Pantalla* pPantalla,int len)
 {
     int i;

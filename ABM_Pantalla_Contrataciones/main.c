@@ -9,27 +9,28 @@
 
 int main()
 {
-    Pantalla visores[LEN_LISTA];
-    Publicidad Marketing[LEN_LISTA];
+    Pantalla screen[LEN_LISTA];
+    Publicidad publi[LEN_LISTA];
     int flag=0;
     int posLibre;
     int opcion=0;
 
-    pan_initPantalla(visores,LEN_LISTA);
-    pub_initPublicidad(Marketing,LEN_LISTA);
-    while(opcion!=6)
+    pan_initPantalla(screen,LEN_LISTA);
+    pub_initPublicidad(publi,LEN_LISTA);
+    while(opcion!=10)
     {
         getIntInRange(&opcion,"\n1)Alta de pantalla\n2)Modificar datos de pantalla\n3)Baja de pantalla\n"
-                      "4)Contratar Publicidad\n5)Mostrar Pantallas\n6)Salir\n\n    INGRESE OPCION: ","ERROR\n",1,6,3);
+                      "4)Contratar Publicidad\n5)Modificar condiciones de publicidad\n8)Listar Contrataciones\n9)Listar Pantallas\n10)Salir\n"
+                          "INGRESE OPCION: ","ERROR\n",1,10,3);
         switch(opcion)
         {
             case 1:
             {
-                posLibre=pan_findFree(visores,LEN_LISTA);
+                posLibre=pan_findFree(screen,LEN_LISTA);
                 if(posLibre>=0)
                 {
                     printf("\n----Se encontro lugar----\n");
-                    if(!pan_addPan(visores,LEN_LISTA,posLibre,"DATO NO VALIDO\n",REINTENTOS))
+                    if(!pan_addPan(screen,LEN_LISTA,posLibre,"DATO NO VALIDO\n",REINTENTOS))
                     {
                         flag=1;
                         printf("\n----Se dio de ALTA exitosamente!----\n");
@@ -49,7 +50,7 @@ int main()
             {
                 if(flag)
                 {
-                    if(pan_alter(visores,LEN_LISTA,"DATO NO VALIDO\n",REINTENTOS))
+                    if(pan_alter(screen,LEN_LISTA,"DATO NO VALIDO\n",REINTENTOS))
                     {
                         printf("\n----Se modifico exitosamente----\n");
                     }
@@ -64,7 +65,7 @@ int main()
             {
                 if(flag)
                 {
-                    if(pan_removePantalla(visores,LEN_LISTA,"DATO NO VALIDO\n",REINTENTOS))
+                    if(pan_removePantalla(screen,LEN_LISTA,"DATO NO VALIDO\n",REINTENTOS))
                     {
                         printf("\n----La BAJA se realizo con exito!----\n");
                     }
@@ -79,8 +80,8 @@ int main()
             {
                 if(flag)
                 {
-                    pan_printPantalla(visores,LEN_LISTA);
-                    if(!pub_addPub(Marketing,visores,LEN_LISTA,"\nDATO NO VALIDO\n",REINTENTOS))
+                    pan_printPantalla(screen,LEN_LISTA);
+                    if(!pub_addPub(publi,screen,LEN_LISTA,"\nDATO NO VALIDO\n",REINTENTOS))
                     {
                         printf("\n----La CONTRATACION se realizo con exito!----\n");
                     }
@@ -96,11 +97,25 @@ int main()
                 break;
             }
             case 5:
-            {
-                if(flag)
                 {
-                    pan_printPantalla(visores,LEN_LISTA);
+                    if(flag)
+                    {
+                        pub_alterContratacion(publi,screen,LEN_LISTA,"\nDATO NO VALIDO\n",REINTENTOS);
+                    }
+                    else
+                    {
+                        printf("\n----No hay PANTALLAS en la NOMINA!----\n");
+                    }
+                    break;
                 }
+            case 8:
+            {
+                pub_printContrataciones(publi,screen,LEN_LISTA,LEN_LISTA);
+                break;
+            }
+            case 9:
+            {
+                pan_printPantalla(screen,LEN_LISTA);
                 break;
             }
         }

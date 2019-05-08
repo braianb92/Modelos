@@ -20,6 +20,7 @@ int pan_removePantalla(Pantalla* pPantalla, int len,char* msgE,int tries);
 int pan_orderByPrice(Pantalla* pPantalla, int len);
 int pan_orderByID(Pantalla* pPantalla, int len);
 
+int printPanMenorA(Pantalla* pPantalla,int len,int valor);
 int pan_printPantalla(Pantalla* pPantalla,int len);
 
 int pan_findPanById(Pantalla* pPantalla, int len, int idE);
