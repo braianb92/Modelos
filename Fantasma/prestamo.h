@@ -31,8 +31,7 @@ int prestamo_printPrestamoBySocioDeterminado(Prestamo* arrayPrestamo,Autor* arra
                                              int lenLibro,char* msgE);
 
 int prestamo_printPrestamo(Prestamo* arrayPrestamo,int lenPrestamo);
-int prestamo_informarTotalSalariosPromedio(Prestamo* array,int len);
-int prestamo_salaryOverPromedio(Prestamo* array,int len,float promedioResult,int* valor);
+int prestamo_informarTotalyPromedioDiario(Prestamo* array,int len);
 
 int prestamo_initPrestamo(Prestamo* array,int len);
 int prestamo_findFree(Prestamo* array, int len);

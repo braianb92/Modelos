@@ -231,62 +231,40 @@ int prestamo_sortPrestamo(Prestamo* array, int len,int order)///1up 0down
     return retorno;
 }
 
-/*int prestamo_informarTotalSalariosPromedio(Prestamo* array,int len)
+int prestamo_informarTotalyPromedioDiario(Prestamo* array,int len)
 {
     int i;
-    float totalResult;
-    float promedioResult;
-    int prestamoloyeeOverPromedio;
-    int contadorPromedio=0;
-    float sum=0;
+    int totalGeneral;
+    float promedioDiario;
+    int diasDiferentes=0;
+    int contadorTotal=0;
     int ret=-1;
+
+    prestamo_sortPrestamo(array,len,1);
     if(array!=NULL && len>0)
     {
         for(i=0;i<len;i++)
         {
             if(array[i].isEmpty==0)
             {
-                sum+=array[i].salary;
-                contadorPromedio++;
+                contadorTotal++;
+                if(array[i].day!=array[i-1].day)
+                {
+                    diasDiferentes++;
+                }
             }
         }
-        totalResult=sum;
-        promedioResult=totalResult/contadorPromedio;
-        prestamo_salaryOverPromedio(array,len,promedioResult,&prestamoloyeeOverPromedio);
+        totalGeneral=contadorTotal;
+        promedioDiario=totalGeneral/diasDiferentes;
         ret=0;
         if(ret==0)
         {
-            printf("\nEL TOTAL DE SALARIOS ES: %.2f\nEL PROMEDIO DE SALARIOS ES: %.2f\n"
-                    "LOS EMPLEADOS QUE SUPERAN EL SALARIO PROMEDIO SON: %d\n",
-                    totalResult,promedioResult,prestamoloyeeOverPromedio);
+            printf("\nEl total de prestamos es: %d\nEl promedio diario de prestamos es: %.2f\nDias diferentes: %d",
+                    totalGeneral,promedioDiario,diasDiferentes);
         }
     }
     return ret;
-}*/
-
-/*int prestamo_salaryOverPromedio(Prestamo* array,int len,float promedioResult,int* valor)
-{
-    int i;
-    int contadorPrestamo=0;
-    int ret=-1;
-    if(array!=NULL && len>0 && valor!=NULL)
-    {
-        for(i=0;i<len;i++)
-        {
-            if(array[i].isEmpty==0)
-            {
-                if(array[i].salary>promedioResult)
-                {
-                    contadorPrestamo++;
-                }
-            }
-
-        }
-        *valor=contadorPrestamo;
-        ret=0;
-    }
-    return ret;
-}*/
+}
 
 int prestamo_initPrestamo(Prestamo* array,int len)
 {

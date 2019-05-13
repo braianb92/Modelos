@@ -611,8 +611,8 @@ int isDate (int day,int month,int year)
 {
     int ret=0;
     if((year<1800 || year>2090)
-       &&(month<1 || month>12)
-       &&(day<1 || day>31))
+       ||(month<1 || month>12)
+       ||(day<1 || day>31))
     {
         return 0;
     }
