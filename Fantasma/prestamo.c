@@ -2,9 +2,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "autor.h"
-#include "utn_strings.h"
 #include "prestamo.h"
+#include "utn_strings.h"
 
 
 
@@ -331,54 +330,6 @@ int prestamo_getID (Prestamo* array,int len,char* msgE,int tries)
         }
     }
     return retorno;
-}
-
-int prestamo_printPrestamoBySocioDeterminado(Prestamo* arrayPrestamo,Autor* arrayAutor,Socio* arraySocio,
-                             Libro* arrayLibro,int lenPrestamo,int lenAutor,int lenSocio,
-                             int lenLibro,char* msgE)
-{
-    int i;
-    int posAutor;
-    int posLibro;
-    int auxIdSocio;
-    int posSocio;
-    int flag=1;
-
-    auxIdSocio=socio_getID(arraySocio,lenSocio,msgE,3);
-    posSocio=socio_findSocioById(arraySocio,lenSocio,auxIdSocio);
-    if((auxIdSocio>=0)&&(posSocio!=-1))
-    {
-        for(i=0;i<lenPrestamo;i++)
-        {
-            if((arrayPrestamo[i].isEmpty==0)&&(arrayPrestamo[i].idSocio==auxIdSocio))
-            {
-                posLibro=libro_findLibroById(arrayLibro,lenLibro,arrayPrestamo[i].idLibro);
-                posAutor=autor_findAutorById(arrayAutor,lenAutor,arrayLibro[posLibro].idAutor);
-                if((posLibro>=0)&&(posAutor>=0))
-                {
-                    printf("\nFecha de Prestamo: %d/%d/%d\nAutor: %s %s\nLibro: %s\n"
-                           "Codigo Prestamo: %d\nCodigo Autor: %d\nCodigo Libro: %d\n"
-                           "Codigo Socio: %d\n-------\n",
-                            arrayPrestamo[i].day,
-                            arrayPrestamo[i].month,
-                            arrayPrestamo[i].year,
-                            arrayAutor[posAutor].name,
-                            arrayAutor[posAutor].surname,
-                            arrayLibro[posLibro].titulo,
-                            arrayPrestamo[i].idPrestamo,
-                            arrayAutor[posAutor].idAutor,
-                            arrayPrestamo[i].idLibro,
-                            arrayPrestamo[i].idSocio);
-                            flag=0;
-                }
-            }
-        }
-        if(flag)
-        {
-            printf("\n----El listado se encuentra vacio----\n");
-        }
-    }
-    return 0;
 }
 
 int prestamo_printPrestamo(Prestamo* arrayPrestamo,int lenPrestamo)

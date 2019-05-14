@@ -313,7 +313,7 @@
 
 1557635682 g:\utn\programacion_laboratorio 1\modelos\fantasma\autor.h
 
-1557627497 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\libro.c
+1557856483 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\libro.c
 	<stdio.h>
 	<string.h>
 	<stdio.h>
@@ -325,7 +325,7 @@
 1557614034 g:\utn\programacion_laboratorio 1\modelos\fantasma\libro.h
 	"autor.h"
 
-1557711155 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\main.c
+1557858303 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\main.c
 	<string.h>
 	<stdio.h>
 	<stdlib.h>
@@ -334,33 +334,48 @@
 	"autor.h"
 	"socio.h"
 	"prestamo.h"
+	"informe.h"
 
-1557614034 g:\utn\programacion_laboratorio 1\modelos\fantasma\socio.h
-
-1557611412 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\socio.c
-	<string.h>
-	<stdio.h>
-	<stdlib.h>
-	"utn_strings.h"
-	"socio.h"
-
-1557726394 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\utn_strings.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	"utn_strings.h"
-
-1557725221 g:\utn\programacion_laboratorio 1\modelos\fantasma\prestamo.h
-	"autor.h"
+1557857964 g:\utn\programacion_laboratorio 1\modelos\fantasma\socio.h
 	"socio.h"
 	"libro.h"
 
-1557726394 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\prestamo.c
+1557857945 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\socio.c
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"utn_strings.h"
+	"socio.h"
+
+1557726494 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\utn_strings.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+
+1557857887 g:\utn\programacion_laboratorio 1\modelos\fantasma\prestamo.h
+	"socio.h"
+	"autor.h"
+	"libro.h"
+
+1557857945 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\prestamo.c
 	<stdio.h>
 	<string.h>
 	<stdio.h>
 	<stdlib.h>
-	"autor.h"
+	"prestamo.h"
 	"utn_strings.h"
+
+1557857803 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\informe.c
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"informe.h"
+
+1557857658 g:\utn\programacion_laboratorio 1\modelos\fantasma\informe.h
+	"utn_strings.h"
+	"libro.h"
+	"autor.h"
+	"socio.h"
 	"prestamo.h"
 

@@ -1,8 +1,9 @@
 #ifndef PRESTAMO_H_INCLUDED
 #define PRESTAMO_H_INCLUDED
-#include "autor.h"
 #include "socio.h"
+#include "autor.h"
 #include "libro.h"
+
 
 typedef struct
 {
@@ -25,10 +26,6 @@ int prestamo_addPrestamo(Prestamo* arrayPrestamo,Socio* arraySocio,Libro* arrayL
 int prestamo_alter(Prestamo* array, int len,char* generalMsgE,int exitAlterMenuNumber,int tries);
 int prestamo_removePrestamo(Prestamo* array, int len,char* msgE,int tries);
 int prestamo_sortPrestamo(Prestamo* array, int len,int order);
-
-int prestamo_printPrestamoBySocioDeterminado(Prestamo* arrayPrestamo,Autor* arrayAutor,Socio* arraySocio,
-                                             Libro* arrayLibro,int lenPrestamo,int lenAutor,int lenSocio,
-                                             int lenLibro,char* msgE);
 
 int prestamo_printPrestamo(Prestamo* arrayPrestamo,int lenPrestamo);
 int prestamo_informarTotalyPromedioDiario(Prestamo* array,int len);

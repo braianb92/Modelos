@@ -4,6 +4,8 @@
 #include "utn_strings.h"
 #include "socio.h"
 
+
+
 static int generarId(void);
 
 int socio_menu(Socio* arraySocio,int lenSocio, char* menuText,
