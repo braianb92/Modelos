@@ -25,7 +25,9 @@ int socio_menu(Socio* arraySocio,int lenSocio, char* menuText,
 int socio_addSocio(Socio* arraySocio,int len,char* msgE,int tries);
 int socio_alter(Socio* arraySocio, int len,char* generalMsgE,int exitAlterMenuNumber,int tries);
 int socio_removeSocio(Socio* arraySocio, int len,char* msgE,int tries);
-int socio_sortSocio(Socio* arraySocio, int len,int order);
+int socio_sortSocioBySurname(Socio* arraySocio, int len,int order);
+int socio_sortSocioById(Socio* arraySocio, int lenSocio,int order);
+int socio_sortSocioEficienteById(Socio* arraySocio, int lenSocio,int order);
 
 int socio_printSocio(Socio* arraySocio,int len);
 

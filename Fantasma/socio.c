@@ -79,7 +79,7 @@ int socio_menu(Socio* arraySocio,int lenSocio, char* menuText,
             case 4:
                 if(flag)
                 {
-                    socio_sortSocio(arraySocio,lenSocio,1);///order UP
+                    socio_sortSocioBySurname(arraySocio,lenSocio,1);///order UP
                     socio_printSocio(arraySocio,lenSocio);
                 }
                 else
@@ -238,7 +238,7 @@ int socio_removeSocio(Socio* arraySocio, int lenSocio,char* msgE,int tries)
     return retorno;
 }
 
-int socio_sortSocio(Socio* arraySocio, int lenSocio,int order)///1up 0down
+int socio_sortSocioBySurname(Socio* arraySocio, int lenSocio,int order)///1up 0down
 {
     int i;
     int j;
@@ -264,6 +264,75 @@ int socio_sortSocio(Socio* arraySocio, int lenSocio,int order)///1up 0down
                     buffer=arraySocio[i];
                     arraySocio[i]=arraySocio[j];
                     arraySocio[j]=buffer;
+                    retorno=0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
+
+int socio_sortSocioById(Socio* arraySocio, int lenSocio,int order)///1up 0down
+{
+    int i;
+    int j;
+    int retorno=-1;
+    Socio buffer;
+    if(arraySocio!=NULL && lenSocio>0)
+    {
+        for(i=0;i<lenSocio-1;i++)
+        {
+
+            for(j=i+1;j<lenSocio;j++)
+            {
+
+                if((order==1)&&(arraySocio[i].idSocio>arraySocio[j].idSocio))
+                {
+                    buffer=arraySocio[i];
+                    arraySocio[i]=arraySocio[j];
+                    arraySocio[j]=buffer;
+                    retorno=0;
+                }
+                else if((order==0)&&(arraySocio[i].idSocio<arraySocio[j].idSocio))
+                {
+                    buffer=arraySocio[i];
+                    arraySocio[i]=arraySocio[j];
+                    arraySocio[j]=buffer;
+                    retorno=0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
+
+int socio_sortSocioEficienteById(Socio* arraySocio, int lenSocio,int order)///1up 0down
+{
+    int i;
+    int flagNoEstaOrdenado=1;
+    int retorno=-1;
+    Socio buffer;
+    if(arraySocio!=NULL && lenSocio>0 && (order==0 || order==1))
+    {
+        while(flagNoEstaOrdenado==1)
+        {
+            flagNoEstaOrdenado=0;
+            for(i=1;i<lenSocio;i++)
+            {
+                if((order==1)&&(arraySocio[i-1].idSocio>arraySocio[i].idSocio))///Creciente
+                {
+                    buffer=arraySocio[i-1];
+                    arraySocio[i-1]=arraySocio[i];
+                    arraySocio[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+                else if((order==0)&&(arraySocio[i-1].idSocio<arraySocio[i].idSocio))///Decreciente
+                {
+                    buffer=arraySocio[i-1];
+                    arraySocio[i-1]=arraySocio[i];
+                    arraySocio[i]=buffer;
+                    flagNoEstaOrdenado=1;
                     retorno=0;
                 }
             }

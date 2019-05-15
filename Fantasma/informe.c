@@ -93,3 +93,49 @@ int informe_printSocioByLibroDeterminado(Prestamo* arrayPrestamo,Socio* arraySoc
     }
     return 0;
 }
+
+int informe_socioConMasPrestamos (Socio* arraySocio, Prestamo* arrayPrestamo,int lenSocio,int lenPrestamo)
+{
+    int i;
+    int max=0;
+    int contadorOcurrencias=0;
+    int idSocioMayorOcurrencia;
+    int posSocio;
+
+    if((arraySocio!=NULL)&&(arrayPrestamo!=NULL)
+       &&((lenSocio>0)&&(lenPrestamo>0)))
+    {
+        socio_sortSocioEficienteById(arraySocio,lenSocio,1);
+        for(i=1;i<lenPrestamo;i++)
+        {
+            if(arrayPrestamo[i-1].idSocio==arrayPrestamo[i].idSocio)
+            {
+                contadorOcurrencias++;
+                if(contadorOcurrencias>max)
+                {
+                    max=contadorOcurrencias;
+                    idSocioMayorOcurrencia=arrayPrestamo[i].idSocio;
+                }
+            }
+            else
+            {
+                contadorOcurrencias=0;
+            }
+        }
+        posSocio=socio_findSocioById(arraySocio,lenSocio,idSocioMayorOcurrencia);
+        if(posSocio!=-1)
+        {
+            printf("\n--------\nSocio con mas Prestamos: %s %s\nCodigo Socio: %d\n"
+                    "Cantidad de Prestamos: %d\n--------\n",
+                    arraySocio[posSocio].name,
+                    arraySocio[posSocio].surname,
+                    arraySocio[posSocio].idSocio,
+                    max+1);
+        }
+        else
+        {
+            printf("\n----No se encontro socio!----\n");
+        }
+    }
+    return 0;
+}

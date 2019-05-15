@@ -34,16 +34,17 @@ int main()
     socio_initSocio(socios,LEN_SOCIO);
     prestamo_initPrestamo(prestamos,LEN_PRESTAMO);
 
-    while(option!=19)
+    while(option!=120)
     {
         printf("\n1)ALTA AUTOR\n2)MODIFICAR AUTOR\n3)BAJA AUTOR\n-----------\n4)ALTA LIBRO\n5)MODIFICAR LIBRO\n6)BAJA LIBRO\n----------\n"
                "7)ALTA SOCIO\n8)MODIFICAR SOCIO\n9)BAJA SOCIO\n----------\n10)ALTA PRESTAMO\n11)MODIFICAR PRESTAMO\n12)BAJA PRESTAMO\n----------\n"
                "13)LISTAR AUTORES\n14)LISTAR LIBROS\n15)LISTAR SOCIOS\n16)LISTAR PRESTAMOS POR SOCIO DETERMINADO(D)\n"
-               "17)INFORMAR TOTAL PRESTAMOS Y PROMEDIO DIARIO(A)\n18)LISTAR SOCIO POR LIBRO DETERMINADO(A)\n----------\n19)Salir\n");
+               "17)INFORMAR TOTAL PRESTAMOS Y PROMEDIO DIARIO(A)\n18)LISTAR SOCIO POR LIBRO DETERMINADO(C)\n"
+               "19)LISTAR SOCIO CON MAYOR CANTIDAD DE PRESTAMOS(F)\n----------\n120)Salir\n");
 
 
         getIntInRange(&option,"\n   Ingrese Opcion: ","\nDATO NO VALIDO\n",
-                    1,19,REINTENTOS);
+                    1,20,REINTENTOS);
         system("cls");
         switch(option)
         {
@@ -253,6 +254,12 @@ int main()
                 {
                     informe_printSocioByLibroDeterminado(prestamos,socios,libros,
                                                          LEN_PRESTAMO,LEN_SOCIO,LEN_LIBRO,"\nNO\n");
+                }
+                break;
+            case 19:
+                if(flagAltaPrest&&flagAltaSocio)
+                {
+                    informe_socioConMasPrestamos(socios,prestamos,LEN_SOCIO,LEN_PRESTAMO);
                 }
                 break;
         }

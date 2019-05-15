@@ -14,6 +14,8 @@ int informe_printSocioByLibroDeterminado(Prestamo* arrayPrestamo,Socio* arraySoc
                                          Libro* arrayLibro,int lenPrestamo,int lenSocio,
                                          int lenLibro,char* msgE);
 
+int informe_socioConMasPrestamos (Socio* arraySocio, Prestamo* arrayPrestamo,int lenSocio,int lenPrestamo);
+
 
 
 
