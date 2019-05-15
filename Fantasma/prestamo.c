@@ -230,6 +230,76 @@ int prestamo_sortPrestamo(Prestamo* array, int len,int order)///1up 0down
     return retorno;
 }
 
+int prestamo_sortPrestamoEficienteBySocioId(Prestamo* arrayPrestamo, int lenPrestamo,int order)///1up 0down
+{
+    int i;
+    int flagNoEstaOrdenado=1;
+    int retorno=-1;
+    Prestamo buffer;
+    if(arrayPrestamo!=NULL && lenPrestamo>0 && (order==0 || order==1))
+    {
+        while(flagNoEstaOrdenado==1)
+        {
+            flagNoEstaOrdenado=0;
+            for(i=1;i<lenPrestamo;i++)
+            {
+                if((order==1)&&(arrayPrestamo[i-1].idSocio>arrayPrestamo[i].idSocio))///Creciente
+                {
+                    buffer=arrayPrestamo[i-1];
+                    arrayPrestamo[i-1]=arrayPrestamo[i];
+                    arrayPrestamo[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+                else if((order==0)&&(arrayPrestamo[i-1].idSocio<arrayPrestamo[i].idSocio))///Decreciente
+                {
+                    buffer=arrayPrestamo[i-1];
+                    arrayPrestamo[i-1]=arrayPrestamo[i];
+                    arrayPrestamo[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
+
+int prestamo_sortPrestamoEficienteByLibroId(Prestamo* arrayPrestamo, int lenPrestamo,int order)///1up 0down
+{
+    int i;
+    int flagNoEstaOrdenado=1;
+    int retorno=-1;
+    Prestamo buffer;
+    if(arrayPrestamo!=NULL && lenPrestamo>0 && (order==0 || order==1))
+    {
+        while(flagNoEstaOrdenado==1)
+        {
+            flagNoEstaOrdenado=0;
+            for(i=1;i<lenPrestamo;i++)
+            {
+                if((order==1)&&(arrayPrestamo[i-1].idLibro>arrayPrestamo[i].idLibro))///Creciente
+                {
+                    buffer=arrayPrestamo[i-1];
+                    arrayPrestamo[i-1]=arrayPrestamo[i];
+                    arrayPrestamo[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+                else if((order==0)&&(arrayPrestamo[i-1].idLibro<arrayPrestamo[i].idLibro))///Decreciente
+                {
+                    buffer=arrayPrestamo[i-1];
+                    arrayPrestamo[i-1]=arrayPrestamo[i];
+                    arrayPrestamo[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
+
 int prestamo_informarTotalyPromedioDiario(Prestamo* array,int len)
 {
     int i;

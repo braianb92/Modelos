@@ -353,12 +353,12 @@
 	<string.h>
 	"utn_strings.h"
 
-1557858564 g:\utn\programacion_laboratorio 1\modelos\fantasma\prestamo.h
+1557900064 g:\utn\programacion_laboratorio 1\modelos\fantasma\prestamo.h
 	"socio.h"
 	"autor.h"
 	"libro.h"
 
-1557858564 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\prestamo.c
+1557900064 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\prestamo.c
 	<stdio.h>
 	<string.h>
 	<stdio.h>
@@ -366,7 +366,7 @@
 	"prestamo.h"
 	"utn_strings.h"
 
-1557888766 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\informe.c
+1557900064 source:g:\utn\programacion_laboratorio 1\modelos\fantasma\informe.c
 	<string.h>
 	<stdio.h>
 	<stdlib.h>

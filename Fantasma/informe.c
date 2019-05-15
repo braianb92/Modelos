@@ -94,6 +94,7 @@ int informe_printSocioByLibroDeterminado(Prestamo* arrayPrestamo,Socio* arraySoc
     return 0;
 }
 
+///SOCIOS QUE REALIZARON MAS SOLICITUDES A UN PRESTAMO (F)
 int informe_socioConMasPrestamos (Socio* arraySocio, Prestamo* arrayPrestamo,int lenSocio,int lenPrestamo)
 {
     int i;
@@ -105,7 +106,7 @@ int informe_socioConMasPrestamos (Socio* arraySocio, Prestamo* arrayPrestamo,int
     if((arraySocio!=NULL)&&(arrayPrestamo!=NULL)
        &&((lenSocio>0)&&(lenPrestamo>0)))
     {
-        socio_sortSocioEficienteById(arraySocio,lenSocio,1);
+        prestamo_sortPrestamoEficienteBySocioId(arrayPrestamo,lenPrestamo,1);
         for(i=1;i<lenPrestamo;i++)
         {
             if(arrayPrestamo[i-1].idSocio==arrayPrestamo[i].idSocio)
@@ -136,6 +137,53 @@ int informe_socioConMasPrestamos (Socio* arraySocio, Prestamo* arrayPrestamo,int
         {
             printf("\n----No se encontro socio!----\n");
         }
+    }
+    return 0;
+}
+
+///LIBROS MENOS SOLICITADOS EN PRESTAMO (F)
+int informe_libroConMenosPrestamos (Prestamo* arrayPrestamo,Libro* arrayLibro,int lenPrestamo,int lenLibro)
+{
+    int i;
+    int min=lenLibro+1;
+    int contadorOcurrencias=0;
+    int idLibroMenorOcurrencia;
+    int posLibro;
+
+    if((arrayLibro!=NULL)&&(arrayPrestamo!=NULL)
+       &&((lenLibro>0)&&(lenPrestamo>0)))
+    {
+        prestamo_sortPrestamoEficienteByLibroId(arrayPrestamo,lenPrestamo,1);
+        for(i=1;i<lenPrestamo;i++)
+        {
+            if(arrayPrestamo[i-1].idLibro==arrayPrestamo[i].idLibro)
+            {
+                contadorOcurrencias++;
+                if(contadorOcurrencias<min)
+                {
+                    min=contadorOcurrencias;
+                    idLibroMenorOcurrencia=arrayPrestamo[i].idLibro;
+                }
+            }
+            else
+            {
+                contadorOcurrencias=0;
+            }
+        }
+        posLibro=libro_findLibroById(arrayLibro,lenLibro,idLibroMenorOcurrencia);
+        /*if(posLibro!=-1)
+        {
+            printf("\n--------\nSocio con mas Prestamos: %s %s\nCodigo Socio: %d\n"
+                    "Cantidad de Prestamos: %d\n--------\n",
+                    arraySocio[posSocio].name,
+                    arraySocio[posSocio].surname,
+                    arraySocio[posSocio].idSocio,
+                    max+1);
+        }
+        else
+        {
+            printf("\n----No se encontro socio!----\n");
+        }*/
     }
     return 0;
 }

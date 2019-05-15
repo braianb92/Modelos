@@ -17,6 +17,7 @@ int libro_addLibro(Libro* arrayLibro,Autor* arrayAutor,int lenLibro,int lenAutor
 int libro_alter(Libro* array, int len,char* generalMsgE,int exitAlterMenuNumber,int tries);
 int libro_removeLibro(Libro* array, int len,char* msgE,int tries);
 int libro_sortLibro(Libro* array, int len,int order);
+int libro_sortLibroById(Libro* array, int len,int order);
 
 int libro_printLibro(Libro* arrayLibro,Autor* arrayAutor,int lenLibro,int lenAutor);
 int libro_informarTotalSalariosPromedio(Libro* array,int len);

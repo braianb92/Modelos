@@ -26,6 +26,8 @@ int prestamo_addPrestamo(Prestamo* arrayPrestamo,Socio* arraySocio,Libro* arrayL
 int prestamo_alter(Prestamo* array, int len,char* generalMsgE,int exitAlterMenuNumber,int tries);
 int prestamo_removePrestamo(Prestamo* array, int len,char* msgE,int tries);
 int prestamo_sortPrestamo(Prestamo* array, int len,int order);
+int prestamo_sortPrestamoEficienteBySocioId(Prestamo* arrayPrestamo, int lenPrestamo,int order);
+int prestamo_sortPrestamoEficienteByLibroId(Prestamo* arrayPrestamo, int lenPrestamo,int order);
 
 int prestamo_printPrestamo(Prestamo* arrayPrestamo,int lenPrestamo);
 int prestamo_informarTotalyPromedioDiario(Prestamo* array,int len);

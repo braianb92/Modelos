@@ -223,6 +223,39 @@ int libro_sortLibro(Libro* array, int len,int order)///1up 0down
     return retorno;
 }
 
+int libro_sortLibroById(Libro* array, int len,int order)///1up 0down
+{
+    int i;
+    int j;
+    int retorno=-1;
+    Libro buffer;
+    if(array!=NULL && len>0)
+    {
+        for(i=0;i<len-1;i++)
+        {
+
+            for(j=i+1;j<len;j++)
+            {
+
+                if((order==1)&&(array[i].idLibro>array[j].idLibro))
+                {
+                    buffer=array[i];
+                    array[i]=array[j];
+                    array[j]=buffer;
+                    retorno=0;
+                }
+                else if((order==0)&&(array[i].idLibro<array[j].idLibro))
+                {
+                    buffer=array[i];
+                    array[i]=array[j];
+                    array[j]=buffer;
+                    retorno=0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
 /*int libro_informarTotalSalariosPromedio(Libro* array,int len)
 {
     int i;
