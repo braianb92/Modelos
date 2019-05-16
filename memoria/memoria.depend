@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1557966274 source:/home/profesor/Ernesto/LABO12019/Clase7/memoria/alumno.c
+	<stdio.h>
+	<stdlib.h>
+	"alumno.h"
+
+1557966152 /home/profesor/Ernesto/LABO12019/Clase7/memoria/alumno.h
+
+1557966247 source:/home/profesor/Ernesto/LABO12019/Clase7/memoria/main.c
+	<stdio.h>
+	<stdlib.h>
+	"alumno.h"
+
+1557966247 source:/home/alumno/Documentos/memoria/main.c
+	<stdio.h>
+	<stdlib.h>
+	"alumno.h"
+
+1557966152 /home/alumno/Documentos/memoria/alumno.h
+
+1557951224 source:/home/alumno/Documentos/memoria/utn_strings.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+
+1557951224 /home/alumno/Documentos/memoria/utn_strings.h
+
