@@ -189,6 +189,139 @@ int instrumento_removeInstrumento(Instrumento* array, int len,char* msgE,int tri
     return retorno;
 }
 
+/** \brief  Sort the elements in the array of Instrumento,
+*           UP or DOWN according to its order parameter
+*           by Surname and Sector.
+* \param    array Instrumento* Pointer to array of Instrumento
+* \param    len int Array len of Instrumento
+* \param    order Int number that indicates
+*           the growing order [1]
+*           the decreasing order[0]
+* \return   return (-1) if wrong, (0) if OK.
+**/
+int Instrumento_sortInstrumentoByNombre(Instrumento* array, int len,int order)///1up 0down
+{
+    int i;
+    int j;
+    int retorno=-1;
+    Instrumento buffer;
+    if(array!=NULL && len>0)
+    {
+        for(i=0;i<len-1;i++)
+        {
+
+            for(j=i+1;j<len;j++)
+            {
+
+                if((order==1)&&(strcmp(array[i].name,array[j].name)>0))
+                {
+                    buffer=array[i];
+                    array[i]=array[j];
+                    array[j]=buffer;
+                    retorno=0;
+                }
+                else if((order==0)&&(strcmp(array[i].name,array[j].name)<0))
+                {
+                    buffer=array[i];
+                    array[i]=array[j];
+                    array[j]=buffer;
+                    retorno=0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
+
+/** \brief  Sort the elements in the array of Instrumento,
+*           UP or DOWN according to its order parameter
+*           by Surname and Sector.
+* \param    array Instrumento* Pointer to array of Instrumento
+* \param    len int Array len of Instrumento
+* \param    order Int number that indicates
+*           the growing order [1]
+*           the decreasing order[0]
+* \return   return (-1) if wrong, (0) if OK.
+**/
+int Instrumento_sortInstrumentoByTipo(Instrumento* array, int len,int order)///1up 0down
+{
+    int i;
+    int j;
+    int retorno=-1;
+    Instrumento buffer;
+    if(array!=NULL && len>0)
+    {
+        for(i=0;i<len-1;i++)
+        {
+
+            for(j=i+1;j<len;j++)
+            {
+
+                if((order==1)&&(array[i].tipo>array[j].tipo))
+                {
+                    buffer=array[i];
+                    array[i]=array[j];
+                    array[j]=buffer;
+                    retorno=0;
+                }
+                else if((order==0)&&(array[i].tipo<array[j].tipo))
+                {
+                    buffer=array[i];
+                    array[i]=array[j];
+                    array[j]=buffer;
+                    retorno=0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
+
+/** \brief  Sort the elements in the array of employees,
+*           UP or DOWN according to its order parameter
+*           by Surname and Sector.
+* \param    arrayEmployee Employee* Pointer to array of employees
+* \param    lenEmployee int Array len of emplyee
+* \param    order Int number that indicates
+*           the growing order [1]
+*           the decreasing order[0]
+* \return   return (-1) if wrong, (0) if OK.
+**/
+int instrumento_sortInstrumentosByNombreEficiente(Instrumento* arrayInstrumento,
+                                                        int lenInstrumento,int order)///1up 0down
+{
+    int i;
+    int flagNoEstaOrdenado=1;
+    int retorno=-1;
+    Instrumento buffer;
+    if(arrayInstrumento!=NULL && lenInstrumento>0 && (order==0 || order==1))
+    {
+        while(flagNoEstaOrdenado==1)
+        {
+            flagNoEstaOrdenado=0;
+            for(i=1;i<lenInstrumento;i++)
+            {
+                if((order==1)&&(strcmp(arrayInstrumento[i-1].name,arrayInstrumento[i].name)>0))///Creciente
+                {
+                    buffer=arrayInstrumento[i-1];
+                    arrayInstrumento[i-1]=arrayInstrumento[i];
+                    arrayInstrumento[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+                else if((order==0)&&(strcmp(arrayInstrumento[i-1].name,arrayInstrumento[i].name)<0))///Decreciente
+                {
+                    buffer=arrayInstrumento[i-1];
+                    arrayInstrumento[i-1]=arrayInstrumento[i];
+                    arrayInstrumento[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
 
 /** \brief  Indicates that all positions in the array are empty
 *           by setting the flag isEmpty in 0 in all positions.

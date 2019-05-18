@@ -4,6 +4,7 @@
 #include "orquesta.h"
 #include "instrumento.h"
 #include "musico.h"
+#include "informes.h"
 
 #define REINTENTOS 3
 #define LEN_ORQUESTA 50
@@ -27,9 +28,18 @@ int main()
     instrumento_initInstrumento(instrumentos,LEN_INSTRUMENTO);
     musico_initMusico(musicos,LEN_MUSICO);
     //pre cargas
-    orquesta_preCarga(orquestas,LEN_ORQUESTA,0,"Luth","Niceto",1);
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,0,"Bajo",1);
-    musico_preCarga(musicos,LEN_MUSICO,0,"Alberto","Garcia",50,0,0);
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,0,"Luth","Niceto",1);//id 0
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,1,"Wurben","Vorte",2);//id 1
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,2,"Furth","Coskin",3);//id 2
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,4,"Timbal",4);//id 0
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,1,"Bateria",4);//id 1
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,2,"Flauta",2);//id 2
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,0,"Bajo",1);//id 3
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,3,"Quena",2);//id 4
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,5,"Okarina",2);//id 5
+    musico_preCarga(musicos,LEN_MUSICO,0,"Alberto","Garcia",50,0,0);//id 0
+    musico_preCarga(musicos,LEN_MUSICO,1,"Gustavo","Dante",20,1,1);// id 1
+    musico_preCarga(musicos,LEN_MUSICO,2,"Rick","Flea",37,2,2);//id 2
 
     while(option!=13)
     {

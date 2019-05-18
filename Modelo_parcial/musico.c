@@ -190,7 +190,17 @@ int musico_removeMusico(Musico* array, int len,char* msgE,int tries)
     return retorno;
 }
 
-int musico_sortMusico(Musico* array, int len,int order)///1up 0down
+/** \brief  Sort the elements in the array of musico,
+*           UP or DOWN according to its order parameter
+*           by Surname and Sector.
+* \param    array Musico* Pointer to array of musico
+* \param    len int Array len of musico
+* \param    order Int number that indicates
+*           the growing order [1]
+*           the decreasing order[0]
+* \return   return (-1) if wrong, (0) if OK.
+**/
+int musico_sortMusicoBySurname(Musico* array, int len,int order)///1up 0down
 {
     int i;
     int j;
@@ -224,6 +234,205 @@ int musico_sortMusico(Musico* array, int len,int order)///1up 0down
     return retorno;
 }
 
+
+/** \brief  Sort the elements in the array of musico,
+*           UP or DOWN according to its order parameter
+*           by Surname and Sector.
+* \param    array Musico* Pointer to array of musico
+* \param    len int Array len of musico
+* \param    order Int number that indicates
+*           the growing order [1]
+*           the decreasing order[0]
+* \return   return (-1) if wrong, (0) if OK.
+**/
+int musico_sortMusicoByNombre(Musico* array, int len,int order)///1up 0down
+{
+    int i;
+    int j;
+    int retorno=-1;
+    Musico buffer;
+    if(array!=NULL && len>0)
+    {
+        for(i=0;i<len-1;i++)
+        {
+
+            for(j=i+1;j<len;j++)
+            {
+
+                if((order==1)&&(strcmp(array[i].name,array[j].name)>0))
+                {
+                    buffer=array[i];
+                    array[i]=array[j];
+                    array[j]=buffer;
+                    retorno=0;
+                }
+                else if((order==0)&&(strcmp(array[i].name,array[j].name)<0))
+                {
+                    buffer=array[i];
+                    array[i]=array[j];
+                    array[j]=buffer;
+                    retorno=0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
+
+/** \brief  Sort the elements in the array of musico,
+*           UP or DOWN according to its order parameter
+*           by Surname and Sector.
+* \param    array Musico* Pointer to array of musico
+* \param    len int Array len of musico
+* \param    order Int number that indicates
+*           the growing order [1]
+*           the decreasing order[0]
+* \return   return (-1) if wrong, (0) if OK.
+**/
+int musico_sortMusicoByEdad(Musico* array, int len,int order)///1up 0down
+{
+    int i;
+    int j;
+    int retorno=-1;
+    Musico buffer;
+    if(array!=NULL && len>0)
+    {
+        for(i=0;i<len-1;i++)
+        {
+
+            for(j=i+1;j<len;j++)
+            {
+
+                if((order==1)&&(array[i].edad>array[j].edad))
+                {
+                    buffer=array[i];
+                    array[i]=array[j];
+                    array[j]=buffer;
+                    retorno=0;
+                }
+                else if((order==0)&&(array[i].edad<array[j].edad))
+                {
+                    buffer=array[i];
+                    array[i]=array[j];
+                    array[j]=buffer;
+                    retorno=0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
+
+int musico_sortMusicoByEdadMismoSurname(Musico* arrayMusico,int lenMusico,int order)
+{
+    int i;
+    Musico buffer;
+
+    for(i=1;i<lenMusico;i++)
+    {
+        if(strcmp(arrayMusico[i-1].surname,arrayMusico[i].surname)==0)
+        {
+            if((order==1)&&(arrayMusico[i-1].edad>arrayMusico[i].edad))
+            {
+                buffer=arrayMusico[i-1];
+                arrayMusico[i-1]=arrayMusico[i];
+                arrayMusico[i]=buffer;
+            }
+            else if((order==0)&&(arrayMusico[i-1].edad<arrayMusico[i].edad))
+            {
+                buffer=arrayMusico[i-1];
+                arrayMusico[i-1]=arrayMusico[i];
+                arrayMusico[i]=buffer;
+            }
+        }
+    }
+    return 0;
+}
+
+/** \brief  Sort the elements in the array of employees,
+*           UP or DOWN according to its order parameter
+*           by Surname and Sector.
+* \param    arrayEmployee Employee* Pointer to array of employees
+* \param    lenEmployee int Array len of emplyee
+* \param    order Int number that indicates
+*           the growing order [1]
+*           the decreasing order[0]
+* \return   return (-1) if wrong, (0) if OK.
+**/
+int musico_sortMusicosBySurnameyEdadEficiente(Musico* arrayMusico,
+                                                    int lenMusico,int order)///1up 0down
+{
+    int i;
+    int flagNoEstaOrdenado=1;
+    int retorno=-1;
+    Musico buffer;
+    if(arrayMusico!=NULL && lenMusico>0 && (order==0 || order==1))
+    {
+        while(flagNoEstaOrdenado==1)
+        {
+            flagNoEstaOrdenado=0;
+            for(i=1;i<lenMusico;i++)
+            {
+                if((order==1)&&(strcmp(arrayMusico[i-1].surname,arrayMusico[i].surname)>0))///Creciente
+                {
+                    buffer=arrayMusico[i-1];
+                    arrayMusico[i-1]=arrayMusico[i];
+                    arrayMusico[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+                else if((order==0)&&(strcmp(arrayMusico[i-1].surname,arrayMusico[i].surname)<0))///Decreciente
+                {
+                    buffer=arrayMusico[i-1];
+                    arrayMusico[i-1]=arrayMusico[i];
+                    arrayMusico[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+            }
+        }
+        if(flagNoEstaOrdenado==0)
+        {
+            musico_sortMusicoByEdadMismoSurname(arrayMusico,lenMusico,order);
+        }
+    }
+    return retorno;
+}
+
+int musico_sortMusicosByInstrumentoEficiente(Musico* arrayMusico,int lenMusico,int order)///1up 0down
+{
+    int i;
+    int flagNoEstaOrdenado=1;
+    int retorno=-1;
+    Musico buffer;
+    if(arrayMusico!=NULL && lenMusico>0 && (order==0 || order==1))
+    {
+        while(flagNoEstaOrdenado==1)
+        {
+            flagNoEstaOrdenado=0;
+            for(i=1;i<lenMusico;i++)
+            {
+                if((order==1)&&(arrayMusico[i-1].idInstrumento>arrayMusico[i].idInstrumento))///Creciente
+                {
+                    buffer=arrayMusico[i-1];
+                    arrayMusico[i-1]=arrayMusico[i];
+                    arrayMusico[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+                else if((order==0)&&(arrayMusico[i-1].idInstrumento<arrayMusico[i].idInstrumento))///Decreciente
+                {
+                    buffer=arrayMusico[i-1];
+                    arrayMusico[i-1]=arrayMusico[i];
+                    arrayMusico[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
 
 /** \brief  Indicates that all positions in the array are empty
 *           by setting the flag isEmpty in 0 in all positions.

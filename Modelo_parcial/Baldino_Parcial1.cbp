@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="informes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="informes.h" />
 		<Unit filename="instrumento.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -53,6 +57,7 @@
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
