@@ -379,3 +379,89 @@
 	"socio.h"
 	"prestamo.h"
 
+1558139536 source:c:\users\baldi\documents\utn_workspace\modelos\fantasma\arrayemployees.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+	"ArrayEmployees.h"
+
+1558139536 c:\users\baldi\documents\utn_workspace\modelos\fantasma\utn_strings.h
+
+1558139536 c:\users\baldi\documents\utn_workspace\modelos\fantasma\arrayemployees.h
+
+1558139536 source:c:\users\baldi\documents\utn_workspace\modelos\fantasma\autor.c
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"utn_strings.h"
+	"autor.h"
+
+1558139536 c:\users\baldi\documents\utn_workspace\modelos\fantasma\autor.h
+
+1558139536 source:c:\users\baldi\documents\utn_workspace\modelos\fantasma\informe.c
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"informe.h"
+
+1558139536 c:\users\baldi\documents\utn_workspace\modelos\fantasma\informe.h
+	"utn_strings.h"
+	"libro.h"
+	"autor.h"
+	"socio.h"
+	"prestamo.h"
+
+1558139536 c:\users\baldi\documents\utn_workspace\modelos\fantasma\libro.h
+	"autor.h"
+
+1558139536 c:\users\baldi\documents\utn_workspace\modelos\fantasma\socio.h
+	"socio.h"
+	"libro.h"
+
+1558139536 c:\users\baldi\documents\utn_workspace\modelos\fantasma\prestamo.h
+	"socio.h"
+	"autor.h"
+	"libro.h"
+
+1558139536 source:c:\users\baldi\documents\utn_workspace\modelos\fantasma\libro.c
+	<stdio.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"autor.h"
+	"utn_strings.h"
+	"libro.h"
+
+1558139536 source:c:\users\baldi\documents\utn_workspace\modelos\fantasma\main.c
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"utn_strings.h"
+	"libro.h"
+	"autor.h"
+	"socio.h"
+	"prestamo.h"
+	"informe.h"
+
+1558139536 source:c:\users\baldi\documents\utn_workspace\modelos\fantasma\prestamo.c
+	<stdio.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"prestamo.h"
+	"utn_strings.h"
+
+1558139536 source:c:\users\baldi\documents\utn_workspace\modelos\fantasma\socio.c
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"utn_strings.h"
+	"socio.h"
+
+1558139536 source:c:\users\baldi\documents\utn_workspace\modelos\fantasma\utn_strings.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+
