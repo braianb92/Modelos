@@ -29,6 +29,7 @@ int musico_sortMusicoByEdad(Musico* array, int len,int order);
 int musico_sortMusicoByEdadMismoSurname(Musico* arrayMusico,int lenMusico,int order);
 int musico_sortMusicosBySurnameyEdadEficiente(Musico* arrayMusico,int lenMusico,int order);
 int musico_sortMusicosByInstrumentoEficiente(Musico* arrayMusico,int lenMusico,int order);
+int musico_sortMusicosByIdOrquestaEficiente(Musico* arrayMusico,int lenMusico,int order);
 
 
 int musico_printMusico(Musico* array,int len);

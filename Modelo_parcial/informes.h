@@ -22,5 +22,6 @@ int informe_promedioDeEdadMusicos(Musico* arrayMusico,int lenMusico);
 int informe_musicoOverPromedio(Musico* arrayMusico,int lenMusico,float promedioResult,int* valor);
 
 int informe_tipoOrquestaMasFrecuente(Orquesta* arrayOrquesta,int lenOrquesta);
+int informe_orquestaConMasMusicos(Orquesta* arrayOrquesta,Musico* arrayMusico,int lenOrquesta,int lenMusico);
 
 #endif // INFORMES_H_INCLUDED

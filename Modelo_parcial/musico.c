@@ -434,6 +434,40 @@ int musico_sortMusicosByInstrumentoEficiente(Musico* arrayMusico,int lenMusico,i
     return retorno;
 }
 
+int musico_sortMusicosByIdOrquestaEficiente(Musico* arrayMusico,int lenMusico,int order)///1up 0down
+{
+    int i;
+    int flagNoEstaOrdenado=1;
+    int retorno=-1;
+    Musico buffer;
+    if(arrayMusico!=NULL && lenMusico>0 && (order==0 || order==1))
+    {
+        while(flagNoEstaOrdenado==1)
+        {
+            flagNoEstaOrdenado=0;
+            for(i=1;i<lenMusico;i++)
+            {
+                if((order==1)&&(arrayMusico[i-1].idOrquesta>arrayMusico[i].idOrquesta))///Creciente
+                {
+                    buffer=arrayMusico[i-1];
+                    arrayMusico[i-1]=arrayMusico[i];
+                    arrayMusico[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+                else if((order==0)&&(arrayMusico[i-1].idOrquesta<arrayMusico[i].idOrquesta))///Decreciente
+                {
+                    buffer=arrayMusico[i-1];
+                    arrayMusico[i-1]=arrayMusico[i];
+                    arrayMusico[i]=buffer;
+                    flagNoEstaOrdenado=1;
+                    retorno=0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
 /** \brief  Indicates that all positions in the array are empty
 *           by setting the flag isEmpty in 0 in all positions.
 * \param    array Musico* Pointer to array of musico

@@ -470,18 +470,52 @@ int informe_orquestaConMasMusicos (Orquesta* arrayOrquesta,Musico* arrayMusico,
     int max=0;
     int contadorMusico=0;
     int IdorquestaConMasMusicos;
+    int posIdOrquesta;
+    char stringTipo[30];
     int retorno=-1;
 
     if(arrayOrquesta!=NULL&&arrayMusico!=NULL
        &&lenOrquesta>0&&lenMusico>0)
     {
-        for(i=0;i<lenOrquesta;i++)
+        musico_sortMusicosByIdOrquestaEficiente(arrayMusico,lenMusico,1);
+        for(i=1;i<lenMusico;i++)
         {
-            if(arrayOrquesta[i].isEmpty==0)
+            if(arrayMusico[i-1].idOrquesta==arrayMusico[i].idOrquesta)
             {
-
+                contadorMusico++;
+                if(contadorMusico>max)
+                {
+                    max=contadorMusico;
+                    IdorquestaConMasMusicos=arrayMusico[i].idOrquesta;
+                }
             }
-
+            else
+            {
+                contadorMusico=0;
+            }
+        }
+        posIdOrquesta=orquesta_findOrquestaById(arrayOrquesta,lenOrquesta,IdorquestaConMasMusicos);
+        if(posIdOrquesta!=-1)
+        {
+            switch(arrayOrquesta[posIdOrquesta].tipo)
+            {
+                case 1:
+                    strncpy(stringTipo,"Sinfonica",sizeof(stringTipo));
+                    break;
+                case 2:
+                    strncpy(stringTipo,"Filarmonica",sizeof(stringTipo));
+                    break;
+                case 3:
+                    strncpy(stringTipo,"Camara",sizeof(stringTipo));
+                    break;
+            }
+            printf("\nOrquesta con mas Musicos: %s\n"
+                   "Tipo: %s\nCodigo Orquesta: %d\n",
+                   arrayOrquesta[posIdOrquesta].name,
+                   stringTipo,
+                   arrayOrquesta[posIdOrquesta].idOrquesta);
+            retorno=0;
         }
     }
+    return retorno;
 }
