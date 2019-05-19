@@ -28,28 +28,38 @@ int main()
     instrumento_initInstrumento(instrumentos,LEN_INSTRUMENTO);
     musico_initMusico(musicos,LEN_MUSICO);
     //pre cargas
-    orquesta_preCarga(orquestas,LEN_ORQUESTA,0,"Luth","Niceto",1);//id 0
-    orquesta_preCarga(orquestas,LEN_ORQUESTA,1,"Wurben","Vorte",2);//id 1
-    orquesta_preCarga(orquestas,LEN_ORQUESTA,2,"Furth","Coskin",3);//id 2
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,4,"Timbal",4);//id 0
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,1,"Bateria",4);//id 1
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,2,"Flauta",2);//id 2
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,0,"Bajo",1);//id 3
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,3,"Quena",2);//id 4
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,5,"Okarina",2);//id 5
-    musico_preCarga(musicos,LEN_MUSICO,0,"Alberto","Garcia",50,0,0);//id 0
-    musico_preCarga(musicos,LEN_MUSICO,1,"Gustavo","Dante",20,1,1);// id 1
-    musico_preCarga(musicos,LEN_MUSICO,2,"Rick","Flea",37,2,2);//id 2
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,0,"Luth","Niceto",1);
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,1,"Wurth","Vorte",3);
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,2,"Furth","Campo",1);
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,3,"Kuth","River",2);
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,4,"Buth","Boca",1);
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,5,"Shur","Niceto",2);
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,0,"Bateria",4);
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,1,"Bajo",1);
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,2,"Quena",2);
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,3,"Guitar",1);
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,4,"Flauta",2);
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,5,"Wiro",3);
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,6,"Okarina",2);
+    musico_preCarga(musicos,LEN_MUSICO,0,"Albert","Garc",55,3,0);
+    musico_preCarga(musicos,LEN_MUSICO,1,"Gustav","Cera",60,0,2);
+    musico_preCarga(musicos,LEN_MUSICO,2,"Ant","Red",20,3,3);
+    musico_preCarga(musicos,LEN_MUSICO,3,"Flea","Red",30,0,2);
+    musico_preCarga(musicos,LEN_MUSICO,4,"Mike","Fat",25,3,0);
+    musico_preCarga(musicos,LEN_MUSICO,5,"Mark","Hope",63,4,2);
+    musico_preCarga(musicos,LEN_MUSICO,6,"Bill","Arm",19,4,1);
+    musico_preCarga(musicos,LEN_MUSICO,7,"Alex","Turn",43,3,2);
+    musico_preCarga(musicos,LEN_MUSICO,8,"Juan","Perez",39,5,5);
 
-    while(option!=13)
+    while(option!=14)
     {
         printf("\n1)Alta Orquesta\n2)Baja Orquesta\n3)Modificar Orquesta\n"
                 "4)Imprimir Orquesta\n\n5)Alta Musico\n6)Baja Musico\n"
                 "7)Modificacion Musico\n8)Imprimir Musico\n\n9)Alta Instrumento\n"
                 "10)Baja Instrumento\n11)Modificar Instrumento\n12)Imprimir Instrumento\n"
-                "\n13)SALIR\n");
+                "\n13-INFORMES\n14)SALIR\n");
         getIntInRange(&option,"\n   Ingrese Opcion: ","\nDATO NO VALIDO\n",
-                    1,13,REINTENTOS);
+                    1,14,REINTENTOS);
         switch(option)
         {
             case 1:
@@ -224,6 +234,10 @@ int main()
                 {
                     printf("\nNO HAY INSTRUMENTOS EN LA NOMINA\n");
                 }
+                break;
+            case 13:
+                informe_menu(orquestas,musicos,instrumentos,LEN_ORQUESTA,LEN_MUSICO,LEN_INSTRUMENTO,
+                             12,REINTENTOS);
                 break;
         }
     }

@@ -4,6 +4,9 @@
 #include "instrumento.h"
 #include "musico.h"
 
+int informe_menu(Orquesta* arrayOrquesta,Musico* arrayMusico,Instrumento* arrayInstrumento,
+                 int lenOrquesta,int lenMusico,int lenInstrumento,int exitMenuNumber,int tries);
+
 int informe_cantidadOrquestas(Orquesta* arrayOrquesta,int lenOrquesta,int* pCantidadOrquestas);
 int informe_cantidadMusicos(Musico* arrayMusico,int lenMusico,int* pCantidadMusicos);
 int informe_cantidadInstrumentos(Instrumento* arrayInstrumento,int lenInstrumento,int* pCantidadInst);

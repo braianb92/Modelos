@@ -89,3 +89,61 @@
 	<string.h>
 	"utn_strings.h"
 
+1558304676 source:c:\users\baldi\documents\utn_workspace\modelos\modelo_parcial\informes.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"informes.h"
+	"utn_strings.h"
+
+1558304473 c:\users\baldi\documents\utn_workspace\modelos\modelo_parcial\informes.h
+	"orquesta.h"
+	"instrumento.h"
+	"musico.h"
+
+1558206286 c:\users\baldi\documents\utn_workspace\modelos\modelo_parcial\orquesta.h
+
+1558207639 c:\users\baldi\documents\utn_workspace\modelos\modelo_parcial\instrumento.h
+
+1558296899 c:\users\baldi\documents\utn_workspace\modelos\modelo_parcial\musico.h
+	"orquesta.h"
+	"instrumento.h"
+
+1558139651 c:\users\baldi\documents\utn_workspace\modelos\modelo_parcial\utn_strings.h
+
+1558207338 source:c:\users\baldi\documents\utn_workspace\modelos\modelo_parcial\instrumento.c
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"utn_strings.h"
+	"instrumento.h"
+
+1558305261 source:c:\users\baldi\documents\utn_workspace\modelos\modelo_parcial\main.c
+	<stdio.h>
+	<stdlib.h>
+	"utn_strings.h"
+	"orquesta.h"
+	"instrumento.h"
+	"musico.h"
+	"informes.h"
+
+1558296899 source:c:\users\baldi\documents\utn_workspace\modelos\modelo_parcial\musico.c
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"utn_strings.h"
+	"musico.h"
+
+1558206286 source:c:\users\baldi\documents\utn_workspace\modelos\modelo_parcial\orquesta.c
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"utn_strings.h"
+	"orquesta.h"
+
+1558139651 source:c:\users\baldi\documents\utn_workspace\modelos\modelo_parcial\utn_strings.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+

@@ -2,6 +2,71 @@
 #include <stdlib.h>
 #include <string.h>
 #include "informes.h"
+#include "utn_strings.h"
+
+int informe_menu(Orquesta* arrayOrquesta,Musico* arrayMusico,Instrumento* arrayInstrumento,
+                 int lenOrquesta,int lenMusico,int lenInstrumento,int exitMenuNumber,int tries)
+{
+    int cantOrqu;
+    int cantIns;
+    int cantMusc;
+    int tipoIns;
+    int option=0;
+
+    while(option!=exitMenuNumber)
+    {
+        printf("\n1-cant orquesta\n2-cant inst\n3-cant musicos\n"
+               "4-tipo ins mas usado\n5-ins mas usado x musicos\n"
+               "6-ins menos usados por musicoss\n7-musico por id inst\n"
+               "8-musico por id orquesta\n9-promedio edad musicos\n"
+               "10-orquesta mas frecuente\n11-orquesta con mas musicos\n"
+               "12-ATRAS");
+
+        getIntInRange(&option,"\n   INGRESE OPCION: ","\nNO\n",1,exitMenuNumber,tries);
+        switch(option)
+        {
+            case 1:
+                informe_cantidadOrquestas(arrayOrquesta,lenOrquesta,&cantOrqu);
+                printf("cant orque: %d",cantOrqu);
+                break;
+            case 2:
+                informe_cantidadInstrumentos(arrayInstrumento,lenInstrumento,&cantIns);
+                printf("cant ins: %d",cantIns);
+                break;
+            case 3:
+                informe_cantidadMusicos(arrayMusico,lenMusico,&cantMusc);
+                printf("cant musc: %d",cantMusc);
+                break;
+            case 4:
+                informe_tipoInstrumentoMasUsado(arrayInstrumento,lenInstrumento,&tipoIns);
+                printf("tipo ins: %d",tipoIns);
+                break;
+            case 5:
+                informe_InstrumentoMasUsadoPorMusicos(arrayInstrumento,arrayMusico,lenInstrumento,lenMusico);
+                break;
+            case 6:
+                informe_InstrumentosMenosUsadosPorMusicos(arrayInstrumento,arrayMusico,lenInstrumento,lenMusico);
+                break;
+            case 7:
+                informe_printMusicoByInstrumentoDeterminado(arrayMusico,arrayInstrumento,lenMusico,
+                                                            lenInstrumento,"\nnoo\n");
+                break;
+            case 8:
+                informe_printMusicosByOrquestaDeterminada(arrayMusico,arrayOrquesta,lenMusico,lenOrquesta,"\nno\n");
+                break;
+            case 9:
+                informe_promedioDeEdadMusicos(arrayMusico,lenMusico);
+                break;
+            case 10:
+                informe_tipoOrquestaMasFrecuente(arrayOrquesta,lenOrquesta);
+                break;
+            case 11:
+                informe_orquestaConMasMusicos(arrayOrquesta,arrayMusico,lenOrquesta,lenMusico);
+                break;
+        }
+    }
+    return 0;
+}
 
 /** \brief  Shows the total amount of salary between employees,
 *           the average salary and the number of employees
