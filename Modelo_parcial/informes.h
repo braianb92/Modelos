@@ -10,9 +10,17 @@ int informe_cantidadInstrumentos(Instrumento* arrayInstrumento,int lenInstrument
 
 int informe_tipoInstrumentoMasUsado(Instrumento* arrayInstrumento,int lenInstrumento,int* pTipoInstMasUsado);
 int informe_InstrumentoMasUsadoPorMusicos(Instrumento* arrayInstrumento,Musico* arrayMusico,int lenInstrumento,int lenMusico);
+int informe_InstrumentosMenosUsadosPorMusicos(Instrumento* arrayInstrumento,Musico* arrayMusico,int lenInstrumento,int lenMusico);
+
+int informe_printMusicoByInstrumentoDeterminado(Musico* arrayMusico,Instrumento* arrayInstrumento,
+                                                int lenMusico,int lenInstrumento,char* msgE);
+
+int informe_printMusicosByOrquestaDeterminada(Musico* arrayMusico,Orquesta* arrayOrquesta,
+                                                int lenMusico,int lenOrquesta,char* msgE);
 
 int informe_promedioDeEdadMusicos(Musico* arrayMusico,int lenMusico);
 int informe_musicoOverPromedio(Musico* arrayMusico,int lenMusico,float promedioResult,int* valor);
 
+int informe_tipoOrquestaMasFrecuente(Orquesta* arrayOrquesta,int lenOrquesta);
 
 #endif // INFORMES_H_INCLUDED
