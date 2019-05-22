@@ -190,11 +190,12 @@ int informe_tipoInstrumentoMasUsado(Instrumento* arrayInstrumento,int lenInstrum
     return retorno;
 }
 
+//ARREGLAR
 int informe_InstrumentosMenosUsadosPorMusicos(Instrumento* arrayInstrumento,Musico* arrayMusico,
                                               int lenInstrumento,int lenMusico)
 {
     int i;
-    int min=lenInstrumento+1;
+    int min=lenMusico+1;
     int contadorOcurrencia=0;
     int IdInstrumentoMenorOcurrencia;
     int posIdInstrumento;
@@ -203,50 +204,58 @@ int informe_InstrumentosMenosUsadosPorMusicos(Instrumento* arrayInstrumento,Musi
     if(arrayInstrumento!=NULL && lenInstrumento>0
        && arrayMusico!=NULL && lenMusico>0)
     {
-        Instrumento_sortInstrumentoByTipo(arrayInstrumento,lenInstrumento,1);
         musico_sortMusicosByInstrumentoEficiente(arrayMusico,lenMusico,1);
         for(i=1;i<lenMusico;i++)
         {
-            if(arrayMusico[i-1].idInstrumento!=arrayMusico[i].idInstrumento)
+            if(arrayMusico[i-1].isEmpty==0&&arrayMusico[i].isEmpty==0)
             {
-                contadorOcurrencia--;
-            }
-            else
-            {
-                contadorOcurrencia++;
-            }
-            if(contadorOcurrencia<=min)
-            {
-                min=contadorOcurrencia;
-                IdInstrumentoMenorOcurrencia=arrayMusico[i-1].idInstrumento;
-                posIdInstrumento=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,
-                                                         IdInstrumentoMenorOcurrencia);
-                if(posIdInstrumento!=-1)
+                if(arrayMusico[i-1].idInstrumento!=arrayMusico[i].idInstrumento)
                 {
-                    switch(arrayInstrumento[posIdInstrumento].tipo)
-                    {
-                        case 1:
-                           strncpy(stringTipo,"Cuerda",sizeof(stringTipo));
-                           break;
-                        case 2:
-                            strncpy(stringTipo,"Viento-Madera",sizeof(stringTipo));
-                            break;
-                        case 3:
-                            strncpy(stringTipo,"Viento-Metal",sizeof(stringTipo));
-                            break;
-                        case 4:
-                            strncpy(stringTipo,"Percusion",sizeof(stringTipo));
-                            break;
-                    }
-                    printf("\n----\nInstrumentos menos Usados Por Musicos\n----\n"
-                           "Nombre: %s\nId Instrumento: %d\nTipo: %s\n",
-                           arrayInstrumento[posIdInstrumento].name,
-                           arrayInstrumento[posIdInstrumento].idInstrumento,
-                           stringTipo);
-                    retorno=0;
+                    contadorOcurrencia++;
                 }
+                else
+                {
+                    contadorOcurrencia--;
+                    min=0;
+
+                }
+                if(contadorOcurrencia<=min)
+                {
+                    min=contadorOcurrencia;
+                    IdInstrumentoMenorOcurrencia=arrayMusico[i].idInstrumento;
+                    posIdInstrumento=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,
+                                                            IdInstrumentoMenorOcurrencia);
+                    if(posIdInstrumento!=-1)
+                    {
+                        switch(arrayInstrumento[posIdInstrumento].tipo)
+                        {
+                            case 1:
+                               strncpy(stringTipo,"Cuerda",sizeof(stringTipo));
+                               break;
+                            case 2:
+                                strncpy(stringTipo,"Viento-Madera",sizeof(stringTipo));
+                                break;
+                            case 3:
+                                strncpy(stringTipo,"Viento-Metal",sizeof(stringTipo));
+                                break;
+                            case 4:
+                                strncpy(stringTipo,"Percusion",sizeof(stringTipo));
+                                break;
+                        }
+                        printf("\n----\nInstrumentos menos Usados Por Musicos\n----\n"
+                               "Nombre: %s\nId Instrumento: %d\nTipo: %s\n",
+                               arrayInstrumento[posIdInstrumento].name,
+                               arrayInstrumento[posIdInstrumento].idInstrumento,
+                               stringTipo);
+                        retorno=0;
+                    }
+                }
+
             }
+
+
         }
+
     }
     return retorno;
 }
@@ -264,7 +273,6 @@ int informe_InstrumentoMasUsadoPorMusicos(Instrumento* arrayInstrumento,Musico* 
     if(arrayInstrumento!=NULL && lenInstrumento>0
        && arrayMusico!=NULL && lenMusico>0)
     {
-        Instrumento_sortInstrumentoByTipo(arrayInstrumento,lenInstrumento,1);
         musico_sortMusicosByInstrumentoEficiente(arrayMusico,lenMusico,1);
         for(i=1;i<lenMusico;i++)
         {
@@ -279,7 +287,7 @@ int informe_InstrumentoMasUsadoPorMusicos(Instrumento* arrayInstrumento,Musico* 
             }
             else
             {
-                contadorOcurrencia=0;
+                contadorOcurrencia--;
             }
         }
         posIdInstrumento=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,
@@ -556,7 +564,7 @@ int informe_orquestaConMasMusicos (Orquesta* arrayOrquesta,Musico* arrayMusico,
             }
             else
             {
-                contadorMusico=0;
+                contadorMusico--;
             }
         }
         posIdOrquesta=orquesta_findOrquestaById(arrayOrquesta,lenOrquesta,IdorquestaConMasMusicos);
