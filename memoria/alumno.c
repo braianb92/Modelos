@@ -1,20 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "alumno.h"
 #include "utn_strings.h"
 
+static int generarId(void);
 
-Alumno* alumno_new()
+Persona* persona_new()
 {
-    return (Alumno*) malloc(sizeof(Alumno));
+    return (Persona*) malloc(sizeof(Persona));
 }
 
-Alumno* alumno_newParametros(int id,int legajo,int status,char* nombre)
+Persona* persona_newParametros(char* nombre,char* apellido,char* edad)
 {
-    return NULL;
+    Persona* per=persona_new();
+    if(per!=NULL)
+    {
+        persona_setNombre(per,nombre);
+        persona_setApellido(per,apellido);
+        persona_setEdad(per,edad);
+    }
+
+
+    return per;
 }
 
-int alumno_delete(Alumno* this)
+int persona_delete(Persona* this)
 {
     int retorno = -1;
     if(this != NULL)
@@ -25,7 +36,7 @@ int alumno_delete(Alumno* this)
     return retorno;
 }
 
-int alumno_setId(Alumno* this, int value)
+int persona_setId(Persona* this, int value)
 {
     int retorno = -1;
     if(this != NULL && value >= 0)
@@ -36,43 +47,46 @@ int alumno_setId(Alumno* this, int value)
     return retorno;
 }
 
-int alumno_setLegajo(Alumno* this, int value)
+
+int persona_setEdad(Persona* this, char* value)
 {
+    int auxEdad;
     int retorno = -1;
     if(this != NULL && isNumber(value))
     {
-        this->legajo = value;
+        auxEdad=atoi(value);
+        this->edad = auxEdad;
         retorno = 0;
     }
     return retorno;
 }
 
-int alumno_setStatus(Alumno* this, int value)
-{
-    int retorno = -1;
-    if(this != NULL && isNumber(value))
-    {
-        this->status = value;
-        retorno = 0;
-    }
-    return retorno;
-}
-
-int alumno_setNombre(Alumno* this, char* value)
+int persona_setNombre(Persona* this, char* value)
 {
     int retorno = -1;
     if(this != NULL && isLetter(value))
     {
-        strncpy(this->nombre,value,sizeof(value));
+        strncpy(this->nombre,value,sizeof(this->nombre));
         retorno = 0;
     }
     return retorno;
 }
 
-int alumno_getId(Alumno* this, int* value)
+int persona_setApellido(Persona* this, char* value)
 {
     int retorno = -1;
-    if(this != NULL && value >=0)
+    if(this != NULL && isLetter(value))
+    {
+        strncpy(this->apellido,value,sizeof(this->apellido));
+        retorno = 0;
+    }
+    return retorno;
+}
+
+int persona_getId(Persona* this, int* value)
+{
+    int retorno = -1;
+    if(this != NULL)
     {
         *value = this->id;
         retorno = 0;
@@ -80,37 +94,121 @@ int alumno_getId(Alumno* this, int* value)
     return retorno;
 }
 
-int alumno_getLegajo(Alumno* this, int* value)
+
+int persona_getEdad(Persona* this, int* value)
 {
     int retorno = -1;
-    if(this != NULL && isNumber(value))
+    if(this != NULL)
     {
-        *value = this->legajo;
+        *value = this->edad;
         retorno = 0;
     }
     return retorno;
 }
 
-int alumno_getStatus(Alumno* this, int* value)
+int persona_getNombre(Persona* this, char* value)
 {
     int retorno = -1;
-    if(this != NULL && isNumber(value))
-    {
-        *value = this->status;
-        retorno = 0;
-    }
-    return retorno;
-}
-
-int alumno_getNombre(Alumno* this, char* value)
-{
-    int retorno = -1;
-    if(this != NULL && isLetter(value))
+    if(this != NULL)
     {
         strncpy(value,this->nombre,sizeof(this->nombre));
         retorno = 0;
     }
     return retorno;
+}
+
+int persona_getApellido(Persona* this, char* value)
+{
+    int retorno = -1;
+    if(this != NULL)
+    {
+        strncpy(value,this->apellido,sizeof(this->apellido));
+        retorno = 0;
+    }
+    return retorno;
+}
+
+int per_addPersona(Persona* arrayPersona[],int lenPersona,char* msgE,int tries)
+{
+    int indexFree;
+    char bufferName[32];
+    char bufferApellido[32];
+    char bufferEdad[32];
+    char nombre[32];
+    char apellido[32];
+    int edad;
+    int retorno=-1;
+    if(lenPersona>0)
+    {
+        indexFree=per_findFree(arrayPersona,lenPersona);
+        if(indexFree!=-1)
+        {
+            if((!getStringLetras(bufferName,"\nIngrese Nombre: ","\nERROR\n",tries))
+                    &&(!getStringLetras(bufferApellido,"\nIngrese Apellido: ","\nERROR\n",tries))
+                       &&(!getStringNumeros(bufferEdad,"\nIngrese Edad: ","\nERROR\n",tries)))
+            {
+                arrayPersona[indexFree]=persona_newParametros(bufferName,
+                                                               bufferApellido,
+                                                               bufferEdad);
+                persona_setId(arrayPersona[indexFree],generarId());
+                persona_getNombre(arrayPersona[indexFree],nombre);
+                persona_getApellido(arrayPersona[indexFree],apellido);
+                persona_getEdad(arrayPersona[indexFree],&edad);
+                printf("\nSe dio de alta a:\n"
+                        "Nombre: %s\nApellido: %s\n"
+                        "Edad: %d\n",
+                        nombre,
+                        apellido,
+                        edad);
+
+
+                retorno=0;
+            }
+        }
+
+    }
+    return retorno;
+}
+
+int per_initArray(Persona* arrayPer[],int lenPer)
+{
+    int i;
+    int retorno=-1;
+    if(arrayPer!=NULL&&lenPer>0)
+    {
+        for(i=0; i<lenPer; i++)
+        {
+            arrayPer[i]=NULL;
+        }
+        retorno=0;
+
+    }
+    return retorno;
+}
+
+int per_findFree(Persona* arrayPersona[], int lenPersona)
+{
+    int i;
+    int ret=-1;
+    if(arrayPersona!=NULL && lenPersona>0)
+    {
+        for(i=0; i<lenPersona; i++)
+        {
+            if(arrayPersona[i]==NULL)
+            {
+                ret=i;
+                printf("\n----Se encontro lugar libre----\n");
+                break;
+            }
+        }
+    }
+    return ret;
+}
+
+static int generarId(void)
+{
+    static int idPer=0;
+    return idPer++;
 }
 
 

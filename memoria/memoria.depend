@@ -26,3 +26,25 @@
 
 1557951224 /home/alumno/Documentos/memoria/utn_strings.h
 
+1558660592 source:/home/alumno/Documentos/Baldino/Modelos-master/memoria/alumno.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"alumno.h"
+	"utn_strings.h"
+
+1558659732 /home/alumno/Documentos/Baldino/Modelos-master/memoria/alumno.h
+
+1558570776 /home/alumno/Documentos/Baldino/Modelos-master/memoria/utn_strings.h
+
+1558660014 source:/home/alumno/Documentos/Baldino/Modelos-master/memoria/main.c
+	<stdio.h>
+	<stdlib.h>
+	"alumno.h"
+
+1558570776 source:/home/alumno/Documentos/Baldino/Modelos-master/memoria/utn_strings.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+

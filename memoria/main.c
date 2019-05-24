@@ -1,31 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "alumno.h"
-#define QTY_ALUMNO 1000
+#define QTY_ARRAYPER 100
 
 int main()
 {
-    Alumno* arrayAlumnos[QTY_ALUMNO];
-    Alumno* pAux;
-    pAux = alumno_new();
-    if(pAux != NULL)
-    {
-        alumno_setId(pAux,44);
-        arrayAlumnos[0] = pAux;
-    }
+    Persona* arrayPersona[QTY_ARRAYPER];
+    per_initArray(arrayPersona,QTY_ARRAYPER);
+    per_addPersona(arrayPersona,QTY_ARRAYPER,"aaa",3);
 
 
-    pAux = alumno_new();
-    if(pAux != NULL)
-    {
-        alumno_setId(pAux,14);
-        arrayAlumnos[1] = pAux;
-    }
-
-    pAux = alumno_newParametros(11,11100,0,"Juan");
-    if(pAux != NULL)
-    {
-        arrayAlumnos[2] = pAux;
-    }
     return 0;
 }
