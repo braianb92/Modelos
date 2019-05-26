@@ -26,6 +26,7 @@ int instrumento_printInstrumento(Instrumento* array,int len);
 int instrumento_initInstrumento(Instrumento* array,int len);
 int instrumento_findFree(Instrumento* array, int len);
 int instrumento_findInstrumentoById(Instrumento* array, int len, int idE);
+int instrumento_findInstrumentoByTipo(Instrumento* array, int len, int idE);
 int instrumento_getID (Instrumento* array,int len,char* msgE,int tries);
 
 #endif // INSTRUMENTO_H_INCLUDED

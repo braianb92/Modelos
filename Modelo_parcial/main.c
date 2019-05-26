@@ -15,42 +15,35 @@ int main()
     Orquesta orquestas[LEN_ORQUESTA];
     Instrumento instrumentos[LEN_INSTRUMENTO];
     Musico musicos[LEN_MUSICO];
+    int removedOrquestaPos;
     int option=0;
     //Puestos en 1 para la pre carga.
-    int flagAltaOrquesta=1;
-    int contadorOrquesta=1;
-    int flagAltaInstrumento=1;
-    int contadorInstrumento=1;
-    int flagAltaMusico=1;
-    int contadorMusico=1;
+    int flagAltaOrquesta=0;
+    int contadorOrquesta=0;
+    int flagAltaInstrumento=0;
+    int contadorInstrumento=0;
+    int flagAltaMusico=0;
+    int contadorMusico=0;
     //inicializacion
     orquesta_initOrquesta(orquestas,LEN_ORQUESTA);
     instrumento_initInstrumento(instrumentos,LEN_INSTRUMENTO);
     musico_initMusico(musicos,LEN_MUSICO);
     //pre cargas
-    orquesta_preCarga(orquestas,LEN_ORQUESTA,0,"Luth","Niceto",1);
-    orquesta_preCarga(orquestas,LEN_ORQUESTA,1,"Wurth","Vorte",3);
-    orquesta_preCarga(orquestas,LEN_ORQUESTA,2,"Furth","Campo",1);
-    orquesta_preCarga(orquestas,LEN_ORQUESTA,3,"Kuth","River",2);
-    orquesta_preCarga(orquestas,LEN_ORQUESTA,4,"Buth","Boca",1);
-    orquesta_preCarga(orquestas,LEN_ORQUESTA,5,"Shur","Niceto",2);
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,0,"Bateria",4);
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,1,"Bajo",1);
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,2,"Quena",2);
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,3,"Guitar",1);
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,4,"Flauta",2);
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,5,"Wiro",3);
-    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,6,"Okarina",2);
-    musico_preCarga(musicos,LEN_MUSICO,0,"Albert","Garc",55,3,0);
-    musico_preCarga(musicos,LEN_MUSICO,1,"Gustav","Cera",60,0,2);
-    musico_preCarga(musicos,LEN_MUSICO,2,"Ant","Red",20,3,3);
-    musico_preCarga(musicos,LEN_MUSICO,3,"Flea","Red",30,0,2);
-    musico_preCarga(musicos,LEN_MUSICO,4,"Mike","Fat",25,3,0);
-    musico_preCarga(musicos,LEN_MUSICO,5,"Mark","Hope",63,4,2);
-    musico_preCarga(musicos,LEN_MUSICO,6,"Bill","Arm",19,4,1);
-    musico_preCarga(musicos,LEN_MUSICO,7,"Alex","Turn",43,3,2);
-    musico_preCarga(musicos,LEN_MUSICO,8,"Juan","Perez",39,5,5);
-
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,1,"Orquesta1","Lugar1",1);
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,2,"Orquesta2","Lugar1",2);
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,3,"Orquesta3","Lugar2",3);
+    orquesta_preCarga(orquestas,LEN_ORQUESTA,4,"Orquesta4","Lugar3",3);
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,1,"Inst1",1);
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,2,"Inst2",2);
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,3,"Inst3",2);
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,4,"Inst4",3);
+    instrumento_preCarga(instrumentos,LEN_INSTRUMENTO,5,"Inst4",4);
+    musico_preCarga(musicos,LEN_MUSICO,1,"Mus1","Amus1",30,1,2);
+    musico_preCarga(musicos,LEN_MUSICO,2,"Mus2","Amus2",20,2,5);
+    musico_preCarga(musicos,LEN_MUSICO,3,"Mus3","Amus3",25,4,2);
+    musico_preCarga(musicos,LEN_MUSICO,4,"Mus4","Amus4",27,4,1);
+    musico_preCarga(musicos,LEN_MUSICO,5,"Mus5","Amus5",22,1,3);
+    musico_preCarga(musicos,LEN_MUSICO,6,"Mus6","Amus6",35,3,4);
     while(option!=14)
     {
         printf("\n1)Alta Orquesta\n2)Baja Orquesta\n3)Modificar Orquesta\n"
@@ -80,7 +73,7 @@ int main()
                 {
                     orquesta_printOrquesta(orquestas,LEN_ORQUESTA);
                     if(!orquesta_removeOrquesta(orquestas,LEN_ORQUESTA,
-                        "\nDATO NO VALIDO\n",REINTENTOS))
+                        "\nDATO NO VALIDO\n",REINTENTOS,&removedOrquestaPos))
                     {
                        printf("\n--Se dio de baja correctamente--\n");
                        contadorOrquesta--;
@@ -237,7 +230,7 @@ int main()
                 break;
             case 13:
                 informe_menu(orquestas,musicos,instrumentos,LEN_ORQUESTA,LEN_MUSICO,LEN_INSTRUMENTO,
-                             12,REINTENTOS);
+                             9,REINTENTOS);
                 break;
         }
     }

@@ -394,6 +394,20 @@ int instrumento_findInstrumentoById(Instrumento* array, int len, int idE)
     return ret;
 }
 
+int instrumento_findInstrumentoByTipo(Instrumento* array, int len, int idE)
+{
+    int i;
+    int ret=-1;
+    for(i=0;i<len;i++)
+    {
+        if((array[i].isEmpty==0)&&(array[i].tipo==idE))
+        {
+            ret=i;
+        }
+    }
+    return ret;
+}
+
 
 /** \brief  Asks the user to enter an ID.
 * \param    array Instrumento* Pointer to array of instrumento
@@ -471,6 +485,6 @@ int instrumento_printInstrumento(Instrumento* array,int len)
 **/
 static int generarId(void)
 {
-    static int idEmp=0;
-    return idEmp++;
+    static int idInst=1;
+    return idInst++;
 }

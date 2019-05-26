@@ -147,3 +147,61 @@
 	<string.h>
 	"utn_strings.h"
 
+1558840756 source:c:\users\baldi\documents\utn_workspace\baldino_parcial1_labo1\baldino_parcial1\informes.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"informes.h"
+	"utn_strings.h"
+
+1558840349 c:\users\baldi\documents\utn_workspace\baldino_parcial1_labo1\baldino_parcial1\informes.h
+	"orquesta.h"
+	"instrumento.h"
+	"musico.h"
+
+1558840016 c:\users\baldi\documents\utn_workspace\baldino_parcial1_labo1\baldino_parcial1\orquesta.h
+
+1558565058 c:\users\baldi\documents\utn_workspace\baldino_parcial1_labo1\baldino_parcial1\instrumento.h
+
+1558296899 c:\users\baldi\documents\utn_workspace\baldino_parcial1_labo1\baldino_parcial1\musico.h
+	"orquesta.h"
+	"instrumento.h"
+
+1558139651 c:\users\baldi\documents\utn_workspace\baldino_parcial1_labo1\baldino_parcial1\utn_strings.h
+
+1558839235 source:c:\users\baldi\documents\utn_workspace\baldino_parcial1_labo1\baldino_parcial1\instrumento.c
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"utn_strings.h"
+	"instrumento.h"
+
+1558840370 source:c:\users\baldi\documents\utn_workspace\baldino_parcial1_labo1\baldino_parcial1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"utn_strings.h"
+	"orquesta.h"
+	"instrumento.h"
+	"musico.h"
+	"informes.h"
+
+1558839235 source:c:\users\baldi\documents\utn_workspace\baldino_parcial1_labo1\baldino_parcial1\musico.c
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"utn_strings.h"
+	"musico.h"
+
+1558840016 source:c:\users\baldi\documents\utn_workspace\baldino_parcial1_labo1\baldino_parcial1\orquesta.c
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	"utn_strings.h"
+	"orquesta.h"
+
+1558139651 source:c:\users\baldi\documents\utn_workspace\baldino_parcial1_labo1\baldino_parcial1\utn_strings.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn_strings.h"
+

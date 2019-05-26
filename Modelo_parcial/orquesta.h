@@ -15,7 +15,7 @@ int orquesta_preCarga(Orquesta* array,int len,int indexPosition,char* nombre,
 
 int orquesta_addOrquesta(Orquesta* array,int len,char* msgE,int tries);
 int orquesta_alter(Orquesta* array, int len,char* generalMsgE,int exitAlterMenuNumber,int tries);
-int orquesta_removeOrquesta(Orquesta* array, int len,char* msgE,int tries);
+int orquesta_removeOrquesta(Orquesta* array, int len,char* msgE,int tries,int* removedOrqId);
 
 int orquesta_sortOrquestaByLugar(Orquesta* array, int len,int order);
 int orquesta_sortOrquestaByNombre(Orquesta* array, int len,int order);

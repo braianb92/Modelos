@@ -3,76 +3,511 @@
 #include <string.h>
 #include "informes.h"
 #include "utn_strings.h"
+#define TIPO_INST_CUERDA 1
+#define TIPO_INST_V_MAD 2
+#define TIPO_INST_V_MET 3
+#define TIPO_INST_PERCUSION 4
+#define TIPO_ORQ_SINFO 1
+#define TIPO_ORQ_FILARM 2
+#define TIPO_ORQ_CAMARA 3
 
+/** \brief  Menu to be printed with the appropriate
+*           functions to call within.
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    arrayMusico Musico* Pointer to array of musico
+* \param    arrayInstrumento Instrumento* Pointer to array of instrumento
+* \param    lenOrquesta orquesta array lenght
+* \param    lenMusico musico array lenght
+* \param    lenInstrumento instrumento array lenght
+* \param    exitMenuNumber int Number that exits the menu
+            and also used as max number to be stablish a range
+            of menu options to acces the corresponding function.
+* \param    tries Number of tries in case of type mistakes.
+* \return   int Return 0.
+* */
 int informe_menu(Orquesta* arrayOrquesta,Musico* arrayMusico,Instrumento* arrayInstrumento,
                  int lenOrquesta,int lenMusico,int lenInstrumento,int exitMenuNumber,int tries)
 {
-    int cantOrqu;
-    int cantIns;
-    int cantMusc;
-    int tipoIns;
     int option=0;
 
     while(option!=exitMenuNumber)
     {
-        printf("\n1-cant orquesta\n2-cant inst\n3-cant musicos\n"
-               "4-tipo ins mas usado\n5-ins mas usado x musicos\n"
-               "6-ins menos usados por musicoss\n7-musico por id inst\n"
-               "8-musico por id orquesta\n9-promedio edad musicos\n"
-               "10-orquesta mas frecuente\n11-orquesta con mas musicos\n"
-               "12-ATRAS");
+        printf("\n1-Orquesta con mas de 5 musicos(A)\n2-Musicos mas de 30(B)\n"
+               "3-Orquestas lugar particular(C)\n4-Orquesta Completa(D)\n"
+               "5-Listar Musico por Orquesta determinada(E)\n"
+               "6-Orquesta con mas musicos(F)\n7-Musicos instrumentos de cuerda(G)\n"
+               "8-Imprimir promedio de musicos por Orquestas(H)\n9-Atras (menu principal)\n");
 
         getIntInRange(&option,"\n   INGRESE OPCION: ","\nNO\n",1,exitMenuNumber,tries);
         switch(option)
         {
             case 1:
-                informe_cantidadOrquestas(arrayOrquesta,lenOrquesta,&cantOrqu);
-                printf("cant orque: %d",cantOrqu);
+                informe_orquestaConMasde5Musicos(arrayOrquesta,arrayMusico,lenOrquesta,lenMusico);
                 break;
             case 2:
-                informe_cantidadInstrumentos(arrayInstrumento,lenInstrumento,&cantIns);
-                printf("cant ins: %d",cantIns);
+                informe_edadMusicoMasDe30(arrayMusico,arrayInstrumento,arrayOrquesta,
+                                          lenInstrumento,lenMusico,lenOrquesta);
                 break;
             case 3:
-                informe_cantidadMusicos(arrayMusico,lenMusico,&cantMusc);
-                printf("cant musc: %d",cantMusc);
+                informe_printOrquestasByLugarDeterminado(arrayOrquesta,lenOrquesta);
                 break;
             case 4:
-                informe_tipoInstrumentoMasUsado(arrayInstrumento,lenInstrumento,&tipoIns);
-                printf("tipo ins: %d",tipoIns);
+                informe_orquestaCompleta(arrayOrquesta,arrayInstrumento,arrayMusico,lenOrquesta,lenInstrumento,
+                                         lenMusico);
                 break;
             case 5:
-                informe_InstrumentoMasUsadoPorMusicos(arrayInstrumento,arrayMusico,lenInstrumento,lenMusico);
+                informe_printMusicosByOrquestaDeterminada(arrayMusico,arrayOrquesta,arrayInstrumento,lenMusico,lenOrquesta,
+                                                          lenInstrumento,"\nERROR\n");
                 break;
             case 6:
-                informe_InstrumentosMenosUsadosPorMusicos(arrayInstrumento,arrayMusico,lenInstrumento,lenMusico);
+                informe_orquestaConMasMusicos(arrayOrquesta,arrayMusico,lenOrquesta,lenMusico);
                 break;
             case 7:
-                informe_printMusicoByInstrumentoDeterminado(arrayMusico,arrayInstrumento,lenMusico,
-                                                            lenInstrumento,"\nnoo\n");
+                informe_printMusicoSoloCuerda(arrayMusico,arrayInstrumento,lenMusico,
+                                              lenInstrumento);
                 break;
             case 8:
-                informe_printMusicosByOrquestaDeterminada(arrayMusico,arrayOrquesta,lenMusico,lenOrquesta,"\nno\n");
-                break;
-            case 9:
-                informe_promedioDeEdadMusicos(arrayMusico,lenMusico);
-                break;
-            case 10:
-                informe_tipoOrquestaMasFrecuente(arrayOrquesta,lenOrquesta);
-                break;
-            case 11:
-                informe_orquestaConMasMusicos(arrayOrquesta,arrayMusico,lenOrquesta,lenMusico);
+                informe_promedioMusicosPorOrquesta(arrayMusico,arrayOrquesta,lenMusico,lenOrquesta);
                 break;
         }
     }
     return 0;
 }
 
-/** \brief  Shows the total amount of salary between employees,
-*           the average salary and the number of employees
-*           over the average.
-* \param    arrayEmployee Employee* Pointer to array of employees
-* \param    lenEmployee int Array len of emplyee
+//INFORME A
+/** \brief  Print orquestas that have five or more musicians
+*           with all the proper information.
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    arrayMusico Musico* Pointer to array of musico
+* \param    lenOrquesta orquesta array lenght
+* \param    lenMusico musico array lenght
+* \return   returns 0
+*
+*/
+int informe_orquestaConMasde5Musicos (Orquesta* arrayOrquesta,Musico* arrayMusico,
+                                   int lenOrquesta,int lenMusico)
+{
+    int i;
+    int posIdOrquesta;
+    char stringTipo[30];
+    int orquestaAnterior=0;
+    int contadorOrquesta=0;
+
+    musico_sortMusicosByIdOrquestaEficiente(arrayMusico,lenMusico,1);
+    for(i=0;i<lenMusico;i++)
+    {
+        if(arrayMusico[i].isEmpty==0)
+        {
+            posIdOrquesta=orquesta_findOrquestaById(arrayOrquesta,lenOrquesta,arrayMusico[i].idOrquesta);
+            if(orquestaAnterior==posIdOrquesta)
+            {
+                contadorOrquesta++;
+            }
+            else
+            {
+                contadorOrquesta--;
+            }
+            orquestaAnterior=posIdOrquesta;
+            if(contadorOrquesta>=5)
+            {
+                switch(arrayOrquesta[posIdOrquesta].tipo)
+                {
+                    case 1:
+                        strncpy(stringTipo,"Sinfonica",sizeof(stringTipo));
+                        break;
+                    case 2:
+                        strncpy(stringTipo,"Filarmonica",sizeof(stringTipo));
+                        break;
+                    case 3:
+                        strncpy(stringTipo,"Camara",sizeof(stringTipo));
+                        break;
+                }
+                printf("\nID orquesta: %d\nNombre: %s\n"
+                       "Tipo: %s\nLugar: %s",
+                       arrayOrquesta[posIdOrquesta].idOrquesta,
+                       arrayOrquesta[posIdOrquesta].name,
+                       stringTipo,
+                       arrayOrquesta[posIdOrquesta].lugar);
+            }
+        }
+    }
+    printf("\nNo se encontraron Orquestas\n");
+    return 0;
+}
+
+//INFORME B
+/** \brief  Print all the muscicians in the array
+*           that are over 30 years old.
+* \param    arrayMusico Musico* Pointer to array of musico
+* \param    arrayInstrumento Instrumento* Pointer to array of instrumento
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    lenInstrumento instrumento array lenght
+* \param    lenMusico musico array lenght
+* \param    lenOrquesta orquesta array lenght
+* \return   int Return 0.
+* */
+int informe_edadMusicoMasDe30(Musico* arrayMusico,Instrumento* arrayInstrumento,Orquesta* arrayOrquesta,
+                              int lenInstrumento,int lenMusico,int lenOrquesta)
+{
+    int i;
+    int posIdInstrumento;
+    int posIdOrquesta;
+    if(arrayMusico!=NULL && lenMusico>=0)
+    {
+        musico_sortMusicoByEdad(arrayMusico,lenMusico,1);
+        for(i=0;i<lenMusico;i++)
+        {
+            if(arrayMusico[i].isEmpty==0&&arrayMusico[i].edad>30)
+            {
+                posIdInstrumento=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,arrayMusico[i].idInstrumento);
+                posIdOrquesta=orquesta_findOrquestaById(arrayOrquesta,lenOrquesta,arrayMusico[i].idOrquesta);
+                printf("\nID Musico: %d\nNombre: %s\n"
+                       "Apellido: %s\nEdad: %d\n"
+                       "Nombre Orquesta: %s\n"
+                       "Nombre Instrumento: %s\n",
+                       arrayMusico[i].idMusico,
+                       arrayMusico[i].name,
+                       arrayMusico[i].surname,
+                       arrayMusico[i].edad,
+                       arrayOrquesta[posIdOrquesta].name,
+                       arrayInstrumento[posIdInstrumento].name);
+            }
+
+        }
+    }
+    return 0;
+}
+//INFORME C
+/** \brief  Asks the user to type an orquesta place
+*           and prints all the matching orquestas
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    lenOrquesta orquesta array lenght
+* \return   int Return 0 if OK; return -1 if wrong
+* */
+int informe_printOrquestasByLugarDeterminado(Orquesta* arrayOrquesta,int lenOrquesta)
+{
+    int i;
+    char bufferLugar[32];
+    char stringTipo[30];
+    int flag=1;
+    int retorno=-1;
+
+    if(!getStringAlphanumeric(bufferLugar,"\nIngrese lugar: ","\nERROR.\n",3))
+    {
+        for(i=0;i<lenOrquesta;i++)
+        {
+            if(strcmp(bufferLugar,arrayOrquesta[i].lugar)==0)
+            {
+                switch(arrayOrquesta[i].tipo)
+                    {
+                       case 1:
+                        strncpy(stringTipo,"Sinfonica",sizeof(stringTipo));
+                        break;
+                    case 2:
+                        strncpy(stringTipo,"Filarmonica",sizeof(stringTipo));
+                        break;
+                    case 3:
+                        strncpy(stringTipo,"Camara",sizeof(stringTipo));
+                        break;
+                    }
+                    printf("\nID de Orquesta: %d\nNombre: %s\nTipo: %s\nLugar: %s"
+                           "\n-------\n",
+                           arrayOrquesta[i].idOrquesta,
+                           arrayOrquesta[i].name,
+                           stringTipo,
+                           arrayOrquesta[i].lugar);
+                           flag=0;
+                           retorno=0;
+            }
+        }
+        if(flag)
+        {
+            printf("\nNo se encontro el lugar\n");
+            retorno=0;
+        }
+    }
+    return retorno;
+}
+
+//INFORME D
+/** \brief  Prints all the orquestas that have 5 or more
+*           musicians assigned a type 1 instrument (cuerda),
+*           3 muscicians assigned a type 2 or 3 instrument (viento),
+*           and 2 muscicians assigned a type 4 instrument (percusion).
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    arrayInstrumento Instrumento* Pointer to array of instrumento
+* \param    arrayMusico Musico* Pointer to array of musico
+* \param    lenOrquesta orquesta array lenght
+* \param    lenInstrumento instrumento array lenght
+* \param    lenMusico musico array lenght
+* \return   int Return 0 if OK; return -1 if wrong
+* */
+int informe_orquestaCompleta(Orquesta* arrayOrquesta,Instrumento* arrayInstrumento,Musico* arrayMusico,
+                             int lenOrquesta,int lenInstrumento,int lenMusico)
+{
+    int i;
+    int cantidadInstCuerda;
+    int cantidadInstViento;
+    int cantidadInstPercusion;
+    int flag=1;
+    int retorno=-1;
+
+    if(arrayOrquesta!=NULL&&arrayInstrumento!=NULL
+       &&lenOrquesta>0&&lenInstrumento>0)
+    {
+
+        for(i=0;i<lenOrquesta;i++)
+        {
+            informe_cantInstCuerdaEnOrquestaEspecifica(arrayInstrumento,arrayOrquesta,arrayMusico,
+                                                       lenInstrumento,lenMusico,i,&cantidadInstCuerda);
+            informe_cantInstVientosEnOrquestaEspecifica(arrayInstrumento,arrayOrquesta,arrayMusico,
+                                                       lenInstrumento,lenMusico,i,&cantidadInstViento);
+            informe_cantInsPercusionEnOrquestaEspecifica(arrayInstrumento,arrayOrquesta,arrayMusico,
+                                                       lenInstrumento,lenMusico,i,&cantidadInstPercusion);
+            if((cantidadInstCuerda>=5)&&(cantidadInstViento==3)&&(cantidadInstPercusion==2))
+            {
+                printf("\n--Orquestas Completas:\n"
+                       "Nombre Orquesta: %s\nLugar: %s\n"
+                       "ID de Orquesta: %d\n",
+                       arrayOrquesta[i].name,
+                       arrayOrquesta[i].lugar,
+                       arrayOrquesta[i].idOrquesta);
+                       flag=0;
+                       retorno=0;
+            }
+        }
+        if(flag)
+            {
+                printf("\nNo hay orquestas completas\n");
+                retorno=0;
+            }
+    }
+    return retorno;
+}
+
+//INFORME E
+/** \brief  Asks the user to enter an existing orquesta ID
+*           and then prints all the muscicians assigned to it.
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    arrayInstrumento Instrumento* Pointer to array of instrumento
+* \param    arrayMusico Musico* Pointer to array of musico
+* \param    lenOrquesta orquesta array lenght
+* \param    lenInstrumento instrumento array lenght
+* \param    lenMusico musico array lenght
+* \param    msgE message error if something wrong
+* \return   int Return 0 if OK; return -1 if wrong
+* */
+int informe_printMusicosByOrquestaDeterminada(Musico* arrayMusico,Orquesta* arrayOrquesta,Instrumento* arrayInstrumento,
+                                              int lenMusico,int lenOrquesta,int lenInstrumento,char* msgE)
+{
+    int i;
+    int auxIdOrquesta;
+    int posOrquesta;
+    int posMusico;
+    int posInstrumento;
+    char stringTipo[30];
+    int flag=1;
+
+    auxIdOrquesta=orquesta_getID(arrayOrquesta,lenOrquesta,msgE,3);
+    posOrquesta=orquesta_findOrquestaById(arrayOrquesta,lenOrquesta,auxIdOrquesta);
+    if((auxIdOrquesta>=0)&&(posOrquesta!=-1))
+    {
+        for(i=0;i<lenMusico;i++)
+        {
+            if((arrayMusico[i].isEmpty==0)&&(arrayMusico[i].idOrquesta==auxIdOrquesta))
+            {
+                posOrquesta=orquesta_findOrquestaById(arrayOrquesta,lenOrquesta,arrayMusico[i].idOrquesta);
+                posMusico=musico_findMusicoById(arrayMusico,lenMusico,arrayMusico[i].idMusico);
+                posInstrumento=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,arrayMusico[i].idInstrumento);
+                if((posOrquesta>=0)&&(posMusico>=0)&&(posMusico>=0))
+                {
+                    switch(arrayInstrumento[posInstrumento].tipo)
+                    {
+                       case 1:
+                           strncpy(stringTipo,"Cuerda",sizeof(stringTipo));
+                           break;
+                        case 2:
+                            strncpy(stringTipo,"Viento-Madera",sizeof(stringTipo));
+                            break;
+                        case 3:
+                            strncpy(stringTipo,"Viento-Metal",sizeof(stringTipo));
+                            break;
+                        case 4:
+                            strncpy(stringTipo,"Percusion",sizeof(stringTipo));
+                            break;
+                    }
+                    printf("\nMusico: %s %s\nEdad: %d\nTipo: %s\nNombre Instrumento: %s"
+                           "\n-------\n",
+                           arrayMusico[posMusico].name,
+                           arrayMusico[posMusico].surname,
+                           arrayMusico[posMusico].edad,
+                           stringTipo,
+                           arrayInstrumento[posInstrumento].name);
+                           flag=0;
+                }
+            }
+        }
+        if(flag)
+        {
+            printf("\n----El listado se encuentra vacio----\n");
+        }
+    }
+    return 0;
+}
+
+//INFORME F
+/** \brief  Prints orquesta with more muscicians.
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    arrayMusico Musico* Pointer to array of musico
+* \param    lenOrquesta orquesta array lenght
+* \param    lenMusico musico array lenght
+* \return   int Return 0 if OK; return -1 if wrong
+* */
+int informe_orquestaConMasMusicos(Orquesta* arrayOrquesta,Musico* arrayMusico,int lenOrquesta,int lenMusico)
+{
+    int i;
+    int cantidadMusicos;
+    char stringTipo[30];
+    int max=0;
+    int retorno=-1;
+
+    if(arrayOrquesta!=NULL&&arrayMusico!=NULL
+       &&lenOrquesta>0&&lenMusico>0)
+   {
+       for(i=0;i<lenOrquesta;i++)
+       {
+           if(arrayOrquesta[i].isEmpty==0)
+           {
+               informe_cantMusicosEnOrquestaEspecifica(arrayOrquesta,arrayMusico,lenMusico,i,&cantidadMusicos);
+               if(cantidadMusicos>=max)
+               {
+                    max=cantidadMusicos;
+                    switch(arrayOrquesta[i].tipo)
+                    {
+                        case 1:
+                            strncpy(stringTipo,"Sinfonica",sizeof(stringTipo));
+                            break;
+                        case 2:
+                            strncpy(stringTipo,"Filarmonica",sizeof(stringTipo));
+                            break;
+                        case 3:
+                            strncpy(stringTipo,"Camara",sizeof(stringTipo));
+                            break;
+                    }
+                    printf("\nID orquesta: %d\nNombre: %s\n"
+                           "Tipo: %s\nLugar: %s\nCantidad de Musicos: %d\n",
+                           arrayOrquesta[i].idOrquesta,
+                           arrayOrquesta[i].name,
+                           stringTipo,
+                           arrayOrquesta[i].lugar,
+                           cantidadMusicos);
+                    retorno=0;
+               }
+
+           }
+       }
+   }
+    return retorno;
+}
+
+//INFORME G
+/** \brief  Prints orquesta with more muscicians.
+* \param    arrayMusico Musico* Pointer to array of musico
+* \param    arrayInstrumento Instrumento* Pointer to array of instrumento
+* \param    lenMusico musico array lenght
+* \param    lenInstrumento instrumento array lenght
+* \return   int Return 0 if OK; return -1 if wrong
+* */
+int informe_printMusicoSoloCuerda(Musico* arrayMusico,Instrumento* arrayInstrumento,
+                                  int lenMusico,int lenInstrumento)
+{
+    int i;
+    int posInstrumentoCuerda;
+    int auxTipo;
+    char stringTipo[30];
+    int flag=1;
+    Instrumento_sortInstrumentoByTipo(arrayInstrumento,lenInstrumento,1);
+    for(i=0;i<lenMusico;i++)
+    {
+
+        if(arrayMusico[i].isEmpty==0)
+        {
+            posInstrumentoCuerda=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,arrayMusico[i].idInstrumento);
+            auxTipo=instrumento_findInstrumentoByTipo(arrayInstrumento,lenInstrumento,arrayInstrumento[posInstrumentoCuerda].tipo);
+            if(posInstrumentoCuerda!=-1&&auxTipo==1)
+            {
+                switch(auxTipo)
+                {
+                   case 1:
+                       strncpy(stringTipo,"Cuerda",sizeof(stringTipo));
+                       break;
+                    case 2:
+                        strncpy(stringTipo,"Viento-Madera",sizeof(stringTipo));
+                        break;
+                    case 3:
+                        strncpy(stringTipo,"Viento-Metal",sizeof(stringTipo));
+                        break;
+                    case 4:
+                        strncpy(stringTipo,"Percusion",sizeof(stringTipo));
+                        break;
+                }
+                printf("\nNombre: %s\nApellido: %s\n"
+                "Edad: %d\nNombre Instrumento: %s\n"
+                "Tipo Instrumento: %s\n-------\n",
+                       arrayMusico[i].name,
+                       arrayMusico[i].surname,
+                       arrayMusico[i].edad,
+                       arrayInstrumento[posInstrumentoCuerda].name,
+                       stringTipo);
+                flag=0;
+            }
+
+        }
+
+    }
+    if(flag)
+    {
+        printf("\n----El listado se encuentra vacio----\n");
+    }
+    return 0;
+}
+
+//INFORME H
+/** \brief  Prints the average of muscicians per orquestas
+* \param    arrayMusico Musico* Pointer to array of musico
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    lenMusico musico array lenght
+* \param    lenOrquesta orquesta array lenght
+* \return   returns 0
+**/
+int informe_promedioMusicosPorOrquesta(Musico* arrayMusico,Orquesta* arrayOrquesta,
+                                       int lenMusico,int lenOrquesta)
+{
+    int cantidadMusicos;
+    int cantidadOrquesta;
+    float promedio;
+
+    informe_cantidadMusicos(arrayMusico,lenMusico,&cantidadMusicos);
+    informe_cantidadOrquestas(arrayOrquesta,lenOrquesta,&cantidadOrquesta);
+    if(cantidadOrquesta!=0)
+    {
+        promedio=(float)cantidadMusicos/(float)cantidadOrquesta;
+        printf("\nEL promedio de Musicos por orquesta es: %.1f\n",
+               promedio);
+    }
+    else
+    {
+        printf("\nNo hay Orquestas\n");
+    }
+    return 0;
+}
+
+//FUNCIONES LLAMADAS POR OTRAS EN INFORMES.C (USO INTERNO)
+/** \brief  Calculates the total existing orquestas
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    lenOrquesta orquesta array lenght
+* \param    pCantidadOrquestas Pointer that returns the
+*           calculated value
 * \return   return (-1) if wrong, (0) if OK.
 **/
 int informe_cantidadOrquestas(Orquesta* arrayOrquesta,int lenOrquesta,int* pCantidadOrquestas)
@@ -95,20 +530,17 @@ int informe_cantidadOrquestas(Orquesta* arrayOrquesta,int lenOrquesta,int* pCant
     return ret;
 }
 
-/** \brief  Calculates the number of employees over
-*           the average salary.
-* \param    arrayEmployee Employee* Pointer to array of employees
-* \param    lenEmployee int Array len of emplyee
-* \param    promedioResult The average salary
-* \param    valor Pointer that keeps the
-*           number of employees that are
-*           over the average salary.
+/** \brief  Calculates the total existing muscicians
+* \param    arrayMusico Musico* Pointer to array of musico
+* \param    lenMusico musico array lenght
+* \param    pCantidadMusicos Pointer that returns the
+*           calculated value
 * \return   return (-1) if wrong, (0) if OK.
 **/
 int informe_cantidadMusicos(Musico* arrayMusico,int lenMusico,int* pCantidadMusicos)
 {
     int i;
-    int contadorMusicos=0;
+    float contadorMusicos=0;
     int ret=-1;
     if(arrayMusico!=NULL && lenMusico>0 && pCantidadMusicos!=NULL)
     {
@@ -125,14 +557,11 @@ int informe_cantidadMusicos(Musico* arrayMusico,int lenMusico,int* pCantidadMusi
     return ret;
 }
 
-/** \brief  Calculates the number of employees over
-*           the average salary.
-* \param    arrayEmployee Employee* Pointer to array of employees
-* \param    lenEmployee int Array len of emplyee
-* \param    promedioResult The average salary
-* \param    valor Pointer that keeps the
-*           number of employees that are
-*           over the average salary.
+/** \brief  Calculates the total existing instruments
+* \param    arrayInstrumento Instrumento* Pointer to array of instrumento
+* \param    lenIntrumento instrumento array lenght
+* \param    pCantidadInst Pointer that returns the
+*           calculated value
 * \return   return (-1) if wrong, (0) if OK.
 **/
 int informe_cantidadInstrumentos(Instrumento* arrayInstrumento,int lenInstrumento,int* pCantidadInst)
@@ -155,440 +584,170 @@ int informe_cantidadInstrumentos(Instrumento* arrayInstrumento,int lenInstrument
     return ret;
 }
 
-int informe_tipoInstrumentoMasUsado(Instrumento* arrayInstrumento,int lenInstrumento,int* pTipoInstMasUsado)
+/** \brief  Calculates the existing amount of
+*           instrumentos of type 1(cuerda) in a
+*           specific orquesta.
+* \param    arrayInstrumento Instrumento* Pointer to array of instrumento
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    lenInstrumento instrumento array lenght
+* \param    lenMusico musico array lenght
+* \param    indexOrquesta value that represents the orquesta position
+* \param    pCantidadInstCuerda Pointer that returns the
+*           calculated value
+* \return   return (-1) if wrong, (0) if OK.
+**/
+int informe_cantInstCuerdaEnOrquestaEspecifica(Instrumento* arrayInstrumento,Orquesta* arrayOrquesta,Musico* arrayMusico,
+                                                int lenInstrumento,int lenMusico,int indexOrquesta,int* pCantidadInstCuerda)
 {
     int i;
-    int max=0;
-    int contadorOcurrencia=0;
-    int instrumentoMayorOcurrencia;
-    int retorno=-1;
-    if(arrayInstrumento!=NULL && lenInstrumento>=0 && pTipoInstMasUsado!=NULL)
-    {
-        Instrumento_sortInstrumentoByTipo(arrayInstrumento,lenInstrumento,1);
-        for(i=1;i<lenInstrumento;i++)
-        {
-            if(arrayInstrumento[i-1].tipo==arrayInstrumento[i].tipo)
-            {
-                contadorOcurrencia++;
-                if(contadorOcurrencia>max)
-                {
-                    max=contadorOcurrencia;
-                    instrumentoMayorOcurrencia=arrayInstrumento[i].tipo;
-                }
-            }
-            else
-            {
-                contadorOcurrencia=0;
-            }
-        }
-        if(instrumentoMayorOcurrencia>=1 || instrumentoMayorOcurrencia<=4)
-        {
-            *pTipoInstMasUsado=instrumentoMayorOcurrencia;
-            retorno=0;
-        }
-    }
-    return retorno;
-}
-
-//ARREGLAR
-int informe_InstrumentosMenosUsadosPorMusicos(Instrumento* arrayInstrumento,Musico* arrayMusico,
-                                              int lenInstrumento,int lenMusico)
-{
-    int i;
-    int min=lenMusico+1;
-    int contadorOcurrencia=0;
-    int IdInstrumentoMenorOcurrencia;
     int posIdInstrumento;
-    char stringTipo[30];
-    int retorno=-1;
-    if(arrayInstrumento!=NULL && lenInstrumento>0
-       && arrayMusico!=NULL && lenMusico>0)
-    {
-        musico_sortMusicosByInstrumentoEficiente(arrayMusico,lenMusico,1);
-        for(i=1;i<lenMusico;i++)
-        {
-            if(arrayMusico[i-1].isEmpty==0&&arrayMusico[i].isEmpty==0)
-            {
-                if(arrayMusico[i-1].idInstrumento!=arrayMusico[i].idInstrumento)
-                {
-                    contadorOcurrencia++;
-                }
-                else
-                {
-                    contadorOcurrencia--;
-                    min=0;
-
-                }
-                if(contadorOcurrencia<=min)
-                {
-                    min=contadorOcurrencia;
-                    IdInstrumentoMenorOcurrencia=arrayMusico[i].idInstrumento;
-                    posIdInstrumento=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,
-                                                            IdInstrumentoMenorOcurrencia);
-                    if(posIdInstrumento!=-1)
-                    {
-                        switch(arrayInstrumento[posIdInstrumento].tipo)
-                        {
-                            case 1:
-                               strncpy(stringTipo,"Cuerda",sizeof(stringTipo));
-                               break;
-                            case 2:
-                                strncpy(stringTipo,"Viento-Madera",sizeof(stringTipo));
-                                break;
-                            case 3:
-                                strncpy(stringTipo,"Viento-Metal",sizeof(stringTipo));
-                                break;
-                            case 4:
-                                strncpy(stringTipo,"Percusion",sizeof(stringTipo));
-                                break;
-                        }
-                        printf("\n----\nInstrumentos menos Usados Por Musicos\n----\n"
-                               "Nombre: %s\nId Instrumento: %d\nTipo: %s\n",
-                               arrayInstrumento[posIdInstrumento].name,
-                               arrayInstrumento[posIdInstrumento].idInstrumento,
-                               stringTipo);
-                        retorno=0;
-                    }
-                }
-
-            }
-
-
-        }
-
-    }
-    return retorno;
-}
-
-int informe_InstrumentoMasUsadoPorMusicos(Instrumento* arrayInstrumento,Musico* arrayMusico,
-                                              int lenInstrumento,int lenMusico)
-{
-    int i;
-    int max=0;
-    int contadorOcurrencia=0;
-    int IdInstrumentoMayorOcurrencia;
-    int posIdInstrumento;
-    char stringTipo[30];
-    int retorno=-1;
-    if(arrayInstrumento!=NULL && lenInstrumento>0
-       && arrayMusico!=NULL && lenMusico>0)
-    {
-        musico_sortMusicosByInstrumentoEficiente(arrayMusico,lenMusico,1);
-        for(i=1;i<lenMusico;i++)
-        {
-            if(arrayMusico[i-1].idInstrumento==arrayMusico[i].idInstrumento)
-            {
-                contadorOcurrencia++;
-                if(contadorOcurrencia>max)
-                {
-                    max=contadorOcurrencia;
-                    IdInstrumentoMayorOcurrencia=arrayMusico[i].idInstrumento;
-                }
-            }
-            else
-            {
-                contadorOcurrencia--;
-            }
-        }
-        posIdInstrumento=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,
-                                                         IdInstrumentoMayorOcurrencia);
-        if(posIdInstrumento!=-1)
-        {
-            switch(arrayInstrumento[posIdInstrumento].tipo)
-            {
-                case 1:
-                   strncpy(stringTipo,"Cuerda",sizeof(stringTipo));
-                   break;
-                case 2:
-                    strncpy(stringTipo,"Viento-Madera",sizeof(stringTipo));
-                    break;
-                case 3:
-                    strncpy(stringTipo,"Viento-Metal",sizeof(stringTipo));
-                    break;
-                case 4:
-                    strncpy(stringTipo,"Percusion",sizeof(stringTipo));
-                    break;
-            }
-            printf("\nInstrumento mas Usado Por Musicos: %s\n"
-                   "Id Instrumento: %d\nTipo: %s\n",
-                   arrayInstrumento[posIdInstrumento].name,
-                   arrayInstrumento[posIdInstrumento].idInstrumento,
-                   stringTipo);
-            retorno=0;
-        }
-    }
-    return retorno;
-}
-
-int informe_promedioDeEdadMusicos(Musico* arrayMusico,int lenMusico)
-{
-    int i;
-    int edadesSumadas;
-    float promedioResult;
-    int musicoOverPromedio;
-    int cantidadMusicos=0;
-    int sum=0;
+    int contadorInstrumentosCuerda=0;
     int ret=-1;
-    if(arrayMusico!=NULL && lenMusico>0)
+    if(arrayInstrumento!=NULL&&pCantidadInstCuerda!=NULL&&arrayMusico!=NULL&&lenMusico>0&&indexOrquesta>=0)
     {
         for(i=0;i<lenMusico;i++)
         {
             if(arrayMusico[i].isEmpty==0)
             {
-                sum+=arrayMusico[i].edad;
-                cantidadMusicos++;
+                if(arrayMusico[i].idOrquesta==arrayOrquesta[indexOrquesta].idOrquesta)
+                {
+                    posIdInstrumento=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,arrayMusico[i].idInstrumento);
+                    if(arrayInstrumento[posIdInstrumento].tipo==TIPO_INST_CUERDA)
+                    {
+                        contadorInstrumentosCuerda++;
+                    }
+                }
             }
         }
-        edadesSumadas=sum;
-        promedioResult=edadesSumadas/cantidadMusicos;
-        informe_musicoOverPromedio(arrayMusico,lenMusico,promedioResult,&musicoOverPromedio);
+        *pCantidadInstCuerda=contadorInstrumentosCuerda;
         ret=0;
-        if(ret==0)
-        {
-            printf("\nLa edad promedio es: %.2f\n"
-                    "Cantidad demusicos que superan la edad promedio: %d\n",
-                    promedioResult,musicoOverPromedio);
-        }
     }
     return ret;
 }
 
-int informe_musicoOverPromedio(Musico* arrayMusico,int lenMusico,float promedioResult,int* valor)
+/** \brief  Calculates the existing amount of
+*           instrumentos of type 2 and 3(vientp) in a
+*           specific orquesta.
+* \param    arrayInstrumento Instrumento* Pointer to array of instrumento
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    lenInstrumento instrumento array lenght
+* \param    lenMusico musico array lenght
+* \param    indexOrquesta value that represents the orquesta position
+* \param    pCantidadInstVientos Pointer that returns the
+*           calculated value
+* \return   return (-1) if wrong, (0) if OK.
+**/
+int informe_cantInstVientosEnOrquestaEspecifica(Instrumento* arrayInstrumento,Orquesta* arrayOrquesta,Musico* arrayMusico,
+                                                int lenInstrumento,int lenMusico,int indexOrquesta,int* pCantidadInstVientos)
 {
     int i;
-    int contadorMusico=0;
+    int posIdInstrumento;
+    int contadorInstrumentosVientos=0;
     int ret=-1;
-    if(arrayMusico!=NULL && lenMusico>0 && valor!=NULL)
+    if(arrayInstrumento!=NULL&&pCantidadInstVientos!=NULL&&arrayMusico!=NULL&&lenMusico>0&&indexOrquesta>=0)
     {
         for(i=0;i<lenMusico;i++)
         {
             if(arrayMusico[i].isEmpty==0)
             {
-                if(arrayMusico[i].edad>promedioResult)
+                if(arrayMusico[i].idOrquesta==arrayOrquesta[indexOrquesta].idOrquesta)
                 {
-                    contadorMusico++;
+                    posIdInstrumento=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,arrayMusico[i].idInstrumento);
+                    if(arrayInstrumento[posIdInstrumento].tipo==TIPO_INST_V_MAD
+                       ||arrayInstrumento[posIdInstrumento].tipo==TIPO_INST_V_MET)
+                    {
+                        contadorInstrumentosVientos++;
+                    }
                 }
             }
-
         }
-        *valor=contadorMusico;
+        *pCantidadInstVientos=contadorInstrumentosVientos;
         ret=0;
     }
     return ret;
 }
 
-int informe_printMusicoByInstrumentoDeterminado(Musico* arrayMusico,Instrumento* arrayInstrumento,
-                                                int lenMusico,int lenInstrumento,char* msgE)
+/** \brief  Calculates the existing amount of
+*           instrumentos of type 4(percusion) in a
+*           specific orquesta.
+* \param    arrayInstrumento Instrumento* Pointer to array of instrumento
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    lenInstrumento instrumento array lenght
+* \param    lenMusico musico array lenght
+* \param    indexOrquesta value that represents the orquesta position
+* \param    pCantidadInstPercusion Pointer that returns the
+*           calculated value
+* \return   return (-1) if wrong, (0) if OK.
+**/
+int informe_cantInsPercusionEnOrquestaEspecifica(Instrumento* arrayInstrumento,Orquesta* arrayOrquesta,Musico* arrayMusico,
+                                                int lenInstrumento,int lenMusico,int indexOrquesta,int* pCantidadInstPercusion)
 {
     int i;
-    int auxIdInstrumento;
-    int posInstrumento;
-    int posMusico;
-    char stringTipo[30];
-    int flag=1;
-
-    auxIdInstrumento=instrumento_getID(arrayInstrumento,lenInstrumento,msgE,3);
-    posInstrumento=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,auxIdInstrumento);
-    if((auxIdInstrumento>=0)&&(posInstrumento!=-1))
+    int posIdInstrumento;
+    int contadorInstrumentosPercusion=0;
+    int ret=-1;
+    if(arrayInstrumento!=NULL&&pCantidadInstPercusion!=NULL&&arrayMusico!=NULL&&lenMusico>0&&indexOrquesta>=0)
     {
         for(i=0;i<lenMusico;i++)
         {
-            if((arrayMusico[i].isEmpty==0)&&(arrayMusico[i].idInstrumento==auxIdInstrumento))
+            if(arrayMusico[i].isEmpty==0)
             {
-                posInstrumento=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,arrayMusico[i].idInstrumento);
-                posMusico=musico_findMusicoById(arrayMusico,lenMusico,arrayMusico[i].idMusico);
-                if((posInstrumento>=0)&&(posMusico>=0))
+                if(arrayMusico[i].idOrquesta==arrayOrquesta[indexOrquesta].idOrquesta)
                 {
-                    switch(arrayInstrumento[posInstrumento].tipo)
+                    posIdInstrumento=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,arrayMusico[i].idInstrumento);
+                    if(arrayInstrumento[posIdInstrumento].tipo==TIPO_INST_PERCUSION)
                     {
-                       case 1:
-                           strncpy(stringTipo,"Cuerda",sizeof(stringTipo));
-                           break;
-                        case 2:
-                            strncpy(stringTipo,"Viento-Madera",sizeof(stringTipo));
-                            break;
-                        case 3:
-                            strncpy(stringTipo,"Viento-Metal",sizeof(stringTipo));
-                            break;
-                        case 4:
-                            strncpy(stringTipo,"Percusion",sizeof(stringTipo));
-                            break;
+                        contadorInstrumentosPercusion++;
                     }
-                    printf("\nMusico: %s %s\nInstrumento: %s\nTipo: %s\nCodigo Musico: %d\n"
-                           "Codigo Instrumento: %d\n-------\n",
-                           arrayMusico[posMusico].name,
-                           arrayMusico[posMusico].surname,
-                           arrayInstrumento[posInstrumento].name,
-                           stringTipo,
-                           arrayMusico[posMusico].idMusico,
-                           arrayInstrumento[posInstrumento].idInstrumento);
-                           flag=0;
                 }
             }
         }
-        if(flag)
-        {
-            printf("\n----El listado se encuentra vacio----\n");
-        }
+        *pCantidadInstPercusion=contadorInstrumentosPercusion;
+        ret=0;
     }
-    return 0;
+    return ret;
 }
 
-int informe_printMusicosByOrquestaDeterminada(Musico* arrayMusico,Orquesta* arrayOrquesta,
-                                                int lenMusico,int lenOrquesta,char* msgE)
-{
-    int i;
-    int auxIdOrquesta;
-    int posOrquesta;
-    int posMusico;
-    char stringTipo[30];
-    int flag=1;
-
-    auxIdOrquesta=orquesta_getID(arrayOrquesta,lenOrquesta,msgE,3);
-    posOrquesta=orquesta_findOrquestaById(arrayOrquesta,lenOrquesta,auxIdOrquesta);
-    if((auxIdOrquesta>=0)&&(posOrquesta!=-1))
-    {
-        for(i=0;i<lenMusico;i++)
-        {
-            if((arrayMusico[i].isEmpty==0)&&(arrayMusico[i].idOrquesta==auxIdOrquesta))
-            {
-                posOrquesta=orquesta_findOrquestaById(arrayOrquesta,lenOrquesta,arrayMusico[i].idOrquesta);
-                posMusico=musico_findMusicoById(arrayMusico,lenMusico,arrayMusico[i].idMusico);
-                if((posOrquesta>=0)&&(posMusico>=0))
-                {
-                    switch(arrayOrquesta[posOrquesta].tipo)
-                    {
-                        case 1:
-                            strncpy(stringTipo,"Sinfonica",sizeof(stringTipo));
-                            break;
-                        case 2:
-                            strncpy(stringTipo,"Filarmonica",sizeof(stringTipo));
-                            break;
-                        case 3:
-                            strncpy(stringTipo,"Camara",sizeof(stringTipo));
-                            break;
-                    }
-                    printf("\nMusico: %s %s\nOrquesta: %s\nTipo: %s\nCodigo Musico: %d\n"
-                           "Codigo Orquesta: %d\n-------\n",
-                           arrayMusico[posMusico].name,
-                           arrayMusico[posMusico].surname,
-                           arrayOrquesta[posOrquesta].name,
-                           stringTipo,
-                           arrayMusico[posMusico].idMusico,
-                           arrayOrquesta[posOrquesta].idOrquesta);
-                           flag=0;
-                }
-            }
-        }
-        if(flag)
-        {
-            printf("\n----El listado se encuentra vacio----\n");
-        }
-    }
-    return 0;
-}
-
-int informe_tipoOrquestaMasFrecuente(Orquesta* arrayOrquesta,int lenOrquesta)
-{
-    int i;
-    int max=0;
-    int contadorOcurrencia=0;
-    int tipoOrquestaMayorOcurrencia;
-    char stringTipo[30];
-    int retorno=-1;
-    if(arrayOrquesta!=NULL && lenOrquesta>=0)
-    {
-        orquesta_sortOrquestaByTipo(arrayOrquesta,lenOrquesta,1);
-        for(i=1;i<lenOrquesta;i++)
-        {
-            if(arrayOrquesta[i-1].tipo==arrayOrquesta[i].tipo)
-            {
-                contadorOcurrencia++;
-                if(contadorOcurrencia>max)
-                {
-                    max=contadorOcurrencia;
-                    tipoOrquestaMayorOcurrencia=arrayOrquesta[i].tipo;
-                }
-            }
-            else
-            {
-                contadorOcurrencia=0;
-            }
-        }
-        if(tipoOrquestaMayorOcurrencia>=1 || tipoOrquestaMayorOcurrencia<=3)
-        {
-            switch(tipoOrquestaMayorOcurrencia)
-            {
-                case 1:
-                    strncpy(stringTipo,"Sinfonica",sizeof(stringTipo));
-                    break;
-                case 2:
-                    strncpy(stringTipo,"Filarmonica",sizeof(stringTipo));
-                    break;
-                case 3:
-                    strncpy(stringTipo,"Camara",sizeof(stringTipo));
-                    break;
-            }
-            printf("\nTipo de Orquesta mas frecuente: %s\n-------\n",stringTipo);
-            retorno=0;
-        }
-    }
-    return retorno;
-}
-
-int informe_orquestaConMasMusicos (Orquesta* arrayOrquesta,Musico* arrayMusico,
-                                   int lenOrquesta,int lenMusico)
+/** \brief  Calculates the existing amount of
+*           muscicians in a specific orquesta.
+* \param    arrayOrquesta Orquesta* Pointer to array of orquesta
+* \param    lenMusico musico array lenght
+* \param    indexOrquesta value that represents the orquesta position
+* \param    pCantMusicosEnUnaOrquesta Pointer that returns the
+*           calculated value
+* \return   return (-1) if wrong, (0) if OK.
+**/
+int informe_cantMusicosEnOrquestaEspecifica (Orquesta* arrayOrquesta,Musico* arrayMusico,
+                                                int lenMusico,int indexOrquesta,int* pCantMusicosEnUnaOrquesta)
 {
     int i;
     int max=0;
     int contadorMusico=0;
-    int IdorquestaConMasMusicos;
-    int posIdOrquesta;
-    char stringTipo[30];
     int retorno=-1;
 
     if(arrayOrquesta!=NULL&&arrayMusico!=NULL
-       &&lenOrquesta>0&&lenMusico>0)
+       &&lenMusico>0&&pCantMusicosEnUnaOrquesta!=NULL)
     {
         musico_sortMusicosByIdOrquestaEficiente(arrayMusico,lenMusico,1);
-        for(i=1;i<lenMusico;i++)
+        for(i=0;i<lenMusico;i++)
         {
-            if(arrayMusico[i-1].idOrquesta==arrayMusico[i].idOrquesta)
+            if(arrayMusico[i].isEmpty==0
+               &&(arrayMusico[i].idOrquesta==arrayOrquesta[indexOrquesta].idOrquesta))
             {
                 contadorMusico++;
                 if(contadorMusico>max)
                 {
                     max=contadorMusico;
-                    IdorquestaConMasMusicos=arrayMusico[i].idOrquesta;
+                    *pCantMusicosEnUnaOrquesta=contadorMusico;
+                    retorno=0;
                 }
             }
             else
             {
-                contadorMusico--;
+                contadorMusico=0;
             }
-        }
-        posIdOrquesta=orquesta_findOrquestaById(arrayOrquesta,lenOrquesta,IdorquestaConMasMusicos);
-        if(posIdOrquesta!=-1)
-        {
-            switch(arrayOrquesta[posIdOrquesta].tipo)
-            {
-                case 1:
-                    strncpy(stringTipo,"Sinfonica",sizeof(stringTipo));
-                    break;
-                case 2:
-                    strncpy(stringTipo,"Filarmonica",sizeof(stringTipo));
-                    break;
-                case 3:
-                    strncpy(stringTipo,"Camara",sizeof(stringTipo));
-                    break;
-            }
-            printf("\nOrquesta con mas Musicos: %s\n"
-                   "Tipo: %s\nCodigo Orquesta: %d\n",
-                   arrayOrquesta[posIdOrquesta].name,
-                   stringTipo,
-                   arrayOrquesta[posIdOrquesta].idOrquesta);
-            retorno=0;
         }
     }
     return retorno;
 }
+//FIN FUNCIONES USO INTERNO

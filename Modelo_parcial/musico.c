@@ -655,6 +655,6 @@ int musico_printMusicoBasic(Musico* array,int len)
 **/
 static int generarId(void)
 {
-    static int idEmp=0;
-    return idEmp++;
+    static int idMus=1;
+    return idMus++;
 }

@@ -44,8 +44,8 @@ int orquesta_addOrquesta(Orquesta* array,int len,char* msgE,int tries)
     if((array!=NULL)&&(len>0))
     {
         indexFree=orquesta_findFree(array,len);
-        if((indexFree!=-1)&&(!getStringLetras(bufferName,"\nIngrese Nombre: ",msgE,tries))
-            &&(!getStringLetras(bufferLugar,"\nIngrese Lugar: ",msgE,tries))
+        if((indexFree!=-1)&&(!getStringAlphanumeric(bufferName,"\nIngrese Nombre: ",msgE,tries))
+            &&(!getStringAlphanumeric(bufferLugar,"\nIngrese Lugar: ",msgE,tries))
             &&(!getIntInRange(&auxTipo,"\nIngrese Tipo: Sinfonica(1)/Filarmonica(2)"
                 "Camara(3) ","\nDATO NO VALIDO\n",1,3,tries)))
         {
@@ -120,7 +120,7 @@ int orquesta_alter(Orquesta* array, int len,char* generalMsgE,int exitAlterMenuN
                     {
                         case 1:
                         {
-                            if(!getStringLetras(bufferName,"\nIngrese NUEVO Nombre: ",generalMsgE,tries))
+                            if(!getStringAlphanumeric(bufferName,"\nIngrese NUEVO Nombre: ",generalMsgE,tries))
                             {
                                 strncpy(array[posOfID].name,bufferName,sizeof(bufferName));
                                 retorno=0;
@@ -129,7 +129,7 @@ int orquesta_alter(Orquesta* array, int len,char* generalMsgE,int exitAlterMenuN
                         }
                         case 2:
                         {
-                            if(!getStringLetras(bufferLugar,"\nIngrese NUEVO Lugar: ",generalMsgE,tries))
+                            if(!getStringAlphanumeric(bufferLugar,"\nIngrese NUEVO Lugar: ",generalMsgE,tries))
                             {
                                 strncpy(array[posOfID].lugar,bufferLugar,sizeof(bufferLugar));
                                 retorno=0;
@@ -165,7 +165,7 @@ int orquesta_alter(Orquesta* array, int len,char* generalMsgE,int exitAlterMenuN
 *           a valid value if something goes wrong.
 * \return   return (-1) if wrong, (0) if OK.
 **/
-int orquesta_removeOrquesta(Orquesta* array, int len,char* msgE,int tries)
+int orquesta_removeOrquesta(Orquesta* array, int len,char* msgE,int tries,int* removedOrqId)
 {
     int auxID;
     int posOfID;
@@ -179,6 +179,7 @@ int orquesta_removeOrquesta(Orquesta* array, int len,char* msgE,int tries)
             if(posOfID!=-1)
             {
                array[posOfID].isEmpty=1;
+               *removedOrqId=posOfID;
                retorno=0;
             }
         }
@@ -540,6 +541,6 @@ int orquesta_printOrquesta(Orquesta* array,int len)
 **/
 static int generarId(void)
 {
-    static int idEmp=0;
-    return idEmp++;
+    static int idOrq=1;
+    return idOrq++;
 }
