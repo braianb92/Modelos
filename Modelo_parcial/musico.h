@@ -22,6 +22,7 @@ int musico_addMusico(Musico* arrayMusico,Orquesta* arrayOrquesta,Instrumento* ar
 
 int musico_alter(Musico* arrayMusico,Orquesta* arrayOrquesta,int lenMusico,int lenOrquesta,char* generalMsgE,int exitAlterMenuNumber,int tries);
 int musico_removeMusico(Musico* array, int len,char* msgE,int tries);
+int musico_removeMusicoApartirDeOrquesta(Musico* arrayMusico,int lenMusico,int removedOrquestaID);
 
 int musico_sortMusicoBySurname(Musico* array, int len,int order);
 int musico_sortMusicoByNombre(Musico* array, int len,int order);
@@ -32,7 +33,7 @@ int musico_sortMusicosByInstrumentoEficiente(Musico* arrayMusico,int lenMusico,i
 int musico_sortMusicosByIdOrquestaEficiente(Musico* arrayMusico,int lenMusico,int order);
 
 
-int musico_printMusico(Musico* array,int len);
+int musico_printMusico(Musico* arrayMusico,Instrumento* arrayInstrumento,int lenMusico,int lenInstrumento);
 int musico_printMusicoBasic(Musico* array,int len);
 
 int musico_initMusico(Musico* array,int len);

@@ -15,20 +15,20 @@ int main()
     Orquesta orquestas[LEN_ORQUESTA];
     Instrumento instrumentos[LEN_INSTRUMENTO];
     Musico musicos[LEN_MUSICO];
-    int removedOrquestaPos;
+    int removedOrquestaID;
     int option=0;
-    //Puestos en 1 para la pre carga.
-    int flagAltaOrquesta=0;
-    int contadorOrquesta=0;
-    int flagAltaInstrumento=0;
-    int contadorInstrumento=0;
-    int flagAltaMusico=0;
-    int contadorMusico=0;
-    //inicializacion
+    //MODIFICAR PARA LA PRE-CARGA.
+    int flagAltaOrquesta=1;
+    int contadorOrquesta=4;
+    int flagAltaInstrumento=1;
+    int contadorInstrumento=5;
+    int flagAltaMusico=1;
+    int contadorMusico=6;
+    //INICIALIZACION.
     orquesta_initOrquesta(orquestas,LEN_ORQUESTA);
     instrumento_initInstrumento(instrumentos,LEN_INSTRUMENTO);
     musico_initMusico(musicos,LEN_MUSICO);
-    //pre cargas
+    //PRE-CARGAS.
     orquesta_preCarga(orquestas,LEN_ORQUESTA,1,"Orquesta1","Lugar1",1);
     orquesta_preCarga(orquestas,LEN_ORQUESTA,2,"Orquesta2","Lugar1",2);
     orquesta_preCarga(orquestas,LEN_ORQUESTA,3,"Orquesta3","Lugar2",3);
@@ -58,7 +58,6 @@ int main()
             case 1:
                 if(!orquesta_addOrquesta(orquestas,LEN_ORQUESTA,"\nDATO NO VALIDO\n",REINTENTOS))
                 {
-                    orquesta_printOrquesta(orquestas,LEN_ORQUESTA);
                     printf("\n--Se dio de alta correctamente--\n");
                     flagAltaOrquesta=1;
                     contadorOrquesta++;
@@ -73,14 +72,22 @@ int main()
                 {
                     orquesta_printOrquesta(orquestas,LEN_ORQUESTA);
                     if(!orquesta_removeOrquesta(orquestas,LEN_ORQUESTA,
-                        "\nDATO NO VALIDO\n",REINTENTOS,&removedOrquestaPos))
+                        "\nDATO NO VALIDO\n",REINTENTOS,&removedOrquestaID))
                     {
-                       printf("\n--Se dio de baja correctamente--\n");
-                       contadorOrquesta--;
-                       if(contadorOrquesta==0)
-                       {
+                        if(!musico_removeMusicoApartirDeOrquesta(musicos,LEN_MUSICO,removedOrquestaID))
+                        {
+                            contadorMusico--;
+                            if(contadorMusico==0)
+                            {
+                                flagAltaMusico=0;
+                            }
+                        }
+                        printf("\n--Se dio de baja la orquesta junto a sus musicos--\n");
+                        contadorOrquesta--;
+                        if(contadorOrquesta==0)
+                        {
                             flagAltaOrquesta=0;
-                       }
+                        }
                     }
                 }
                 else
@@ -167,7 +174,7 @@ int main()
             case 8:
                 if(flagAltaMusico)
                 {
-                    musico_printMusico(musicos,LEN_MUSICO);
+                    musico_printMusico(musicos,instrumentos,LEN_MUSICO,LEN_INSTRUMENTO);
                 }
                 else
                 {

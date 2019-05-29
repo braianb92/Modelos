@@ -6,14 +6,12 @@
 
 static int generarId(void);
 
-/** \brief  Adds an instrument with
-*           parameter values in an specific position.
-* \param    array Instrumento* Pointer to array of
+/** \brief  Adds an instrumento with the given parameters
+* \param    array Instrumento* Pointer to array of instrumento
 * \param    len int Array len of instrumento
-* \param    msgE char Shows an error message to be printed
-*           when a value is not valid.
-* \param    tries The times user can try to enter
-*           a valid value if something goes wrong.
+* \param    indexPosition The position in the instrumento array
+* \param    nombre Name to be assigned
+* \param    tipo type of instrument to be assigned
 * \return   return (-1) if wrong, (0) if OK.
 * */
 int instrumento_preCarga(Instrumento* array,int len,int indexPosition,char* nombre,int tipo)
@@ -191,7 +189,7 @@ int instrumento_removeInstrumento(Instrumento* array, int len,char* msgE,int tri
 
 /** \brief  Sort the elements in the array of Instrumento,
 *           UP or DOWN according to its order parameter
-*           by Surname and Sector.
+*           by nombre.
 * \param    array Instrumento* Pointer to array of Instrumento
 * \param    len int Array len of Instrumento
 * \param    order Int number that indicates
@@ -235,7 +233,7 @@ int Instrumento_sortInstrumentoByNombre(Instrumento* array, int len,int order)//
 
 /** \brief  Sort the elements in the array of Instrumento,
 *           UP or DOWN according to its order parameter
-*           by Surname and Sector.
+*           by tipo.
 * \param    array Instrumento* Pointer to array of Instrumento
 * \param    len int Array len of Instrumento
 * \param    order Int number that indicates
@@ -277,11 +275,11 @@ int Instrumento_sortInstrumentoByTipo(Instrumento* array, int len,int order)///1
     return retorno;
 }
 
-/** \brief  Sort the elements in the array of employees,
+/** \brief  Sort the elements in the array of instrumento,
 *           UP or DOWN according to its order parameter
-*           by Surname and Sector.
-* \param    arrayEmployee Employee* Pointer to array of employees
-* \param    lenEmployee int Array len of emplyee
+*           by nombre with a better method.
+* \param    arrayInstrumento Instrumento* Pointer to array of instrumento
+* \param    leninstrumento Lenght of instrumento array
 * \param    order Int number that indicates
 *           the growing order [1]
 *           the decreasing order[0]
@@ -394,6 +392,14 @@ int instrumento_findInstrumentoById(Instrumento* array, int len, int idE)
     return ret;
 }
 
+/** \brief  Searchs through the array for a
+*           specific value(Tipo de instrumento).
+* \param    array Instrumento* Pointer to array of instrumento
+* \param    len int Array len of instrumento
+* \param    idE Value to be found and matched in the array.
+* \return   return (-1) if not found,
+*           (position) if position matched.
+**/
 int instrumento_findInstrumentoByTipo(Instrumento* array, int len, int idE)
 {
     int i;

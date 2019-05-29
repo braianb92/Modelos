@@ -4,8 +4,18 @@
 #include "utn_strings.h"
 #include "orquesta.h"
 
+
 static int generarId(void);
 
+/** \brief  Adds an orquesta with the given parameters
+* \param    array Orquesta* Pointer to array of
+* \param    len int Array len of orquesta
+* \param    indexPosition The position in the orquesta array
+* \param    nombre Name to be assigned
+* \param    lugar Place to be assigned
+* \param    tipo type of orquesta to be assigned
+* \return   return (-1) if wrong, (0) if OK.
+* */
 int orquesta_preCarga(Orquesta* array,int len,int indexPosition,char* nombre,
                       char* lugar,int tipo)
 {
@@ -179,8 +189,12 @@ int orquesta_removeOrquesta(Orquesta* array, int len,char* msgE,int tries,int* r
             if(posOfID!=-1)
             {
                array[posOfID].isEmpty=1;
-               *removedOrqId=posOfID;
+               *removedOrqId=auxID;
                retorno=0;
+            }
+            else
+            {
+                printf("\n---El Codigo de orquesta no es valido---\n");
             }
         }
      }
@@ -189,7 +203,7 @@ int orquesta_removeOrquesta(Orquesta* array, int len,char* msgE,int tries,int* r
 
 /** \brief  Sort the elements in the array of orquesta,
 *           UP or DOWN according to its order parameter
-*           by Surname and Sector.
+*           by lugar.
 * \param    array Orquesta* Pointer to array of orquesta
 * \param    len int Array len of orquesta
 * \param    order Int number that indicates
@@ -234,7 +248,7 @@ int orquesta_sortOrquestaByLugar(Orquesta* array, int len,int order)///1up 0down
 
 /** \brief  Sort the elements in the array of orquesta,
 *           UP or DOWN according to its order parameter
-*           by Surname and Sector.
+*           by Nombre.
 * \param    array Orquesta* Pointer to array of orquesta
 * \param    len int Array len of orquesta
 * \param    order Int number that indicates
@@ -278,7 +292,7 @@ int orquesta_sortOrquestaByNombre(Orquesta* array, int len,int order)///1up 0dow
 
 /** \brief  Sort the elements in the array of orquesta,
 *           UP or DOWN according to its order parameter
-*           by Surname and Sector.
+*           by tipo.
 * \param    array Orquesta* Pointer to array of orquesta
 * \param    len int Array len of orquesta
 * \param    order Int number that indicates
@@ -320,6 +334,16 @@ int orquesta_sortOrquestaByTipo(Orquesta* array, int len,int order)///1up 0down
     return retorno;
 }
 
+/** \brief  Sort the elements in the array of orquesta,
+*           UP or DOWN according to its order parameter
+*           by tipo when lugar matches.
+* \param    array Orquesta* Pointer to array of orquesta
+* \param    len int Array len of orquesta
+* \param    order Int number that indicates
+*           the growing order [1]
+*           the decreasing order[0]
+* \return   return (-1) if wrong, (0) if OK.
+**/
 int orquesta_sortOrquestaByTipoMismoLugar(Orquesta* arrayOrquesta,int lenOrquesta,int order)
 {
     int i;
@@ -348,7 +372,7 @@ int orquesta_sortOrquestaByTipoMismoLugar(Orquesta* arrayOrquesta,int lenOrquest
 
 /** \brief  Sort the elements in the array of employees,
 *           UP or DOWN according to its order parameter
-*           by Surname and Sector.
+*           by tipo and place with a better method.
 * \param    arrayEmployee Employee* Pointer to array of employees
 * \param    lenEmployee int Array len of emplyee
 * \param    order Int number that indicates
@@ -491,12 +515,10 @@ int orquesta_getID (Orquesta* array,int len,char* msgE,int tries)
     return retorno;
 }
 
-/** \brief  Shows the values of occupied positions.
+/** \brief  Shows the existing orquestas.
 * \param    array Orquesta* Pointer to array of orquesta
 * \param    len int Array len of orquesta
 * \param    msgE char Shows an error message to be printed
-* \param    tries The times user can try to enter
-*           a valid value if something goes wrong.
 * \return   return 0.
 **/
 int orquesta_printOrquesta(Orquesta* array,int len)

@@ -6,7 +6,17 @@
 
 static int generarId(void);
 
-
+/** \brief  Adds a musico with the given parameters
+* \param    array Musico* Pointer to array of musico
+* \param    len int Array len of musico
+* \param    indexPosition The position in the musico array
+* \param    nombre Name to be assigned
+* \param    apellido Surname to be assigned
+* \param    edad age to be assigned
+* \param    idOrquesta  Existing orquesta ID to be assigned
+* \param    idInstrumento Existing instrumento ID to be assigned
+* \return   return (-1) if wrong, (0) if OK.
+* */
 int musico_preCarga(Musico* array,int len,int indexPosition,char* nombre,
                     char* apellido,int edad,int idOrquesta,int idInstrumento)
 {
@@ -159,7 +169,6 @@ int musico_alter(Musico* arrayMusico,Orquesta* arrayOrquesta,int lenMusico,int l
     return retorno;
 }
 
-
 /** \brief  Remove a musico by Id (put isEmpty Flag in 1)
 * \param    array Musico* Pointer to array of musico
 * \param    len int Array len of musico
@@ -190,9 +199,38 @@ int musico_removeMusico(Musico* array, int len,char* msgE,int tries)
     return retorno;
 }
 
+/** \brief  Remove a musico by Id (put isEmpty Flag in 1)
+* \param    array Musico* Pointer to array of musico
+* \param    len int Array len of musico
+* \param    msgE char Shows an error message to be printed
+*           when a value is not valid.
+* \param    tries The times user can try to enter
+*           a valid value if something goes wrong.
+* \return   return (-1) if wrong, (0) if OK.
+**/
+int musico_removeMusicoApartirDeOrquesta(Musico* arrayMusico,int lenMusico,int removedOrquestaID)
+{
+    int i;
+    int posIdMusico;
+    int retorno=-1;
+    if(arrayMusico!=NULL && lenMusico>0&&removedOrquestaID>=0)
+    {
+        for(i=0;i<lenMusico;i++)
+        {
+            posIdMusico=musico_findMusicoByIdOrquesta(arrayMusico,lenMusico,arrayMusico[i].idOrquesta==removedOrquestaID);
+            if(posIdMusico!=-1)
+            {
+               arrayMusico[posIdMusico].isEmpty=1;
+               retorno=0;
+            }
+        }
+     }
+    return retorno;
+}
+
 /** \brief  Sort the elements in the array of musico,
 *           UP or DOWN according to its order parameter
-*           by Surname and Sector.
+*           by Surname.
 * \param    array Musico* Pointer to array of musico
 * \param    len int Array len of musico
 * \param    order Int number that indicates
@@ -237,7 +275,7 @@ int musico_sortMusicoBySurname(Musico* array, int len,int order)///1up 0down
 
 /** \brief  Sort the elements in the array of musico,
 *           UP or DOWN according to its order parameter
-*           by Surname and Sector.
+*           by Nombre.
 * \param    array Musico* Pointer to array of musico
 * \param    len int Array len of musico
 * \param    order Int number that indicates
@@ -281,7 +319,7 @@ int musico_sortMusicoByNombre(Musico* array, int len,int order)///1up 0down
 
 /** \brief  Sort the elements in the array of musico,
 *           UP or DOWN according to its order parameter
-*           by Surname and Sector.
+*           by edad.
 * \param    array Musico* Pointer to array of musico
 * \param    len int Array len of musico
 * \param    order Int number that indicates
@@ -323,6 +361,16 @@ int musico_sortMusicoByEdad(Musico* array, int len,int order)///1up 0down
     return retorno;
 }
 
+/** \brief  Sort the elements in the array of musico,
+*           UP or DOWN according to its order parameter
+*           by edad when having equal surname.
+* \param    array Musico* Pointer to array of musico
+* \param    len int Array len of musico
+* \param    order Int number that indicates
+*           the growing order [1]
+*           the decreasing order[0]
+* \return   return (-1) if wrong, (0) if OK.
+**/
 int musico_sortMusicoByEdadMismoSurname(Musico* arrayMusico,int lenMusico,int order)
 {
     int i;
@@ -349,11 +397,11 @@ int musico_sortMusicoByEdadMismoSurname(Musico* arrayMusico,int lenMusico,int or
     return 0;
 }
 
-/** \brief  Sort the elements in the array of employees,
+/** \brief  Sort the elements in the array of musico,
 *           UP or DOWN according to its order parameter
-*           by Surname and Sector.
-* \param    arrayEmployee Employee* Pointer to array of employees
-* \param    lenEmployee int Array len of emplyee
+*           by edad when having equal surname with better method.
+* \param    array Musico* Pointer to array of musico
+* \param    len int Array len of musico
 * \param    order Int number that indicates
 *           the growing order [1]
 *           the decreasing order[0]
@@ -399,6 +447,16 @@ int musico_sortMusicosBySurnameyEdadEficiente(Musico* arrayMusico,
     return retorno;
 }
 
+/** \brief  Sort the elements in the array of musico,
+*           UP or DOWN according to its order parameter
+*           by instrumento with better method.
+* \param    array Musico* Pointer to array of musico
+* \param    len int Array len of musico
+* \param    order Int number that indicates
+*           the growing order [1]
+*           the decreasing order[0]
+* \return   return (-1) if wrong, (0) if OK.
+**/
 int musico_sortMusicosByInstrumentoEficiente(Musico* arrayMusico,int lenMusico,int order)///1up 0down
 {
     int i;
@@ -434,6 +492,16 @@ int musico_sortMusicosByInstrumentoEficiente(Musico* arrayMusico,int lenMusico,i
     return retorno;
 }
 
+/** \brief  Sort the elements in the array of musico,
+*           UP or DOWN according to its order parameter
+*           by orquesta with better method.
+* \param    array Musico* Pointer to array of musico
+* \param    len int Array len of musico
+* \param    order Int number that indicates
+*           the growing order [1]
+*           the decreasing order[0]
+* \return   return (-1) if wrong, (0) if OK.
+**/
 int musico_sortMusicosByIdOrquestaEficiente(Musico* arrayMusico,int lenMusico,int order)///1up 0down
 {
     int i;
@@ -540,7 +608,7 @@ int musico_findMusicoById(Musico* array, int len, int idE)
 }
 
 /** \brief  Searchs through the array for a
-*           specific value(ID).
+*           specific value(ID orquesta).
 * \param    array Musico* Pointer to array of musico
 * \param    len int Array len of musico
 * \param    idE Value to be found and matched in the array.
@@ -593,23 +661,44 @@ int musico_getID (Musico* array,int len,char* msgE,int tries)
 *           a valid value if something goes wrong.
 * \return   return 0.
 **/
-int musico_printMusico(Musico* array,int len)
+int musico_printMusico(Musico* arrayMusico,Instrumento* arrayInstrumento,int lenMusico,int lenInstrumento)
 {
     int i;
+    int posInst;
+    char stringTipo[30];
     int flag=1;
-    for(i=0;i<len;i++)
+    for(i=0;i<lenMusico;i++)
     {
-        if(array[i].isEmpty==0)
+        if(arrayMusico[i].isEmpty==0)
         {
-            printf("\nID Musico: %d\nNombre: %s\nApellido: %s\n"
-            "Edad: %d\nCodigo Orquesta: %d\nCodigo Instrumento: %d\n-------\n",
-                   array[i].idMusico,
-                   array[i].name,
-                   array[i].surname,
-                   array[i].edad,
-                   array[i].idOrquesta,
-                   array[i].idInstrumento);
-            flag=0;
+            posInst=instrumento_findInstrumentoById(arrayInstrumento,lenInstrumento,arrayMusico[i].idInstrumento);
+            if(posInst!=-1)
+            {
+                switch(arrayInstrumento[posInst].tipo)
+                {
+                   case 1:
+                       strncpy(stringTipo,"Cuerda",sizeof(stringTipo));
+                       break;
+                    case 2:
+                        strncpy(stringTipo,"Viento-Madera",sizeof(stringTipo));
+                        break;
+                    case 3:
+                        strncpy(stringTipo,"Viento-Metal",sizeof(stringTipo));
+                        break;
+                    case 4:
+                        strncpy(stringTipo,"Percusion",sizeof(stringTipo));
+                        break;
+                }
+                printf("\nID Musico: %d\nNombre: %s\nApellido: %s\n"
+                "Edad: %d\nNombre Instrumento: %s\nTipo: %s\n-------\n",
+                       arrayMusico[i].idMusico,
+                       arrayMusico[i].name,
+                       arrayMusico[i].surname,
+                       arrayMusico[i].edad,
+                       arrayInstrumento[posInst].name,
+                       stringTipo);
+                flag=0;
+            }
         }
     }
     if(flag)
