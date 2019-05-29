@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "alumno.h"
+#include "persona.h"
 #include "utn_strings.h"
 
 static int generarId(void);
@@ -128,7 +128,7 @@ int persona_getApellido(Persona* this, char* value)
     return retorno;
 }
 
-int per_addPersona(Persona* arrayPersona[],int lenPersona,char* msgE,int tries)
+int persona_addPersona(Persona* arrayPersona[],int lenPersona,char* msgE,int tries)
 {
     int indexFree;
     char bufferName[32];
@@ -140,12 +140,12 @@ int per_addPersona(Persona* arrayPersona[],int lenPersona,char* msgE,int tries)
     int retorno=-1;
     if(lenPersona>0)
     {
-        indexFree=per_findFree(arrayPersona,lenPersona);
+        indexFree=persona_findFree(arrayPersona,lenPersona);
         if(indexFree!=-1)
         {
-            if((!getStringLetras(bufferName,"\nIngrese Nombre: ","\nERROR\n",tries))
-                    &&(!getStringLetras(bufferApellido,"\nIngrese Apellido: ","\nERROR\n",tries))
-                       &&(!getStringNumeros(bufferEdad,"\nIngrese Edad: ","\nERROR\n",tries)))
+            if((!getStringLetras(bufferName,"\nIngrese Nombre: ",msgE,tries))
+                    &&(!getStringLetras(bufferApellido,"\nIngrese Apellido: ",msgE,tries))
+                       &&(!getStringNumeros(bufferEdad,"\nIngrese Edad: ",msgE,tries)))
             {
                 arrayPersona[indexFree]=persona_newParametros(bufferName,
                                                                bufferApellido,
@@ -170,7 +170,7 @@ int per_addPersona(Persona* arrayPersona[],int lenPersona,char* msgE,int tries)
     return retorno;
 }
 
-int per_initArray(Persona* arrayPer[],int lenPer)
+int persona_initArray(Persona* arrayPer[],int lenPer)
 {
     int i;
     int retorno=-1;
@@ -186,7 +186,7 @@ int per_initArray(Persona* arrayPer[],int lenPer)
     return retorno;
 }
 
-int per_findFree(Persona* arrayPersona[], int lenPersona)
+int persona_findFree(Persona* arrayPersona[], int lenPersona)
 {
     int i;
     int ret=-1;
@@ -210,15 +210,3 @@ static int generarId(void)
     static int idPer=0;
     return idPer++;
 }
-
-
-
-
-
-
-
-
-
-
-
-

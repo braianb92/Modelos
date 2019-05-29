@@ -1,5 +1,6 @@
-#ifndef PERSONA_H
-#define PERSONA_H
+#ifndef PERSONA_H_INCLUDED
+#define PERSONA_H_INCLUDED
+
 #define QTY_NAME 50
 typedef struct
 {
@@ -8,7 +9,6 @@ typedef struct
     char apellido[32];
     int edad;
 } Persona;
-#endif
 
 Persona* persona_new();
 Persona* persona_newParametros(char* nombre,char* apellido,char* edad);
@@ -27,17 +27,10 @@ int persona_getEdad(Persona* this, int* value);
 int persona_getNombre(Persona* this, char* value);
 int persona_getApellido(Persona* this, char* value);
 
-int per_addPersona(Persona* arrayPersona[],int lenPersona,char* msgE,int tries);
-int per_initArray(Persona* arrayPer[],int lenPer);
-int per_findFree(Persona* arrayPersona[], int lenPersona);
+int persona_addPersona(Persona* arrayPersona[],int lenPersona,char* msgE,int tries);
 
 
+int persona_initArray(Persona* arrayPer[],int lenPer);
+int persona_findFree(Persona* arrayPersona[], int lenPersona);
 
-
-
-
-
-
-
-
-
+#endif // PERSONA_H_INCLUDED
