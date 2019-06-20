@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1560989701 source:/home/alumno/Documentos/Baldino_TP_labo1-master/EjercicioPre2doParcialV2/Empleado.c
+	"LinkedList.h"
+
+1560989429 /home/alumno/Documentos/Baldino_TP_labo1-master/EjercicioPre2doParcialV2/LinkedList.h
+
+1560990338 source:/home/alumno/Documentos/Baldino_TP_labo1-master/EjercicioPre2doParcialV2/LinkedList.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"LinkedList.h"
+
+1560989808 source:/home/alumno/Documentos/Baldino_TP_labo1-master/EjercicioPre2doParcialV2/main.c
+	<stdio.h>
+	<stdlib.h>
+	"Empleado.h"
+	"LinkedList.h"
+	"Parser.h"
+
+1529542728 /home/alumno/Documentos/Baldino_TP_labo1-master/EjercicioPre2doParcialV2/Empleado.h
+
+1560989791 /home/alumno/Documentos/Baldino_TP_labo1-master/EjercicioPre2doParcialV2/Parser.h
+	"LinkedList.h"
+
+1560989791 source:/home/alumno/Documentos/Baldino_TP_labo1-master/EjercicioPre2doParcialV2/Parser.c
+	"LinkedList.h"
+
