@@ -1,0 +1,2 @@
+cant_ent,cant_x_tipo,cant_max_entregado,prom,peso_prom
+1000,100,51,0

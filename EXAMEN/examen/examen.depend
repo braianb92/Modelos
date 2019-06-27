@@ -1,0 +1,66 @@
+# depslib dependency file v1.0
+1561586330 source:/home/alumno/Documentos/EXAMEN/examen/baldino_validations.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"baldino_validation.h"
+
+1561585649 /home/alumno/Documentos/EXAMEN/examen/baldino_validation.h
+
+1561592249 source:/home/alumno/Documentos/EXAMEN/examen/controller.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"entregas.h"
+	"controller.h"
+	"parser.h"
+	"baldino_validation.h"
+
+1561585609 /home/alumno/Documentos/EXAMEN/examen/LinkedList.h
+
+1561588593 /home/alumno/Documentos/EXAMEN/examen/entregas.h
+
+1561592249 /home/alumno/Documentos/EXAMEN/examen/controller.h
+
+1561586408 /home/alumno/Documentos/EXAMEN/examen/parser.h
+
+1561588605 source:/home/alumno/Documentos/EXAMEN/examen/entregas.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"entregas.h"
+	"baldino_validation.h"
+
+1561585588 source:/home/alumno/Documentos/EXAMEN/examen/LinkedList.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"LinkedList.h"
+
+1561593965 source:/home/alumno/Documentos/EXAMEN/examen/main.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"baldino_validation.h"
+	"entregas.h"
+	"controller.h"
+	"informe.h"
+
+1561586796 source:/home/alumno/Documentos/EXAMEN/examen/parser.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"entregas.h"
+	"parser.h"
+
+1561593965 source:/home/alumno/Documentos/EXAMEN/examen/informe.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"entregas.h"
+	"parser.h"
+	"baldino_validation.h"
+	"informe.h"
+
+1561592249 /home/alumno/Documentos/EXAMEN/examen/informe.h
+
